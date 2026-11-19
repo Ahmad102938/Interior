@@ -4,19 +4,20 @@ import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { PerformanceMonitor } from "@react-three/drei";
 import { ACESFilmicToneMapping, SRGBColorSpace } from "three";
-import { qualitySettings, type Quality } from "@/config/experience";
+import { qualitySettings, type Layout, type Quality } from "@/config/experience";
 import type { ProgressController } from "@/lib/animation/scroll";
 import { ExperienceScene } from "./ExperienceScene";
 
 type Props = {
   progress: React.RefObject<ProgressController>;
   quality: Quality;
+  layout: Layout;
   /** Whether the hero is on screen — rendering is suspended when it is not. */
   active: boolean;
   onReady: () => void;
 };
 
-export default function ExperienceCanvas({ progress, quality, active, onReady }: Props) {
+export default function ExperienceCanvas({ progress, quality, layout, active, onReady }: Props) {
   const [dpr, setDpr] = useState(qualitySettings[quality].dpr[1]);
 
   return (
@@ -37,7 +38,7 @@ export default function ExperienceCanvas({ progress, quality, active, onReady }:
       <PerformanceMonitor
         onDecline={() => setDpr(qualitySettings[quality].dpr[0])}
       />
-      <ExperienceScene progress={progress} quality={quality} />
+      <ExperienceScene progress={progress} quality={quality} layout={layout} />
     </Canvas>
   );
 }

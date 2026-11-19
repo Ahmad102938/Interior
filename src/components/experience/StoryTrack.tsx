@@ -12,23 +12,33 @@ type Props = {
 };
 
 /**
- * Horizontal story overlay. Its transform and each panel's opacity are written
- * directly by the progress ticker — React only re-renders when the active
- * chapter changes (for aria-hidden / focusability).
+ * Story overlay. Landscape: panels in a row, the track slides horizontally.
+ * Portrait (< 768px): panels stacked, the track slides vertically and copy
+ * sits at the bottom of the frame beneath the 3D subject. Transforms and
+ * opacity are written by the progress ticker — React only re-renders when
+ * the active chapter changes (for aria-hidden / inert).
  */
 export function StoryTrack({ trackRef, panelRefs, active }: Props) {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div ref={trackRef} className="flex h-full will-change-transform" style={{ width: `${STORY_PANELS * 100}vw` }}>
+      <div
+        ref={trackRef}
+        className="flex h-(--track-h) w-full flex-col will-change-transform md:h-full md:w-(--track-w) md:flex-row"
+        style={{ ["--track-h" as string]: `${STORY_PANELS * 100}%`, ["--track-w" as string]: `${STORY_PANELS * 100}vw` }}
+      >
         {[null, ...verticals].map((v, i) => (
-          <div key={v?.key ?? "intro"} className="relative flex h-full w-screen shrink-0 items-center">
+          <div
+            key={v?.key ?? "intro"}
+            className="relative flex h-(--panel-h) w-full shrink-0 items-end pb-[max(2.5rem,env(safe-area-inset-bottom))] md:h-full md:w-screen md:items-center md:pb-0"
+            style={{ ["--panel-h" as string]: `${100 / STORY_PANELS}%` }}
+          >
             <div
               ref={(el) => {
                 panelRefs.current[i] = el;
               }}
               aria-hidden={active !== i}
               inert={active !== i}
-              className={cn("container-page will-change-[transform,opacity]", active === i && "pointer-events-auto")}
+              className={cn("container-page w-full pr-12 will-change-[transform,opacity] md:pr-10 xl:pr-14", active === i && "pointer-events-auto")}
               style={i === 0 ? undefined : { opacity: 0 }}
             >
               {v ? <ChapterPanel vertical={v} /> : <IntroPanel />}
@@ -40,20 +50,13 @@ export function StoryTrack({ trackRef, panelRefs, active }: Props) {
   );
 }
 
-export function ChapterRail({
-  active,
-  barRef,
-  onSelect,
-}: {
-  active: number;
-  barRef: React.Ref<HTMLDivElement>;
-  onSelect: (panel: number) => void;
-}) {
+/** Landscape rail: chapter labels along the bottom with a horizontal progress line. */
+export function ChapterRail({ active, onSelect }: { active: number; onSelect: (panel: number) => void }) {
   return (
-    <nav aria-label="Business verticals" className="absolute inset-x-0 bottom-0 z-10">
+    <nav aria-label="Business verticals" className="absolute inset-x-0 bottom-0 z-10 hidden md:block">
       <div className="container-page pb-6 lg:pb-8">
         <div className="relative h-px bg-white/15">
-          <div ref={barRef} className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-gold" />
+          <div className="absolute inset-y-0 left-0 w-full origin-left bg-gold" style={{ transform: "scaleX(var(--rail-progress, 0))" }} />
         </div>
         <ol className="mt-4 grid grid-cols-4 gap-4">
           {verticals.map((v, i) => {
@@ -73,6 +76,57 @@ export function ChapterRail({
                   <span className="text-[0.75rem] font-semibold uppercase tracking-[0.14em]">
                     <span className="hidden lg:inline">{v.title}</span>
                     <span className="lg:hidden">{v.shortTitle}</span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </nav>
+  );
+}
+
+/**
+ * Portrait rail: a slim vertical progress line on the right edge with one
+ * tappable marker per vertical. Only the active chapter's number is labelled,
+ * so it never competes with the copy.
+ */
+export function ChapterRailVertical({ active, onSelect }: { active: number; onSelect: (panel: number) => void }) {
+  return (
+    <nav aria-label="Business verticals" className="absolute top-[36%] right-2 z-10 -translate-y-1/2 md:hidden">
+      <div className="relative flex flex-col items-center">
+        <div aria-hidden className="absolute top-[22px] bottom-[22px] left-1/2 w-px -translate-x-1/2 bg-white/20">
+          <div className="absolute inset-x-0 top-0 h-full origin-top bg-gold" style={{ transform: "scaleY(var(--rail-progress, 0))" }} />
+        </div>
+        <ol className="relative flex flex-col gap-3">
+          {verticals.map((v, i) => {
+            const isActive = active === i + 1;
+            const done = active > i + 1;
+            return (
+              <li key={v.key}>
+                <button
+                  type="button"
+                  onClick={() => onSelect(i + 1)}
+                  aria-label={`${v.number} ${v.title}`}
+                  aria-current={isActive ? "step" : undefined}
+                  className="group relative grid size-11 place-items-center"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "block rounded-full transition-all duration-500 ease-(--ease-premium)",
+                      isActive ? "size-3 bg-gold ring-4 ring-gold/25" : done ? "size-2 bg-gold-pale" : "size-2 bg-white/40",
+                    )}
+                  />
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute right-full mr-1 font-display text-sm tabular-nums text-gold-pale transition-opacity duration-500",
+                      isActive ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    {v.number}
                   </span>
                 </button>
               </li>

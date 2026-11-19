@@ -6,22 +6,32 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { SCROLL_LENGTH_VH, STORY_PANELS, atmospheres, type Quality } from "@/config/experience";
+import {
+  PORTRAIT_QUERY,
+  SCROLL_LENGTH_VH,
+  SCROLL_LENGTH_VH_PORTRAIT,
+  STORY_PANELS,
+  atmospheres,
+  type Layout,
+  type Quality,
+} from "@/config/experience";
 import { createProgressController, dampProgress } from "@/lib/animation/scroll";
 import { activePanel, clamp01, heldStoryPosition, storyPosition } from "@/lib/animation/transitions";
 import { cn } from "@/lib/utils";
-import { ChapterRail, StoryTrack } from "./StoryTrack";
+import { ChapterRail, ChapterRailVertical, StoryTrack } from "./StoryTrack";
 import { ExperienceFallback, posterFor } from "./ExperienceFallback";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const ExperienceCanvas = dynamic(() => import("./ExperienceCanvas"), { ssr: false });
 
-type Mode = "pending" | "cinematic" | "static" | "mobile";
+type Mode = "pending" | "cinematic" | "static";
 
 function detectMode(): Mode {
-  if (!window.matchMedia("(min-width: 768px)").matches) return "mobile";
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "static";
+  // Respect Data Saver on metered connections.
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  if (conn?.saveData) return "static";
   try {
     const c = document.createElement("canvas");
     if (!(c.getContext("webgl2") || c.getContext("webgl"))) return "static";
@@ -31,7 +41,8 @@ function detectMode(): Mode {
   return "cinematic";
 }
 
-function detectQuality(): Quality {
+function detectQuality(layout: Layout): Quality {
+  if (layout === "portrait") return "low";
   const nav = navigator as Navigator & { deviceMemory?: number };
   const strong = window.innerWidth >= 1200 && (nav.hardwareConcurrency ?? 8) >= 6 && (nav.deviceMemory ?? 8) >= 4;
   return strong ? "high" : "medium";
@@ -57,12 +68,17 @@ const atmosRgb = atmospheres.map((a) => hexToRgb(a.background));
 /**
  * SIGNATURE HERO — one pinned, scroll-driven 3D journey through the four
  * business environments. A single master progress value (ScrollTrigger →
- * damped ticker) drives the camera, the scene mood, the horizontal story
- * track, the rail and the active chapter, so nothing can drift out of sync.
+ * damped ticker) drives the camera, the scene mood, the story track, the
+ * rail and the active chapter, so nothing can drift out of sync.
+ *
+ * Landscape: copy slides horizontally, rail along the bottom.
+ * Portrait (phones): same world on a portrait camera path, copy slides
+ * vertically beneath the subject, rail on the right edge.
  */
 export function CinematicExperience() {
   const [mode, setMode] = useState<Mode>("pending");
   const [quality, setQuality] = useState<Quality>("medium");
+  const [layout, setLayout] = useState<Layout>("landscape");
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(true);
   const [ready, setReady] = useState(false);
@@ -70,18 +86,19 @@ export function CinematicExperience() {
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const bar = useRef<HTMLDivElement>(null);
   const panels = useRef<(HTMLDivElement | null)[]>([]);
   const ctrl = useRef(createProgressController());
   const activeRef = useRef(0);
 
   useEffect(() => {
     const update = () => {
+      const l: Layout = window.matchMedia(PORTRAIT_QUERY).matches ? "portrait" : "landscape";
+      setLayout(l);
       setMode(detectMode());
-      setQuality(detectQuality());
+      setQuality(detectQuality(l));
     };
     update();
-    const queries = ["(min-width: 768px)", "(prefers-reduced-motion: reduce)"].map((q) => window.matchMedia(q));
+    const queries = [PORTRAIT_QUERY, "(prefers-reduced-motion: reduce)"].map((q) => window.matchMedia(q));
     queries.forEach((q) => q.addEventListener("change", update));
     return () => queries.forEach((q) => q.removeEventListener("change", update));
   }, []);
@@ -93,20 +110,26 @@ export function CinematicExperience() {
     () => {
       if (!pinned || !section.current) return;
       const c = ctrl.current;
+      const portrait = layout === "portrait";
 
       const apply = () => {
         const p = c.value;
         const held = heldStoryPosition(p);
-        if (track.current) track.current.style.transform = `translate3d(${-held * 100}vw,0,0)`;
+        if (track.current) {
+          track.current.style.transform = portrait
+            ? `translate3d(0,${(-held * 100) / STORY_PANELS}%,0)` // % of the (5×) track height = one panel per step
+            : `translate3d(${-held * 100}vw,0,0)`;
+        }
         panels.current.forEach((el, i) => {
           if (!el) return;
           const d = held - i;
           const o = clamp01(1 - Math.abs(d) * 2.2);
           el.style.opacity = String(o);
-          el.style.transform = `translate3d(${-d * 10}vw,${Math.abs(d) * 1.5}rem,0)`;
+          // Layered parallax: copy travels slightly faster than its panel.
+          el.style.transform = portrait ? `translate3d(0,${-d * 9}svh,0)` : `translate3d(${-d * 10}vw,${Math.abs(d) * 1.5}rem,0)`;
           el.style.visibility = o < 0.01 ? "hidden" : "visible";
         });
-        if (bar.current) bar.current.style.transform = `scaleX(${clamp01((storyPosition(p) - 0.5) / (STORY_PANELS - 1.5))})`;
+        stage.current?.style.setProperty("--rail-progress", String(clamp01((storyPosition(p) - 0.5) / (STORY_PANELS - 1.5))));
         // Background tint used by the readability gradients.
         const s = storyPosition(p);
         const i = Math.min(Math.floor(s), atmosRgb.length - 2);
@@ -144,7 +167,8 @@ export function CinematicExperience() {
       gsap.ticker.add(tick);
       return () => gsap.ticker.remove(tick);
     },
-    { dependencies: [pinned] },
+    // revertOnUpdate: kill the previous ScrollTrigger + ticker when the layout flips.
+    { dependencies: [pinned, layout], revertOnUpdate: true },
   );
 
   // Suspend WebGL rendering once the hero has scrolled away.
@@ -179,8 +203,8 @@ export function CinematicExperience() {
 
   return (
     <>
-      {/* Mobile and accessible fallback story */}
-      <ExperienceFallback className={pinned ? "md:hidden" : undefined} />
+      {/* Reduced motion / Data Saver / no WebGL */}
+      {mode === "static" && <ExperienceFallback />}
 
       {pinned && (
         <section
@@ -188,8 +212,11 @@ export function CinematicExperience() {
           id="experience"
           aria-label="ADIDEV — four business environments"
           data-nav-theme="overlay"
-          className="relative hidden md:block"
-          style={{ height: `calc(100svh + ${SCROLL_LENGTH_VH}vh)` }}
+          className="relative h-(--len-portrait) md:h-(--len-landscape)"
+          style={{
+            ["--len-portrait" as string]: `calc(100svh + ${SCROLL_LENGTH_VH_PORTRAIT}vh)`,
+            ["--len-landscape" as string]: `calc(100svh + ${SCROLL_LENGTH_VH}vh)`,
+          }}
         >
           <div
             ref={stage}
@@ -198,35 +225,46 @@ export function CinematicExperience() {
           >
             {/* Poster until the first lit frame — never an empty canvas */}
             <div className={cn("absolute inset-0 transition-opacity duration-1000", ready ? "opacity-0" : "opacity-100")}>
-              <Image src={posterFor(0)} alt="" fill priority sizes="100vw" className="object-cover" />
+              <Image src={posterFor(0)} alt="" fill priority sizes="100vw" className="object-cover object-[66%_50%] md:object-center" />
             </div>
             {mode === "cinematic" && (
               <div className={cn("absolute inset-0 transition-opacity duration-1000", ready ? "opacity-100" : "opacity-0")}>
                 <CanvasBoundary onError={onCanvasError}>
-                  <ExperienceCanvas progress={ctrl} quality={quality} active={inView} onReady={onReady} />
+                  <ExperienceCanvas progress={ctrl} quality={quality} layout={layout} active={inView} onReady={onReady} />
                 </CanvasBoundary>
               </div>
             )}
 
             {/* Readability gradients tinted by the current environment */}
+            {/* Landscape: copy on the left */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0"
+              className="pointer-events-none absolute inset-0 hidden md:block"
               style={{
                 background:
                   "linear-gradient(90deg, rgb(var(--scene-rgb) / 0.92) 0%, rgb(var(--scene-rgb) / 0.62) 32%, rgb(var(--scene-rgb) / 0) 62%)",
               }}
             />
+            {/* Portrait: copy at the bottom, subject above */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 md:hidden"
+              style={{
+                background:
+                  "linear-gradient(0deg, rgb(var(--scene-rgb) / 0.97) 0%, rgb(var(--scene-rgb) / 0.86) 30%, rgb(var(--scene-rgb) / 0.4) 50%, rgb(var(--scene-rgb) / 0) 64%)",
+              }}
+            />
             <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/45 to-transparent" />
-            <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-linear-to-t from-black/55 to-transparent" />
+            <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-48 bg-linear-to-t from-black/55 to-transparent md:block" />
 
             <StoryTrack trackRef={track} panelRefs={panels} active={active} />
-            <ChapterRail active={active} barRef={bar} onSelect={goTo} />
+            <ChapterRail active={active} onSelect={goTo} />
+            <ChapterRailVertical active={active} onSelect={goTo} />
 
             <div
               aria-hidden
               className={cn(
-                "absolute right-6 bottom-28 flex items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/55 transition-opacity duration-700 lg:right-14",
+                "absolute right-6 bottom-28 hidden items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/55 transition-opacity duration-700 md:flex lg:right-14",
                 active === 0 ? "opacity-100" : "opacity-0",
               )}
             >
@@ -235,8 +273,21 @@ export function CinematicExperience() {
                 <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2s_ease-in-out_infinite] bg-gold-pale" />
               </span>
             </div>
+            {/* Portrait scroll cue: vertical, tucked in the right gutter under the rail */}
+            <div
+              aria-hidden
+              className={cn(
+                "absolute right-[1.375rem] bottom-[max(2.75rem,env(safe-area-inset-bottom))] flex flex-col items-center gap-3 transition-opacity duration-700 md:hidden",
+                active === 0 ? "opacity-100" : "opacity-0",
+              )}
+            >
+              <span className="text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-white/55 [writing-mode:vertical-rl]">Scroll</span>
+              <span className="relative block h-10 w-px overflow-hidden bg-white/20">
+                <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2s_ease-in-out_infinite] bg-gold-pale" />
+              </span>
+            </div>
             {!ready && mode === "cinematic" && (
-              <p role="status" className="absolute top-28 right-6 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/50 lg:right-14">
+              <p role="status" className="absolute top-24 right-5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/50 md:top-28 md:right-6 lg:right-14">
                 Loading 3D environment…
               </p>
             )}

@@ -1,19 +1,25 @@
 import { CatmullRomCurve3, Color, Vector3 } from "three";
-import { atmospheres, cameraKeys } from "@/config/experience";
+import { atmospheres, cameraKeys, cameraKeysPortrait, type Layout } from "@/config/experience";
 import { storyPosition } from "./transitions";
 
-const posCurve = new CatmullRomCurve3(cameraKeys.map((k) => new Vector3(...k.pos)), false, "centripetal");
-const targetCurve = new CatmullRomCurve3(cameraKeys.map((k) => new Vector3(...k.target)), false, "centripetal");
+const curves = (keys: typeof cameraKeys) => ({
+  pos: new CatmullRomCurve3(keys.map((k) => new Vector3(...k.pos)), false, "centripetal"),
+  target: new CatmullRomCurve3(keys.map((k) => new Vector3(...k.target)), false, "centripetal"),
+});
+const paths: Record<Layout, ReturnType<typeof curves>> = {
+  landscape: curves(cameraKeys),
+  portrait: curves(cameraKeysPortrait),
+};
 
 /**
  * Samples camera position/target for master progress p. getPoint() is
  * parameterised by control-point index, so evenly spaced keyframes map
  * linearly to progress. Writes into the provided vectors (no allocation).
  */
-export function sampleCamera(p: number, outPos: Vector3, outTarget: Vector3) {
+export function sampleCamera(p: number, outPos: Vector3, outTarget: Vector3, layout: Layout = "landscape") {
   const t = Math.min(1, Math.max(0, p));
-  posCurve.getPoint(t, outPos);
-  targetCurve.getPoint(t, outTarget);
+  paths[layout].pos.getPoint(t, outPos);
+  paths[layout].target.getPoint(t, outTarget);
 }
 
 export type AtmosphereSample = {

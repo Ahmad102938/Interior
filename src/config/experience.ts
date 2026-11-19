@@ -9,6 +9,13 @@ export const STORY_PANELS = 5;
 
 /** Scroll distance of the pinned section, in viewport heights (beyond the first). */
 export const SCROLL_LENGTH_VH = 520;
+/** Phones: shorter journey — thumb scrolling covers less distance per gesture. */
+export const SCROLL_LENGTH_VH_PORTRAIT = 440;
+
+/** Below this width the hero uses the portrait layout (vertical story, portrait camera). */
+export const PORTRAIT_QUERY = "(max-width: 767px)";
+
+export type Layout = "landscape" | "portrait";
 
 /** Damping applied to the scroll target (higher = snappier). Per second. */
 export const PROGRESS_DAMPING = 5.5;
@@ -56,6 +63,31 @@ export const cameraKeys: { pos: V3; target: V3 }[] = [
   { pos: [234.5, 2.3, 1.5], target: [244, 1.5, -15] },
 ];
 
+/**
+ * Portrait (phone) camera path. Same world, same order — re-framed so each
+ * subject sits in the upper part of a tall frame and the copy owns the bottom.
+ */
+export const cameraKeysPortrait: { pos: V3; target: V3 }[] = [
+  // s = 0.0 — whole tower in frame, standing above the headline
+  { pos: [-7, 3, 78], target: [0, 1.5, 0] },
+  // s = 0.5 — approach
+  { pos: [-6, 2.5, 56], target: [0.5, 5, 0] },
+  // s = 1.0 — TELECOM: low angle up the lattice
+  { pos: [-7, 2, 40], target: [0, 9.5, 0] },
+  // s = 1.5 — rise and glide towards the solar field
+  { pos: [40, 13, 46], target: [56, 2, -4] },
+  // s = 2.0 — SOLAR: high view down the rows
+  { pos: [72, 26, 40], target: [78, -6, -6] },
+  // s = 2.5 — traverse towards the industrial site
+  { pos: [118, 11, 46], target: [140, 5, -4] },
+  // s = 3.0 — CIVIL: frame, crane and footings
+  { pos: [151, 8, 50], target: [157, 1, -4] },
+  // s = 3.5 — approach the glazed facade
+  { pos: [226, 4, 34], target: [233, 3, -4] },
+  // s = 4.0 — INTERIORS: inside, looking to the meeting room
+  { pos: [233, 2.4, 2], target: [241, 0.4, -14] },
+];
+
 /** Environment mood per panel (opening shares the telecom mood). */
 export const atmospheres: {
   background: string;
@@ -77,11 +109,13 @@ export const atmospheres: {
 
 export const chapterKeys: VerticalKey[] = ["telecom", "solar", "civil", "interiors"];
 
-export type Quality = "high" | "medium";
+export type Quality = "high" | "medium" | "low";
 
 export const qualitySettings: Record<Quality, { dpr: [number, number]; shadowMap: number; solarRows: number; envResolution: number }> = {
   high: { dpr: [1, 1.75], shadowMap: 2048, solarRows: 9, envResolution: 256 },
   medium: { dpr: [1, 1.25], shadowMap: 1024, solarRows: 6, envResolution: 128 },
+  // Phones: high-DPI screens, smaller GPUs — cap pixels, keep shadows modest.
+  low: { dpr: [1, 1.5], shadowMap: 1024, solarRows: 6, envResolution: 64 },
 };
 
 /** Pointer parallax applied to the camera (world units). */

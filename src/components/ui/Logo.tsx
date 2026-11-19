@@ -11,7 +11,7 @@ export function Logo({ tone = "light", className }: { tone?: "light" | "dark"; c
       </span>
       <span className="leading-none">
         <span className={cn("block font-display text-[1.375rem] font-semibold tracking-[0.2em]", dark ? "text-navy" : "text-white")}>ADIDEV</span>
-        <span className={cn("mt-1 block text-[0.5625rem] font-semibold uppercase tracking-[0.2em] lg:max-xl:hidden", dark ? "text-slate" : "text-white/55")}>
+        <span className={cn("mt-1 block text-[0.5625rem] font-semibold uppercase tracking-[0.2em] max-[359px]:hidden lg:max-xl:hidden", dark ? "text-slate" : "text-white/55")}>
           Engineering & Infrastructure
         </span>
       </span>

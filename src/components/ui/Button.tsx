@@ -26,7 +26,7 @@ export function Button({ href, children, variant = "primary", className, arrow =
     <Link
       href={href}
       className={cn(
-        "group inline-flex min-h-12 items-center justify-center gap-2.5 px-6 text-[0.8125rem] font-semibold uppercase tracking-[0.12em] transition-colors duration-300",
+        "group inline-flex min-h-12 items-center justify-center gap-2.5 px-5 text-[0.75rem] font-semibold whitespace-nowrap uppercase tracking-[0.1em] transition-colors duration-300 sm:px-6 sm:text-[0.8125rem] sm:tracking-[0.12em]",
         variants[variant],
         className,
       )}

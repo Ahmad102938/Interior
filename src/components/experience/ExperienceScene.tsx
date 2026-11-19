@@ -21,7 +21,7 @@ import {
   type Mesh,
   type PerspectiveCamera,
 } from "three";
-import { POINTER_PARALLAX, qualitySettings, zones, type Quality } from "@/config/experience";
+import { POINTER_PARALLAX, qualitySettings, zones, type Layout, type Quality } from "@/config/experience";
 import { createAtmosphereSample, sampleAtmosphere, sampleCamera } from "@/lib/animation/camera";
 import { storyPosition } from "@/lib/animation/transitions";
 import type { ProgressController } from "@/lib/animation/scroll";
@@ -40,7 +40,15 @@ const pathCurve = new CatmullRomCurve3(
   ].map(([x, z]) => new Vector3(x, 0.04, z)),
 );
 
-export function ExperienceScene({ progress: progressRef, quality }: { progress: React.RefObject<ProgressController>; quality: Quality }) {
+export function ExperienceScene({
+  progress: progressRef,
+  quality,
+  layout,
+}: {
+  progress: React.RefObject<ProgressController>;
+  quality: Quality;
+  layout: Layout;
+}) {
   const { scene, gl, size } = useThree();
   const camera = useThree((s) => s.camera) as PerspectiveCamera;
   const settings = qualitySettings[quality];
@@ -68,7 +76,9 @@ export function ExperienceScene({ progress: progressRef, quality }: { progress: 
 
   // Wider lens on tall/narrow viewports so the subjects stay in frame.
   useEffect(() => {
-    camera.fov = size.width / size.height < 1.1 ? 52 : 38;
+    const aspect = size.width / size.height;
+    // Tall phone frames need a wider vertical lens; tablets in portrait sit between.
+    camera.fov = aspect < 0.7 ? 58 : aspect < 1.1 ? 52 : 38;
     camera.updateProjectionMatrix();
   }, [camera, size.width, size.height]);
 
@@ -77,7 +87,7 @@ export function ExperienceScene({ progress: progressRef, quality }: { progress: 
     const p = progress.value;
 
     // Camera — sampled from the shared path, plus a damped pointer parallax.
-    sampleCamera(p, scratch.pos, scratch.target);
+    sampleCamera(p, scratch.pos, scratch.target, layout);
     const k = 1 - Math.exp(-3 * Math.min(dt, 0.1));
     scratch.px += (progress.pointer.x - scratch.px) * k;
     scratch.py += (progress.pointer.y - scratch.py) * k;
