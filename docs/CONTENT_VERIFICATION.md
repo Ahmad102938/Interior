@@ -27,11 +27,13 @@ To publish a fact: replace the placeholder value in `src/data/` and set
 | States with project presence | `data/company.ts` → `metrics` | Figma draft shows "18 States" — unverified |
 | Telecom sites supported | `data/company.ts` → `metrics` | Figma draft shows "1,000+ LTE" — unverified |
 | Team strength | `data/company.ts` → `metrics` | |
-| Company timeline / milestones | `data/history.ts` | All five entries are structural placeholders |
+| Company timeline / milestones | `data/history.ts` | Seven structural placeholders. Separate **operations commenced** from **incorporated** — publish incorporation only if it differs. The whole About "Our journey" section stays hidden until at least one entry is verified. |
+| Headquarters location | `data/about.ts` → `companyFacts` | "Karnal, Haryana" is taken from the existing website — confirm before publishing |
+| About fact rail: established, legal name, team strength, offices | `data/about.ts` → `companyFacts` | Shown in the About intro only once verified |
 | Corporate & regional office addresses | `data/company.ts` → `contact` | |
 | Official phone & business email | `data/company.ts` → `contact` | |
 | Social media URLs | `data/company.ts` → `contact.social` | |
-| Founder / director name, designation, bio, portrait | `data/capabilities.ts` → `leadership` | |
+| Founder / director name, designation, bio, portrait | `data/capabilities.ts` → `leadership` | About → organisation chart shows a generic "Leadership & management" node until verified |
 | All project case studies | `data/projects.ts` | Six category placeholders — no real project data supplied. Draft slugs return 404 in production. |
 | Client / partner logos (8 slots) | `data/capabilities.ts` → `clientLogos` | Written permission required |
 | Testimonials | `data/capabilities.ts` → `testimonials` | Empty — genuine, approved quotes only |
@@ -43,6 +45,7 @@ To publish a fact: replace the placeholder value in `src/data/` and set
 ## Provisional copy (shown — needs sign-off)
 
 - Positioning, tagline, hero introduction, overview, vision, mission, core values (`data/company.ts`)
+- About page copy: intro, "Who we are" statement, lifecycle, value descriptions, vertical role lines, industry→vertical mapping, 5-stage method with lead teams, organisation functions, responsible-execution principles (`data/about.ts`, from presentation slides 2, 5, 6, 12–19)
 - Service descriptions, service lists and process flows for all four verticals (`data/verticals.ts`)
 - Capabilities, execution stages, quality / HSE / sustainability practices, "Why Adidev", team functions, industries, FAQs (`data/capabilities.ts`)
 - Privacy Policy and Terms (`app/privacy-policy`, `app/terms`) — generic drafts, **require legal review**
@@ -51,5 +54,6 @@ To publish a fact: replace the placeholder value in `src/data/` and set
 
 - `ENQUIRY_WEBHOOK_URL` — management-approved enquiry recipient (CRM / email service). Until set, the form returns an honest "not sent" message (HTTP 503).
 - Original logo (SVG/PNG) — `components/ui/Logo.tsx` is a typographic placeholder.
-- Project photography for each vertical — current imagery is labelled "Illustrative visualisation" (renders of the site's own 3D scenes).
-- Optional: client CAD / GLB models to replace procedural scenes in `components/experience/scenes/` (drop files in `public/models/<vertical>/`).
+- Project photography for each vertical — current imagery (`public/images/verticals/`) is labelled "Illustrative visualisation".
+- Hero storyline copy (`src/data/story.ts`) — needs sign-off. The hero building is an illustrative design, not a delivered ADIDEV project; its annotations ("6 m RCC frame", "4 levels") describe the model only.
+- Optional: a real project's drawings / BIM / GLB model to replace the illustrative building in `components/experience/site/building.ts`.

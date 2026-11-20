@@ -1,6 +1,6 @@
 "use client";
 
-import { Component, useCallback, useEffect, useRef, useState } from "react";
+import { Component, memo, useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import gsap from "gsap";
@@ -15,11 +15,13 @@ import {
   type Layout,
   type Quality,
 } from "@/config/experience";
-import { createProgressController, dampProgress } from "@/lib/animation/scroll";
+import { createProgressController, dampProgress, type ProgressController } from "@/lib/animation/scroll";
 import { activePanel, clamp01, heldStoryPosition, storyPosition } from "@/lib/animation/transitions";
 import { cn } from "@/lib/utils";
 import { ChapterRail, ChapterRailVertical, StoryTrack } from "./StoryTrack";
 import { ExperienceFallback, posterFor } from "./ExperienceFallback";
+import { tagsAt as siteTags } from "./site/building";
+import { Callout } from "./Callout";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -61,6 +63,26 @@ class CanvasBoundary extends Component<{ onError: () => void; children: React.Re
     return this.state.failed ? null : this.props.children;
   }
 }
+
+/** Model callouts; memoised so chapter changes don't re-mount their refs. */
+const CalloutLayer = memo(function CalloutLayer({ ctrl }: { ctrl: React.RefObject<ProgressController> }) {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {siteTags.map((t, i) => (
+        <Callout
+          key={t.label}
+          label={t.label}
+          detail={t.detail}
+          side={t.side}
+          reach={t.reach}
+          elRef={(el) => {
+            ctrl.current.tags[i] = el;
+          }}
+        />
+      ))}
+    </div>
+  );
+});
 
 const hexToRgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 const atmosRgb = atmospheres.map((a) => hexToRgb(a.background));
@@ -199,7 +221,10 @@ export function CinematicExperience() {
   }, []);
 
   const onCanvasError = useCallback(() => setMode("static"), []);
-  const onReady = useCallback(() => setReady(true), []);
+  const onReady = useCallback(() => {
+    ctrl.current.revealed = true;
+    setReady(true);
+  }, []);
 
   return (
     <>
@@ -210,7 +235,7 @@ export function CinematicExperience() {
         <section
           ref={section}
           id="experience"
-          aria-label="ADIDEV — four business environments"
+          aria-label="From blueprint to building"
           data-nav-theme="overlay"
           className="relative h-(--len-portrait) md:h-(--len-landscape)"
           style={{
@@ -223,19 +248,36 @@ export function CinematicExperience() {
             className="sticky top-0 h-svh overflow-hidden bg-navy-deep"
             style={{ ["--scene-rgb" as string]: "13 26 44" }}
           >
-            {/* Poster until the first lit frame — never an empty canvas */}
-            <div className={cn("absolute inset-0 transition-opacity duration-1000", ready ? "opacity-0" : "opacity-100")}>
-              <Image src={posterFor(0)} alt="" fill priority sizes="100vw" className="object-cover object-[66%_50%] md:object-center" />
+            {/* Stand-in until the first lit frame — never an empty canvas. It matches
+                where the visitor is: at the top, the empty design canvas the blueprint
+                then draws itself onto; mid-story (e.g. a reload), that stage's still. */}
+            <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-0" : "opacity-100")}>
+              {active === 0 ? (
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-[#0b1626]"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(84,108,140,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(84,108,140,0.16) 1px, transparent 1px)",
+                    backgroundSize: "26px 26px",
+                  }}
+                />
+              ) : (
+                <Image src={posterFor(active)} alt="" fill sizes="100vw" className="object-cover object-[66%_50%] md:object-center" />
+              )}
             </div>
             {mode === "cinematic" && (
-              <div className={cn("absolute inset-0 transition-opacity duration-1000", ready ? "opacity-100" : "opacity-0")}>
+              <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-100" : "opacity-0")}>
                 <CanvasBoundary onError={onCanvasError}>
-                  <ExperienceCanvas progress={ctrl} quality={quality} layout={layout} active={inView} onReady={onReady} />
+                  <ExperienceCanvas progress={ctrl} quality={quality} layout={layout} active={inView} onReady={onReady} onContextLost={onCanvasError} />
                 </CanvasBoundary>
               </div>
             )}
 
             {/* Readability gradients tinted by the current environment */}
+            {/* Plan-stage annotation chips — positioned by the 3D scene each frame */}
+            {mode === "cinematic" && layout === "landscape" && <CalloutLayer ctrl={ctrl} />}
+
             {/* Landscape: copy on the left */}
             <div
               aria-hidden
@@ -288,7 +330,7 @@ export function CinematicExperience() {
             </div>
             {!ready && mode === "cinematic" && (
               <p role="status" className="absolute top-24 right-5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/50 md:top-28 md:right-6 lg:right-14">
-                Loading 3D environment…
+                Preparing the drawing…
               </p>
             )}
           </div>

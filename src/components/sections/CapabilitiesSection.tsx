@@ -1,16 +1,10 @@
-import { capabilities } from "@/data/capabilities";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-
-const phases = [
-  { label: "Pre-construction control", span: "lg:col-span-3" },
-  { label: "Field execution", span: "lg:col-span-2" },
-  { label: "Close-out", span: "lg:col-span-1" },
-];
+import { CapabilityExplorer } from "./CapabilityExplorer";
 
 /**
- * Connected capability diagram: six capabilities on one gold spine, grouped
- * into the three phases they control. Vertical spine on small screens.
+ * Engineering capabilities: a compact index of six disciplines grouped by
+ * phase, with one capability's scope in focus at a time.
  */
 export function CapabilitiesSection({ showCta = true }: { showCta?: boolean }) {
   return (
@@ -34,37 +28,8 @@ export function CapabilitiesSection({ showCta = true }: { showCta?: boolean }) {
           intro="Planning, engineering coordination, procurement, field execution and handover managed as one connected system — so decisions made early carry through to site."
         />
 
-        <div className="mt-16 lg:mt-24" data-reveal>
-          {/* Phase brackets */}
-          <div className="hidden gap-6 lg:grid lg:grid-cols-6">
-            {phases.map((p) => (
-              <div key={p.label} className={p.span}>
-                <p className="eyebrow text-gold-pale/80">{p.label}</p>
-                <div aria-hidden className="mt-3 h-3 border-x border-t border-gold/40" />
-              </div>
-            ))}
-          </div>
-
-          <ol className="relative mt-2 grid gap-10 pl-10 lg:grid-cols-6 lg:gap-6 lg:pl-0">
-            <span aria-hidden className="absolute top-0 bottom-0 left-[0.6875rem] w-px bg-gold/50 lg:top-[0.6875rem] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto" />
-            {capabilities.map((c) => (
-              <li key={c.number} className="relative">
-                <span aria-hidden className="absolute top-0 -left-10 grid size-6 place-items-center rounded-full border border-gold bg-navy lg:static">
-                  <span className="size-2 rounded-full bg-gold" />
-                </span>
-                <p className="font-display text-2xl text-gold-pale lg:mt-6">{c.number}</p>
-                <h3 className="mt-2 text-lg leading-snug font-semibold">{c.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{c.summary}</p>
-                <ul className="mt-4 space-y-2 border-t border-white/10 pt-4">
-                  {c.items.map((it) => (
-                    <li key={it} className="text-[0.8125rem] leading-snug text-white/80">
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
+        <div className="mt-14 lg:mt-20" data-reveal>
+          <CapabilityExplorer />
         </div>
 
         {showCta && (

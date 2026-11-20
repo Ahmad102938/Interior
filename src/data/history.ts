@@ -15,10 +15,17 @@ export type Milestone = {
  */
 export const history: Milestone[] = [
   {
-    id: "inception",
+    id: "commencement",
     period: "[Year]",
-    title: "Company established",
-    description: "Inception and founding focus — awaiting the approved establishment date and history.",
+    title: "Operations commence",
+    description: "Foundational business activity — awaiting the approved date (draft says 2014, existing website says 2017).",
+    status: "pending",
+  },
+  {
+    id: "incorporation",
+    period: "[Year]",
+    title: "Company incorporated",
+    description: "Legal incorporation — publish only if management confirms it differs from the commencement date.",
     status: "pending",
   },
   {
@@ -47,6 +54,13 @@ export const history: Milestone[] = [
     period: "[Year]",
     title: "Commercial interior & fit-out",
     description: "Turnkey workplace, retail and showroom fit-out execution.",
+    status: "pending",
+  },
+  {
+    id: "integrated",
+    period: "Today",
+    title: "One integrated operating model",
+    description: "Four verticals delivered through shared planning, procurement, site execution and quality disciplines.",
     status: "pending",
   },
 ];

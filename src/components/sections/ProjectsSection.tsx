@@ -19,7 +19,7 @@ export function ProjectsSection() {
         />
         <div className="mt-12 lg:mt-16" data-reveal>
           {list.length > 0 ? (
-            <ProjectGallery projects={list} limit={6} />
+            <ProjectGallery projects={list} limit={6} viewAllHref="/projects" />
           ) : (
             <div className="grid gap-6 border border-line bg-white p-8 lg:grid-cols-[1fr_auto] lg:items-center lg:p-12">
               <p className="display text-3xl text-navy">Case studies are being prepared for publication.</p>
@@ -29,13 +29,6 @@ export function ProjectsSection() {
             </div>
           )}
         </div>
-        {list.length > 0 && (
-          <div className="mt-12 flex justify-center">
-            <Button href="/projects" variant="outline-dark">
-              View all projects
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   );

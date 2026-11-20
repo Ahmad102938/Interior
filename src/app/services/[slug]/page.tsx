@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
-import { verticals, verticalBySlug } from "@/data/verticals";
+import { verticals, verticalBySlug, verticalImage } from "@/data/verticals";
 import { projects } from "@/data/projects";
 import { publishable } from "@/lib/content";
 import { PageHero, HeroShell } from "@/components/ui/PageHero";
@@ -11,7 +11,6 @@ import { ProjectCard } from "@/components/ui/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { CtaBanner } from "@/components/sections/CtaBanner";
-import { posterFor } from "@/components/experience/ExperienceFallback";
 import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
@@ -43,7 +42,6 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
   const v = verticalBySlug(slug);
   if (!v) notFound();
   const c = verticalClasses[v.key];
-  const index = verticals.indexOf(v);
   const related = publishable(projects).filter((p) => p.vertical === v.key);
 
   return (
@@ -54,7 +52,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
         intro={v.summary}
         bg={c.bg}
         accentClass={c.accent}
-        image={{ src: posterFor(index + 1), alt: `${v.title} — illustrative visualisation`, caption: "Illustrative visualisation" }}
+        image={{ src: verticalImage(v), alt: `${v.title} — illustrative visualisation`, caption: "Illustrative visualisation" }}
         crumbs={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }, { label: v.title }]}
       />
 

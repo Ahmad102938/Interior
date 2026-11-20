@@ -11,7 +11,7 @@ export function PendingBadge({ status, className }: { status: Status; className?
     <span
       title="Pending management verification — hidden in production"
       className={cn(
-        "inline-flex items-center border border-dashed border-amber-500/70 bg-amber-50 px-1.5 py-0.5 font-sans text-[0.625rem] font-bold uppercase tracking-[0.12em] text-amber-800",
+        "inline-flex items-center border border-dashed border-amber-500/50 bg-amber-500/10 px-1.5 py-px font-sans text-[0.5625rem] font-semibold uppercase tracking-[0.12em] text-amber-600",
         className,
       )}
     >

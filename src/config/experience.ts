@@ -1,16 +1,17 @@
-import type { VerticalKey } from "./theme";
-
 /**
- * Cinematic hero configuration. One master progress value p ∈ [0, 1] drives
- * everything; "story position" s = p * STORY_PANELS-1 maps to panels:
- *   s = 0 → opening frame, s = 1 → Telecom, 2 → Solar, 3 → Civil, 4 → Interiors.
+ * Cinematic hero configuration — "From Blueprint to Building".
+ * One master progress value p ∈ [0, 1] drives everything; story position
+ * s = p × (STORY_PANELS − 1) maps to the stages of one site transforming:
+ *   s = 0 → blueprint (hook) · 1 → Design · 2 → Plan · 3 → Build
+ *   · 4 → Interior (camera flies through the new curtain wall into level 2)
+ *   · 5 → Handover (back out through the glass to the finished building at dusk)
  */
-export const STORY_PANELS = 5;
+export const STORY_PANELS = 6;
 
 /** Scroll distance of the pinned section, in viewport heights (beyond the first). */
-export const SCROLL_LENGTH_VH = 520;
+export const SCROLL_LENGTH_VH = 500;
 /** Phones: shorter journey — thumb scrolling covers less distance per gesture. */
-export const SCROLL_LENGTH_VH_PORTRAIT = 440;
+export const SCROLL_LENGTH_VH_PORTRAIT = 450;
 
 /** Below this width the hero uses the portrait layout (vertical story, portrait camera). */
 export const PORTRAIT_QUERY = "(max-width: 767px)";
@@ -18,77 +19,111 @@ export const PORTRAIT_QUERY = "(max-width: 767px)";
 export type Layout = "landscape" | "portrait";
 
 /** Damping applied to the scroll target (higher = snappier). Per second. */
-export const PROGRESS_DAMPING = 5.5;
+export const PROGRESS_DAMPING = 5;
 
-/**
- * Fraction of each panel interval during which text stays parked before the
- * horizontal track starts moving to the next chapter.
- */
+/** Fraction of each stage interval the copy stays parked before moving on. */
 export const STORY_HOLD = 0.42;
 
-/** World-space centres of each environment, laid out along +X. */
-export const zones: Record<VerticalKey, [number, number, number]> = {
-  telecom: [0, 0, 0],
-  solar: [78, 0, -6],
-  civil: [158, 0, -4],
-  interiors: [238, 0, -6],
-};
+/** Seconds the opening blueprint takes to draw itself (the 5-second hook). */
+export const BLUEPRINT_DRAW_SECONDS = 2.6;
+
+/**
+ * Stage timeline in story-position units. Each element of the site fades,
+ * grows or morphs across its [from, to] window, so the transformation is
+ * continuous and fully reversible.
+ */
+/*
+ * Choreography. Copy parks on each stage for s ∈ [k − 0.21, k + 0.21]
+ * (STORY_HOLD), so every stage is fully "in" before its hold starts and only
+ * leaves after it ends; hand-offs happen in the gaps between holds.
+ *
+ *   0 Blueprint ─┐ ┌─ 1 Design ─┐ ┌─ 2 Plan ─┐ ┌─ 3 Build ─┐ ┌─ 4 Interior ─┐ ┌─ 5 Handover
+ *
+ * While the camera is inside (Interior), the exterior finishes out of view —
+ * site struck, landscape, dusk — so stepping back out reveals the result.
+ */
+export const stageTimeline = {
+  // 0 → 1: the drawing lifts into a massing model; context and tools arrive
+  blueprint: { fadeOut: [2.25, 2.6] },
+  wireWalls: { rise: [0.24, 0.72], fadeOut: [2.3, 2.6] },
+  wireFurniture: { in: [0.5, 0.76], fadeOut: [1.24, 1.42] },
+  context: { in: [0.28, 0.72], wireOut: [2.26, 2.5], solidIn: [2.32, 2.66] },
+  designTools: { in: [0.5, 0.76], out: [1.4, 1.58] },
+  // 1 → 2: the section plane sweeps up through the model and the floors separate behind it
+  sectionSweep: { rise: [1.22, 1.5] },
+  floors: { in: [1.26, 1.5], explode: [1.36, 1.74], collapse: [2.23, 2.48], out: [2.42, 2.62] },
+  ghost: { in: [1.28, 1.56], out: [2.22, 2.42] },
+  // 2 → 3: floors re-assemble, then frame → slabs → concrete masses; the site mobilises
+  columns: { rise: [2.3, 2.5] },
+  slab: { in: [2.34, 2.72] },
+  masonry: { rise: [2.44, 2.78] },
+  risers: { in: [2.36, 2.56], fadeOut: [2.9, 3.1] },
+  site: { in: [2.26, 2.56], fadeOut: [3.85, 4.1] },
+  scaffold: { in: [2.58, 2.78], fadeOut: [3.8, 4.05] },
+  roads: { in: [2.26, 2.56] },
+  // 3 → 4: glazing goes in, the camera flies to level 2 and through it.
+  // `enter`/`exit` are the moments the camera crosses the glass: while inside,
+  // the exterior shell is switched off and its lights move under the pendants.
+  glass: { in: [3.3, 3.55] },
+  interior: { in: [3.3, 3.42], enter: 3.72, lights: [3.45, 3.85], exit: 4.27, out: [4.6, 4.75] },
+  // Out of view while inside: site struck, landscape, dusk, lights on
+  furniture: { in: [3.8, 4.0] },
+  landscape: { in: [3.8, 4.2] },
+  sky: { in: [3.6, 4.15] },
+  lights: { in: [3.85, 4.25] },
+} as const;
 
 type V3 = [number, number, number];
 
 /**
- * Camera keyframes evenly spaced in progress (index / (n-1)). Interpolated with
- * a centripetal Catmull–Rom curve so motion stays continuous between zones.
- * Targets are biased left of each subject so the HTML copy (left side) and the
- * model (right side) do not compete.
+ * Camera keyframes evenly spaced in progress. Landscape frames keep the site
+ * right of centre so the copy (left) and the model never compete.
  */
 export const cameraKeys: { pos: V3; target: V3 }[] = [
-  // s = 0.0 — opening establishing shot of the telecom site
-  { pos: [-34, 7, 54], target: [-9, 13, 0] },
-  // s = 0.5 — approach
-  { pos: [-28, 5.5, 42], target: [-7, 13.5, 0] },
-  // s = 1.0 — TELECOM: low, close, looking up the lattice
-  { pos: [-21, 3.6, 31], target: [-5.5, 13, 0] },
-  // s = 1.5 — lateral glide out towards the solar field
-  { pos: [22, 10, 40], target: [48, 3, -4] },
-  // s = 2.0 — SOLAR: elevated view across the arrays
-  { pos: [54, 15, 30], target: [74, 0, -10] },
-  // s = 2.5 — traverse the arrays towards the industrial site
-  { pos: [104, 9, 38], target: [128, 4, -4] },
-  // s = 3.0 — CIVIL: past the foundations, tilting up to the steel frame
-  { pos: [128, 4.5, 30], target: [148, 9, -6] },
-  // s = 3.5 — approach the glazed facade of the workplace
-  { pos: [214, 3.4, 30], target: [234, 2.6, -4] },
-  // s = 4.0 — INTERIORS: inside the completed workplace
-  { pos: [234.5, 2.3, 1.5], target: [244, 1.5, -15] },
+  // s = 0.0 — top-down on the site plan, like a design canvas
+  { pos: [-24, 105, 14], target: [-24, 0, 10] },
+  // s = 0.5 — the drawing tilts
+  { pos: [-40, 82, 66], target: [-16, 0, 6] },
+  // s = 1.0 — DESIGN: three-quarter view of the massing model
+  { pos: [-72, 46, 74], target: [-12, 9, 0] },
+  // s = 1.5 — orbit across the front
+  { pos: [-26, 40, 92], target: [-10, 10, 0] },
+  // s = 2.0 — PLAN: from the other corner, services inside the model
+  { pos: [70, 62, 112], target: [-6, 23, -2] },
+  // s = 2.5 — swing back as construction starts
+  { pos: [-12, 30, 88], target: [-10, 12, 0] },
+  // s = 3.0 — BUILD: wide site view with crane
+  { pos: [-66, 26, 66], target: [-10, 14, 0] },
+  // s = 3.5 — rise to level 2 and line up with the new curtain wall
+  { pos: [14, 10.8, 27], target: [13, 10.2, 4] },
+  // s = 4.0 — INTERIOR: inside the hall, looking across the floor to the glazing
+  { pos: [19.2, 10.05, -6.4], target: [-5, 9.5, 7.5] },
+  // s = 4.5 — back out through the glass, pulling away from the façade
+  { pos: [12, 9.5, 31], target: [2, 12, 2] },
+  // s = 5.0 — HANDOVER: low plaza view up the finished building at dusk
+  { pos: [-46, 2.6, 58], target: [-2, 12.5, 4] },
 ];
 
 /**
- * Portrait (phone) camera path. Same world, same order — re-framed so each
- * subject sits in the upper part of a tall frame and the copy owns the bottom.
+ * Portrait (phone) path. The opening looks down from the +x side so the plan's
+ * long axis runs up the tall screen; the camera then orbits round to the front.
+ * Targets sit nearer the camera than the site so the site rides in the upper frame.
  */
 export const cameraKeysPortrait: { pos: V3; target: V3 }[] = [
-  // s = 0.0 — whole tower in frame, standing above the headline
-  { pos: [-7, 3, 78], target: [0, 1.5, 0] },
-  // s = 0.5 — approach
-  { pos: [-6, 2.5, 56], target: [0.5, 5, 0] },
-  // s = 1.0 — TELECOM: low angle up the lattice
-  { pos: [-7, 2, 40], target: [0, 9.5, 0] },
-  // s = 1.5 — rise and glide towards the solar field
-  { pos: [40, 13, 46], target: [56, 2, -4] },
-  // s = 2.0 — SOLAR: high view down the rows
-  { pos: [72, 26, 40], target: [78, -6, -6] },
-  // s = 2.5 — traverse towards the industrial site
-  { pos: [118, 11, 46], target: [140, 5, -4] },
-  // s = 3.0 — CIVIL: frame, crane and footings
-  { pos: [151, 8, 50], target: [157, 1, -4] },
-  // s = 3.5 — approach the glazed facade
-  { pos: [226, 4, 34], target: [233, 3, -4] },
-  // s = 4.0 — INTERIORS: inside, looking to the meeting room
-  { pos: [233, 2.4, 2], target: [241, 0.4, -14] },
+  { pos: [24, 120, 6], target: [20, 0, 6] },
+  { pos: [42, 96, 30], target: [16, 0, 10] },
+  { pos: [56, 62, 64], target: [6, 6, 12] },
+  { pos: [14, 58, 92], target: [2, 6, 16] },
+  { pos: [66, 78, 122], target: [2, 20, 14] },
+  { pos: [6, 42, 96], target: [0, 8, 18] },
+  { pos: [-58, 40, 86], target: [-6, 6, 20] },
+  { pos: [13, 10.8, 32], target: [13, 9.6, 2] },
+  { pos: [19.2, 10.05, -6.4], target: [2, 9.4, 6] },
+  { pos: [12, 9.5, 36], target: [2, 11, 4] },
+  { pos: [-44, 5, 74], target: [-1, 3, 16] },
 ];
 
-/** Environment mood per panel (opening shares the telecom mood). */
+/** Environment mood per stage — software canvas → site → finished space. */
 export const atmospheres: {
   background: string;
   fog: [near: number, far: number];
@@ -100,23 +135,28 @@ export const atmospheres: {
   accent: string;
   exposure: number;
 }[] = [
-  { background: "#0d1a2c", fog: [40, 150], sun: "#dfe7f2", sunIntensity: 2.1, sky: "#5b7394", ground: "#1a1f26", hemiIntensity: 0.55, accent: "#af8958", exposure: 1.0 },
-  { background: "#11213a", fog: [40, 150], sun: "#e8eef6", sunIntensity: 2.4, sky: "#6a84a8", ground: "#1d2229", hemiIntensity: 0.6, accent: "#af8958", exposure: 1.02 },
-  { background: "#123526", fog: [45, 170], sun: "#ffe4bf", sunIntensity: 3.0, sky: "#8fb0a0", ground: "#2a2a1f", hemiIntensity: 0.7, accent: "#d8c398", exposure: 1.05 },
-  { background: "#1b1c1e", fog: [38, 150], sun: "#f1ece4", sunIntensity: 2.5, sky: "#7d8288", ground: "#222224", hemiIntensity: 0.6, accent: "#af8958", exposure: 1.0 },
-  { background: "#2a1218", fog: [30, 120], sun: "#ffdcb8", sunIntensity: 1.6, sky: "#c9a99a", ground: "#2a1a18", hemiIntensity: 0.55, accent: "#d8c398", exposure: 1.08 },
+  // Blueprint: deep navy design canvas
+  { background: "#0b1626", fog: [140, 360], sun: "#dfe7f2", sunIntensity: 0.6, sky: "#3b5272", ground: "#0d1520", hemiIntensity: 0.35, accent: "#c9a46e", exposure: 0.95 },
+  // Design: navy, model glowing gold
+  { background: "#0e1c30", fog: [140, 360], sun: "#dfe7f2", sunIntensity: 0.9, sky: "#4a6283", ground: "#111a26", hemiIntensity: 0.45, accent: "#c9a46e", exposure: 1.0 },
+  // Plan: cooler, technical
+  { background: "#102238", fog: [140, 360], sun: "#e3eaf3", sunIntensity: 1.2, sky: "#5b7394", ground: "#151d27", hemiIntensity: 0.5, accent: "#af8958", exposure: 1.0 },
+  // Build: overcast daylight on site
+  { background: "#3a4656", fog: [120, 360], sun: "#fff1dc", sunIntensity: 2.6, sky: "#a9b4c2", ground: "#3a3632", hemiIntensity: 0.85, accent: "#af8958", exposure: 1.05 },
+  // Interior: warm hall, blue-hour city through the glass
+  { background: "#16294a", fog: [90, 320], sun: "#9fb6d8", sunIntensity: 0.35, sky: "#b8b2a8", ground: "#4a3a2e", hemiIntensity: 1.05, accent: "#d8c398", exposure: 1.18 },
+  // Handover: blue-hour dusk, warm architectural lighting
+  { background: "#1a2f50", fog: [90, 300], sun: "#9fb6d8", sunIntensity: 0.55, sky: "#4f6f9e", ground: "#2a2622", hemiIntensity: 0.75, accent: "#d8c398", exposure: 1.1 },
 ];
-
-export const chapterKeys: VerticalKey[] = ["telecom", "solar", "civil", "interiors"];
 
 export type Quality = "high" | "medium" | "low";
 
-export const qualitySettings: Record<Quality, { dpr: [number, number]; shadowMap: number; solarRows: number; envResolution: number }> = {
-  high: { dpr: [1, 1.75], shadowMap: 2048, solarRows: 9, envResolution: 256 },
-  medium: { dpr: [1, 1.25], shadowMap: 1024, solarRows: 6, envResolution: 128 },
+export const qualitySettings: Record<Quality, { dpr: [number, number]; shadowMap: number; envResolution: number }> = {
+  high: { dpr: [1, 1.75], shadowMap: 2048, envResolution: 256 },
+  medium: { dpr: [1, 1.25], shadowMap: 1024, envResolution: 128 },
   // Phones: high-DPI screens, smaller GPUs — cap pixels, keep shadows modest.
-  low: { dpr: [1, 1.5], shadowMap: 1024, solarRows: 6, envResolution: 64 },
+  low: { dpr: [1, 1.5], shadowMap: 1024, envResolution: 64 },
 };
 
 /** Pointer parallax applied to the camera (world units). */
-export const POINTER_PARALLAX = { x: 1.6, y: 0.8 };
+export const POINTER_PARALLAX = { x: 1.2, y: 0.6 };

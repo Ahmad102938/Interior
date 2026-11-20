@@ -130,3 +130,60 @@
     transform: none;
   }
 }
+
+@keyframes callout-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Image reveal: a soft wipe as images enter the viewport (no JS; reduced-motion safe). */
+@keyframes image-reveal {
+  from {
+    clip-path: inset(0 0 18% 0);
+    transform: scale(1.06);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal-image] {
+      animation: image-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    /* Method timeline: the gold spine fills as the section scrolls through. */
+    [data-spine-fill] {
+      transform-origin: top;
+      animation: spine-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 20% exit 60%;
+    }
+  }
+}
+@keyframes spine-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Detail panels that swap content (capability explorer, execution stages) */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@utility animate-panel-in {
+  animation: panel-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}

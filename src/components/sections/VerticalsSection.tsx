@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { verticals, serviceHref } from "@/data/verticals";
+import { verticals, serviceHref, verticalImage } from "@/data/verticals";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MediaSlot } from "@/components/ui/MediaSlot";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
-import { posterFor } from "@/components/experience/ExperienceFallback";
 import { cn } from "@/lib/utils";
 
 /**
@@ -31,7 +30,7 @@ export function VerticalsSection() {
             return (
               <article key={v.key} data-reveal className={cn("grid overflow-hidden text-white lg:grid-cols-12", c.bg)}>
                 <MediaSlot
-                  src={posterFor(i + 1)}
+                  src={verticalImage(v)}
                   alt={`${v.title} — illustrative visualisation`}
                   slot={v.imageSlots[0]}
                   caption="Illustrative visualisation"

@@ -4,7 +4,7 @@ import { verticals } from "@/data/verticals";
 import { projects } from "@/data/projects";
 import { publishable } from "@/lib/content";
 
-const routes = ["", "/about", "/industries", "/services", "/projects", "/capabilities", "/quality-safety-compliance", "/clients-partners", "/team", "/resources", "/careers", "/contact", "/request-a-quote", "/privacy-policy", "/terms"];
+const routes = ["", "/about", "/industries", "/services", "/projects", "/capabilities", "/quality-safety-compliance", "/clients-partners", "/resources", "/careers", "/contact", "/request-a-quote", "/privacy-policy", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

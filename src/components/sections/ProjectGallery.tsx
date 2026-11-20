@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import type { Project, ProjectCategory } from "@/data/projects";
 import { projectCategories } from "@/data/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
@@ -8,7 +10,11 @@ import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 
 /** Editorial portfolio: one dominant featured project + varied supporting grid, with filters. */
-export function ProjectGallery({ projects, limit }: { projects: Project[]; limit?: number }) {
+/**
+ * `viewAllHref` closes the supporting grid with a "View all" tile, so a
+ * limited gallery always ends on a full row (featured + 5 + tile).
+ */
+export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Project[]; limit?: number; viewAllHref?: string }) {
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
   const available = projectCategories.filter((c) => projects.some((p) => p.category === c.key));
   const list = useMemo(() => {
@@ -34,11 +40,12 @@ export function ProjectGallery({ projects, limit }: { projects: Project[]; limit
         {featured ? (
           <div className="grid gap-6">
             <ProjectCard project={featured} featured />
-            {rest.length > 0 && (
+            {(rest.length > 0 || viewAllHref) && (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {rest.map((p) => (
                   <ProjectCard key={p.slug} project={p} />
                 ))}
+                {viewAllHref && <ViewAllTile href={viewAllHref} />}
               </div>
             )}
           </div>
@@ -47,6 +54,37 @@ export function ProjectGallery({ projects, limit }: { projects: Project[]; limit
         )}
       </div>
     </div>
+  );
+}
+
+function ViewAllTile({ href }: { href: string }) {
+  return (
+    <Link
+      href={href}
+      className="group relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-navy p-8 text-white"
+    >
+      <span
+        aria-hidden
+        className="absolute inset-0 -z-10 opacity-[0.07]"
+        style={{
+          backgroundImage: "linear-gradient(#d8c398 1px, transparent 1px), linear-gradient(90deg, #d8c398 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+      />
+      <span aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-0 bg-maroon transition-[height] duration-700 ease-(--ease-premium) group-hover:h-full" />
+      <p className="eyebrow text-gold-pale">Portfolio</p>
+      <div>
+        <p className="display text-[2.25rem] leading-[1.05]">
+          View all
+          <br />
+          <em className="font-normal text-gold-pale">projects</em>
+        </p>
+        <p className="mt-3 text-sm text-white/60">Telecom, solar, civil and interiors</p>
+      </div>
+      <span className="grid size-14 place-items-center self-end rounded-full border border-gold-pale/50 transition-colors duration-500 group-hover:border-white group-hover:bg-white group-hover:text-maroon">
+        <ArrowUpRight aria-hidden className="size-5 transition-transform duration-500 group-hover:rotate-45" />
+      </span>
+    </Link>
   );
 }
 

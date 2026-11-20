@@ -164,3 +164,5 @@ export const verticals: Vertical[] = [
 export const verticalBySlug = (slug: string) => verticals.find((v) => v.slug === slug);
 export const verticalByKey = (key: VerticalKey) => verticals.find((v) => v.key === key)!;
 export const serviceHref = (v: Pick<Vertical, "slug">) => `/services/${v.slug}`;
+/** Interim illustrative render per vertical — replace with approved project photography. */
+export const verticalImage = (v: Pick<Vertical, "key">) => `/images/verticals/${v.key}.jpg`;

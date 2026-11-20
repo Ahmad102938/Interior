@@ -11,7 +11,7 @@ const enquiryRoutes = [
   { title: "General enquiries", copy: "Anything else — we will route it to the right team." },
 ];
 
-export function ContactSection({ index = "09", headingLevel = "h2" }: { index?: string; headingLevel?: "h1" | "h2" }) {
+export function ContactSection({ index = "08", headingLevel = "h2" }: { index?: string; headingLevel?: "h1" | "h2" }) {
   const rows = [contact.office, contact.phone, contact.email, contact.regional, contact.website].filter((c) => isPublishable(c.status));
   return (
     <section id="contact" data-nav-theme="dark" className="section-y bg-navy text-white">

@@ -34,7 +34,6 @@ export const footerQuickLinks = [
   { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Capabilities", href: "/capabilities" },
-  { label: "Team", href: "/team" },
   { label: "Clients & Partners", href: "/clients-partners" },
   { label: "Resources", href: "/resources" },
   { label: "Contact Us", href: "/contact" },

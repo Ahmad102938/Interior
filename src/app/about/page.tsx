@@ -1,29 +1,44 @@
 import type { Metadata } from "next";
-import { company } from "@/data/company";
-import { PageHero } from "@/components/ui/PageHero";
-import { HeritageSection } from "@/components/sections/HeritageSection";
-import { TeamSection } from "@/components/sections/TeamSection";
-import { CtaBanner } from "@/components/sections/CtaBanner";
+import { AboutIntro } from "@/components/about/AboutIntro";
+import { AboutStory } from "@/components/about/AboutStory";
+import { VisionMission } from "@/components/about/VisionMission";
+import { ValuesLedger } from "@/components/about/ValuesLedger";
+import { VerticalsMatrix } from "@/components/about/VerticalsMatrix";
+import { OperatingSystem } from "@/components/about/OperatingSystem";
+import { MethodAndPeople } from "@/components/about/MethodAndPeople";
+import { ResponsibleExecution } from "@/components/about/ResponsibleExecution";
+import { AboutJourney } from "@/components/about/AboutJourney";
+import { AboutCta } from "@/components/about/AboutCta";
+
+const title = "About ADIDEV | Integrated Engineering & Infrastructure Solutions";
+const description =
+  "Discover ADIDEV's integrated capabilities across telecom infrastructure, solar and renewable energy, civil construction, and commercial interior fit-out.";
 
 export const metadata: Metadata = {
-  title: "About Adidev",
-  description: company.overview,
+  title: { absolute: title },
+  description,
   alternates: { canonical: "/about" },
+  openGraph: { title, description, url: "/about", type: "website" },
 };
 
+/**
+ * About — the company story. Owns: overview, vision & mission, values,
+ * organisation and heritage. Services, capabilities, quality practice and
+ * industries are summarised here and linked to their own pages.
+ */
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        eyebrow="About Adidev"
-        title="Engineering partners"
-        accent="for dependable delivery."
-        intro={company.howWeWork}
-        crumbs={[{ label: "Home", href: "/" }, { label: "About" }]}
-      />
-      <HeritageSection />
-      <TeamSection index="02" />
-      <CtaBanner />
+      <AboutIntro />
+      <AboutStory />
+      <VisionMission />
+      <ValuesLedger />
+      <VerticalsMatrix />
+      <OperatingSystem />
+      <MethodAndPeople />
+      <ResponsibleExecution />
+      <AboutJourney />
+      <AboutCta />
     </>
   );
 }

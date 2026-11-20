@@ -172,3 +172,178 @@ export function stone(repeat = 1) {
     ctx.globalAlpha = 1;
   }, repeat);
 }
+
+/** Concrete block masonry, stretcher bond, with mortar joints. */
+export function blocks(repeat = 1) {
+  return make(`blocks:${repeat}`, 512, (ctx, s) => {
+    const r = rng(91);
+    ctx.fillStyle = "#b9b4aa"; // mortar
+    ctx.fillRect(0, 0, s, s);
+    const rows = 8;
+    const bh = s / rows;
+    const bw = s / 2;
+    for (let i = 0; i < rows; i++) {
+      const off = i % 2 ? bw / 2 : 0;
+      for (let j = -1; j < 3; j++) {
+        const x = j * bw + off;
+        const t = 140 + Math.floor(r() * 26);
+        ctx.fillStyle = `rgb(${t},${t - 4},${t - 12})`;
+        ctx.fillRect(x + 3, i * bh + 3, bw - 6, bh - 6);
+        for (let k = 0; k < 60; k++) {
+          ctx.globalAlpha = 0.15;
+          ctx.fillStyle = r() > 0.5 ? "#6f6a62" : "#d1cbc0";
+          ctx.fillRect(x + 3 + r() * (bw - 6), i * bh + 3 + r() * (bh - 6), 2, 2);
+        }
+        ctx.globalAlpha = 1;
+      }
+    }
+  }, repeat);
+}
+
+/**
+ * Board-formed architectural concrete: 2.4 m × 1.2 m panels, tie holes,
+ * soft tonal variation. One texture tile = 4.8 m × 4.8 m of facade.
+ */
+export function concretePanels() {
+  return make("concrete-panels", 1024, (ctx, s) => {
+    const r = rng(1234);
+    ctx.fillStyle = "#c9c4bb";
+    ctx.fillRect(0, 0, s, s);
+    const cols = 2;
+    const rows = 4;
+    const pw = s / cols;
+    const ph = s / rows;
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        const t = 188 + Math.floor(r() * 22) - 11;
+        ctx.fillStyle = `rgb(${t},${t - 4},${t - 10})`;
+        ctx.fillRect(i * pw, j * ph, pw, ph);
+        // Mottling
+        for (let k = 0; k < 220; k++) {
+          ctx.globalAlpha = 0.05 + r() * 0.06;
+          ctx.fillStyle = r() > 0.5 ? "#8e897f" : "#e2ded6";
+          const rad = 2 + r() * 14;
+          ctx.beginPath();
+          ctx.arc(i * pw + r() * pw, j * ph + r() * ph, rad, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // Vertical streaks (weathering)
+        for (let k = 0; k < 6; k++) {
+          ctx.globalAlpha = 0.05;
+          ctx.fillStyle = "#7d786f";
+          ctx.fillRect(i * pw + r() * pw, j * ph, 1 + r() * 3, ph * (0.4 + r() * 0.6));
+        }
+        ctx.globalAlpha = 1;
+        // Tie holes: 3 × 2 per panel
+        for (let a = 0; a < 3; a++) {
+          for (let b = 0; b < 2; b++) {
+            const x = i * pw + pw * (0.18 + a * 0.32);
+            const y = j * ph + ph * (0.28 + b * 0.44);
+            ctx.fillStyle = "#77736b";
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#a9a49a";
+            ctx.beginPath();
+            ctx.arc(x - 1, y - 1, 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        // Panel joints
+        ctx.fillStyle = "rgba(90,86,80,0.3)";
+        ctx.fillRect(i * pw, j * ph, pw, 2);
+        ctx.fillRect(i * pw, j * ph, 2, ph);
+      }
+    }
+  });
+}
+
+/** Large-format stone paving, 1.2 m modules, dark joints. One tile = 4.8 m. */
+export function paving() {
+  return make("paving", 512, (ctx, s) => {
+    const r = rng(77);
+    const n = 4;
+    const c = s / n;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const t = 96 + Math.floor(r() * 22);
+        ctx.fillStyle = `rgb(${t},${t + 2},${t + 6})`;
+        ctx.fillRect(i * c, j * c, c, c);
+        for (let k = 0; k < 120; k++) {
+          ctx.globalAlpha = 0.08;
+          ctx.fillStyle = r() > 0.5 ? "#2e3134" : "#8b8f94";
+          ctx.fillRect(i * c + r() * c, j * c + r() * c, 2, 2);
+        }
+        ctx.globalAlpha = 1;
+      }
+    }
+    ctx.strokeStyle = "#1e2124";
+    ctx.lineWidth = 3;
+    for (let i = 0; i <= n; i++) {
+      ctx.beginPath();
+      ctx.moveTo(i * c, 0);
+      ctx.lineTo(i * c, s);
+      ctx.moveTo(0, i * c);
+      ctx.lineTo(s, i * c);
+      ctx.stroke();
+    }
+  });
+}
+
+/** Distant office windows at night for the city backdrop. */
+export function cityWindows() {
+  return make("city-windows", 256, (ctx, s) => {
+    const r = rng(5);
+    ctx.fillStyle = "#0d1522";
+    ctx.fillRect(0, 0, s, s);
+    const cols = 16;
+    const rows = 32;
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        if (r() < 0.38) {
+          ctx.fillStyle = r() < 0.7 ? "#f2c98a" : "#c9dcf2";
+          ctx.globalAlpha = 0.5 + r() * 0.5;
+          ctx.fillRect(i * (s / cols) + 3, j * (s / rows) + 2, s / cols - 6, s / rows - 4);
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+  });
+}
+
+/** Commercial carpet tiles: 0.5 m tiles, quarter-turned, flecked. One texture = 2 m. */
+export function carpet() {
+  return make("carpet", 512, (ctx, s) => {
+    const r = rng(303);
+    const n = 4;
+    const c = s / n;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const t = 92 + Math.floor(r() * 12);
+        ctx.fillStyle = `rgb(${t},${t + 1},${t + 4})`;
+        ctx.fillRect(i * c, j * c, c, c);
+        // Directional pile stripes, quarter-turned per tile
+        ctx.globalAlpha = 0.12;
+        ctx.strokeStyle = "#8a8f96";
+        for (let k = 0; k < 18; k++) {
+          ctx.beginPath();
+          const o = (k / 18) * c;
+          if ((i + j) % 2) {
+            ctx.moveTo(i * c + o, j * c);
+            ctx.lineTo(i * c + o, j * c + c);
+          } else {
+            ctx.moveTo(i * c, j * c + o);
+            ctx.lineTo(i * c + c, j * c + o);
+          }
+          ctx.stroke();
+        }
+        for (let k = 0; k < 260; k++) {
+          ctx.globalAlpha = 0.18;
+          ctx.fillStyle = r() > 0.5 ? "#2c2f33" : "#9aa0a8";
+          ctx.fillRect(i * c + r() * c, j * c + r() * c, 1.5, 1.5);
+        }
+        ctx.globalAlpha = 1;
+      }
+    }
+  });
+}
