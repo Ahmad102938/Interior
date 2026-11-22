@@ -34,6 +34,10 @@ function detectMode(): Mode {
   // Respect Data Saver on metered connections.
   const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
   if (conn?.saveData) return "static";
+  // Entry-level phones (≤2 GB RAM or ≤2 cores) get the designed static story
+  // instead of a scene they would struggle to run smoothly.
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  if ((nav.deviceMemory ?? 8) <= 2 || (nav.hardwareConcurrency ?? 8) <= 2) return "static";
   try {
     const c = document.createElement("canvas");
     if (!(c.getContext("webgl2") || c.getContext("webgl"))) return "static";
@@ -104,6 +108,10 @@ export function CinematicExperience() {
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(true);
   const [ready, setReady] = useState(false);
+  // The WebGL scene starts once the page has loaded and the main thread is
+  // idle, so it never competes with first paint or hydration. The blueprint
+  // stand-in covers the wait.
+  const [boot, setBoot] = useState(false);
 
   const section = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
@@ -126,6 +134,24 @@ export function CinematicExperience() {
   }, []);
 
   const pinned = mode === "cinematic" || mode === "pending";
+
+  useEffect(() => {
+    if (mode !== "cinematic") return;
+    let idle = 0;
+    let timer = 0;
+    const start = () => {
+      const ric = window.requestIdleCallback;
+      if (ric) idle = ric(() => setBoot(true), { timeout: 1200 });
+      else timer = window.setTimeout(() => setBoot(true), 200);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      if (idle) window.cancelIdleCallback(idle);
+      clearTimeout(timer);
+    };
+  }, [mode]);
 
   // Master progress: scroll → target; ticker → damped value → every consumer.
   useGSAP(
@@ -266,7 +292,7 @@ export function CinematicExperience() {
                 <Image src={posterFor(active)} alt="" fill sizes="100vw" className="object-cover object-[66%_50%] md:object-center" />
               )}
             </div>
-            {mode === "cinematic" && (
+            {mode === "cinematic" && boot && (
               <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-100" : "opacity-0")}>
                 <CanvasBoundary onError={onCanvasError}>
                   <ExperienceCanvas progress={ctrl} quality={quality} layout={layout} active={inView} onReady={onReady} onContextLost={onCanvasError} />
@@ -306,7 +332,7 @@ export function CinematicExperience() {
             <div
               aria-hidden
               className={cn(
-                "absolute right-6 bottom-28 hidden items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/55 transition-opacity duration-700 md:flex lg:right-14",
+                "absolute right-6 bottom-[calc(7rem+var(--safe-bottom))] hidden items-center gap-3 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white/55 transition-opacity duration-700 md:flex lg:right-14",
                 active === 0 ? "opacity-100" : "opacity-0",
               )}
             >
@@ -319,7 +345,7 @@ export function CinematicExperience() {
             <div
               aria-hidden
               className={cn(
-                "absolute right-[1.375rem] bottom-[max(2.75rem,env(safe-area-inset-bottom))] flex flex-col items-center gap-3 transition-opacity duration-700 md:hidden",
+                "absolute right-[1.375rem] bottom-[calc(2.75rem+var(--safe-bottom))] flex flex-col items-center gap-3 transition-opacity duration-700 md:hidden",
                 active === 0 ? "opacity-100" : "opacity-0",
               )}
             >

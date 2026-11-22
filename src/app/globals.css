@@ -9,6 +9,8 @@
   --color-navy-deep: #0e1c30;
   --color-gold: #af8958;
   --color-gold-pale: #d8c398;
+  /* Gold for small text on ivory/white — same hue, deep enough for WCAG AA (4.6:1). */
+  --color-gold-ink: #86663c;
   --color-ivory: #f7efe2;
   --color-ivory-soft: #fbf7f0;
   --color-charcoal: #292b2d;
@@ -20,6 +22,12 @@
   --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
 
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Space taken at the bottom of the screen by browser chrome or the home
+   indicator. Bottom-anchored UI adds this so nothing hides behind Safari's toolbar. */
+:root {
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--vv-bottom, 0px));
 }
 
 @layer base {
@@ -49,12 +57,15 @@
   width: 100%;
   max-width: 1320px;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  --gutter: 1.25rem;
+  /* Edge-to-edge viewport: keep clear of the notch in landscape */
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
   @media (width >= 48rem) {
-    padding-inline: 2.5rem;
+    --gutter: 2.5rem;
   }
   @media (width >= 80rem) {
-    padding-inline: 3.5rem;
+    --gutter: 3.5rem;
   }
 }
 
@@ -75,6 +86,9 @@
 
 @utility section-y {
   padding-block: 5rem;
+  @media (width >= 48rem) {
+    padding-block: 6rem;
+  }
   @media (width >= 64rem) {
     padding-block: 8rem;
   }

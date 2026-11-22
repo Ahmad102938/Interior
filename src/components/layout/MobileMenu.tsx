@@ -114,7 +114,7 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
             </div>
 
             <div
-              className="container-page grid flex-1 content-start gap-10 py-8 md:grid-cols-[1.3fr_1fr] md:gap-16 md:py-12"
+              className="container-page grid flex-1 content-start gap-10 pt-8 pb-[calc(2rem+var(--safe-bottom))] md:grid-cols-[1.3fr_1fr] md:gap-16 md:pt-12 md:pb-[calc(3rem+var(--safe-bottom))]"
               onClick={(e) => {
                 if ((e.target as HTMLElement).closest("a")) close(false);
               }}
@@ -133,7 +133,7 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
                             active ? "text-white" : "text-ivory/85 hover:text-white",
                           )}
                         >
-                          <span className={cn("w-6 text-[0.6875rem] font-semibold tabular-nums tracking-[0.1em]", active ? "text-gold" : "text-white/35")}>
+                          <span className={cn("w-6 text-[0.6875rem] font-semibold tabular-nums tracking-[0.1em]", active ? "text-gold-pale" : "text-white/35")}>
                             {String(i + 1).padStart(2, "0")}
                           </span>
                           <span className="font-display text-[1.75rem] leading-none md:text-[2.125rem]">{item.label}</span>

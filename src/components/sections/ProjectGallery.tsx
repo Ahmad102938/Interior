@@ -50,7 +50,7 @@ export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Pro
             )}
           </div>
         ) : (
-          <p className="border border-line bg-white p-8 text-slate">No published projects in this category yet.</p>
+          <p className="border border-line bg-white p-6 text-slate sm:p-8">No published projects in this category yet.</p>
         )}
       </div>
     </div>
@@ -61,7 +61,7 @@ function ViewAllTile({ href }: { href: string }) {
   return (
     <Link
       href={href}
-      className="group relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-navy p-8 text-white"
+      className="group relative isolate flex min-h-[22rem] flex-col justify-between overflow-hidden bg-navy p-6 text-white sm:p-8"
     >
       <span
         aria-hidden

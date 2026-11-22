@@ -94,7 +94,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
             ))}
           </div>
           {related.length > 0 && (
-            <div className="mt-20">
+            <div className="mt-14 lg:mt-20">
               <h2 className="display text-4xl text-navy">Related projects</h2>
               <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {related.map((p) => (

@@ -97,6 +97,36 @@ export function pvModules(cols = 2, rows = 6) {
   });
 }
 
+/**
+ * One solar module as seen from a distance: silver frame, blue cells, light
+ * busbars. Brighter than `pvModules` so arrays still read as solar at the
+ * scale of the neighbourhood and in dusk light.
+ */
+export function solarModule() {
+  return make("solar-module", 256, (ctx, s) => {
+    ctx.fillStyle = "#cfd5dc";
+    ctx.fillRect(0, 0, s, s);
+    const pad = 8;
+    const cols = 6;
+    const rows = 10;
+    const w = (s - pad * 2) / cols;
+    const h = (s - pad * 2) / rows;
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        const x = pad + i * w;
+        const y = pad + j * h;
+        const g = ctx.createLinearGradient(x, y, x + w, y + h);
+        g.addColorStop(0, "#2d5f9e");
+        g.addColorStop(1, "#173a68");
+        ctx.fillStyle = g;
+        ctx.fillRect(x + 1, y + 1, w - 2, h - 2);
+      }
+    }
+    ctx.fillStyle = "rgba(205,215,230,0.45)";
+    for (let i = 1; i < 3; i++) ctx.fillRect(pad + (i * (s - pad * 2)) / 3 - 1, pad, 2, s - pad * 2);
+  });
+}
+
 /** Warm oak planks. */
 export function wood(repeat = 1) {
   return make(`wood:${repeat}`, 512, (ctx, s) => {

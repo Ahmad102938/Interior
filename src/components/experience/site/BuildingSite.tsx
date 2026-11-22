@@ -48,9 +48,9 @@ import {
   tagsAt,
   volCenter,
   volSize,
-  worldBox,
   type V3,
 } from "./building";
+import { worldBox } from "./geometry";
 import { Silhouette, Worker } from "./Worker";
 import { INTERIOR_LIGHTS } from "./InteriorHall";
 

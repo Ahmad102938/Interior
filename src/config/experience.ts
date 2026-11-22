@@ -71,6 +71,14 @@ export const stageTimeline = {
   landscape: { in: [3.8, 4.2] },
   sky: { in: [3.6, 4.15] },
   lights: { in: [3.85, 4.25] },
+  // Telecom + solar alongside the building: drawn in Design, set out in Plan,
+  // built through Build (the Build hold is s ∈ [2.79, 3.21]), live at dusk.
+  tracesDraw: { in: [0.3, 0.95], out: [3.05, 3.4] },
+  tracesSetOut: { in: [1.55, 2.0], out: [2.5, 2.8] },
+  tower: { footing: [2.28, 2.42], rise: [2.36, 3.08], fitOut: [3.0, 3.24], live: [3.2, 3.36] },
+  solarFarm: { piles: [2.36, 2.6], rails: [2.52, 2.78], modules: [2.7, 3.22] },
+  carport: { frame: [2.46, 2.7], modules: [2.74, 3.08], chargers: [2.98, 3.12] },
+  roofSolar: { install: [2.62, 3.4] },
 } as const;
 
 type V3 = [number, number, number];

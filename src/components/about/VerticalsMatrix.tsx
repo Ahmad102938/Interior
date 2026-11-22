@@ -61,7 +61,7 @@ export function VerticalsMatrix() {
         </ul>
 
         {/* Industries served — sectors, not additional service lines */}
-        <div className="mt-16 border-t border-line pt-10" data-reveal>
+        <div className="mt-12 border-t border-line pt-10 lg:mt-16" data-reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <h3 className="eyebrow text-navy">Industries we serve</h3>
@@ -83,7 +83,8 @@ export function VerticalsMatrix() {
             {industryMap.map((ind) => (
               <li key={ind.name} className="flex items-center justify-between gap-4 bg-white px-5 py-4">
                 <span className="text-[0.9375rem] font-medium text-navy">{ind.name}</span>
-                <span className="flex gap-1.5" aria-label={`Drawn from: ${ind.verticals.map((k) => verticals.find((v) => v.key === k)!.shortTitle).join(", ")}`}>
+                <span className="flex gap-1.5">
+                  <span className="sr-only">Drawn from: {ind.verticals.map((k) => verticals.find((v) => v.key === k)!.shortTitle).join(", ")}</span>
                   {ind.verticals.map((k) => (
                     <span key={k} aria-hidden title={verticals.find((v) => v.key === k)!.title} className={cn("size-2 rounded-full", verticalClasses[k].bg)} />
                   ))}

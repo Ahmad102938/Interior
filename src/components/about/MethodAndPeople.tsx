@@ -67,7 +67,7 @@ export function MethodAndPeople() {
                 </span>
                 <h3 className={cn("display text-[2rem] transition-colors duration-500", active === i ? "text-navy" : "text-navy/60")}>{m.title}</h3>
                 <p className="mt-2 max-w-lg text-[0.9375rem] leading-relaxed text-slate">{m.detail}</p>
-                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-gold">
+                <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-gold-ink">
                   Led by {m.teams.map((t) => functions[t].name.toLowerCase()).join(" · ")}
                 </p>
               </li>

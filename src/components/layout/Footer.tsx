@@ -50,7 +50,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/15">
-        <div className="container-page flex flex-col gap-3 py-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-3 pt-6 pb-[calc(1.5rem+var(--safe-bottom))] text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
           <p>© <CopyrightYear /> Adidev. All Rights Reserved.</p>
           <p className="flex gap-5">
             <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>

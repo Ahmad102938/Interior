@@ -22,7 +22,7 @@ const stageBg: Record<string, string> = {
 export function ExperienceFallback({ className }: { className?: string }) {
   return (
     <section aria-label="From blueprint to building" data-nav-theme="dark" className={cn("bg-navy-deep", className)}>
-      <div data-nav-theme="overlay" className="relative flex min-h-svh items-end overflow-hidden pt-28 pb-14 md:items-center">
+      <div data-nav-theme="overlay" className="relative flex min-h-svh items-end overflow-hidden pt-28 pb-[calc(3.5rem+var(--safe-bottom))] md:items-center">
         <Image src={posterFor(0)} alt="" fill priority sizes="100vw" className="object-cover object-[70%_50%]" />
         <div aria-hidden className="absolute inset-0 bg-linear-to-t from-navy-deep via-navy-deep/70 to-navy-deep/20 md:bg-linear-to-r md:from-navy-deep/95 md:via-navy-deep/70 md:to-transparent" />
         <div className="container-page relative">

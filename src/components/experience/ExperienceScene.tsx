@@ -6,7 +6,7 @@
  * immutability rules don't model this, so they are disabled for this file only.
  */
 /* eslint-disable react-hooks/immutability */
-import { useEffect, useMemo, useRef } from "react";
+import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
 import {
@@ -21,6 +21,7 @@ import {
   type HemisphereLight,
   type Material,
   type Mesh,
+  type Object3D,
   type PerspectiveCamera,
   type Texture,
 } from "three";
@@ -35,6 +36,7 @@ import { DesignLayer } from "./site/DesignLayer";
 import { ExplodedFloors } from "./site/ExplodedFloors";
 import { ConstructionSite } from "./site/ConstructionSite";
 import { InteriorHall } from "./site/InteriorHall";
+import { VerticalTraces } from "./site/VerticalTraces";
 
 const SUN_POS = new Vector3(-40, 70, 50);
 
@@ -66,27 +68,47 @@ function useCanvasGrid() {
 const WARM_STOPS = Array.from({ length: 21 }, (_, i) => i / 20);
 
 /**
- * Hidden warm-up before the canvas is revealed. The scene silently renders the
- * whole story (blueprint → handover), one stop per frame, so every shader,
- * texture upload, shadow program, reflection target, blur pass and post effect
- * is created up front. Without it, three.js does that work the first time each
- * stage appears — a visible hitch mid-scroll. The HTML story is untouched.
+ * Hidden warm-up before the canvas is revealed. Without it, three.js builds
+ * each shader program the first time its object appears — a visible hitch
+ * mid-scroll.
+ *
+ * 1. Every object is made visible for one `compileAsync` pass, so all programs
+ *    (including those of objects off-camera or hidden until later stages) are
+ *    built in a single sweep; where KHR_parallel_shader_compile exists the
+ *    driver compiles them off the main thread.
+ * 2. The scene then silently renders the whole story, one stop per frame, so
+ *    texture uploads, shadow programs, reflection targets and post effects are
+ *    created up front too. Programs are cached by now, so these are ordinary
+ *    frames rather than long compile tasks. The HTML story is untouched.
  */
 function Warmup({ progress, onReady }: { progress: React.RefObject<ProgressController>; onReady: () => void }) {
-  const step = useRef(-1);
+  const step = useRef(-2);
   useFrame(({ gl, scene, camera }) => {
     const i = step.current;
-    // Compile everything the previous stop made visible — including objects
-    // outside the camera frustum, which a plain render would cull and skip.
-    if (i >= 0 && i < WARM_STOPS.length) gl.compile(scene, camera);
-    if (i === -1) {
+    if (i === -2) {
+      step.current = -3; // waiting on the compile
+      const hidden: Object3D[] = [];
       scene.traverse((o) => {
         const mat = (o as Mesh).material as Material | Material[] | undefined;
         for (const m of Array.isArray(mat) ? mat : mat ? [mat] : []) {
           for (const v of Object.values(m)) if (v && (v as Texture).isTexture) gl.initTexture(v as Texture);
         }
+        if (!o.visible) {
+          hidden.push(o);
+          o.visible = true;
+        }
       });
+      // The traversal is synchronous; visibility is restored before anything renders.
+      const compiled = gl.compileAsync(scene, camera);
+      hidden.forEach((o) => (o.visible = false));
+      const start = () => {
+        if (step.current === -3) step.current = -1;
+      };
+      compiled.then(start, start);
+      setTimeout(start, 4000); // never hold the reveal on a driver that stalls
+      return;
     }
+    if (i === -3) return;
     if (i + 1 < WARM_STOPS.length) {
       progress.current.override = WARM_STOPS[i + 1];
       step.current = i + 1;
@@ -113,6 +135,26 @@ export function ExperienceScene({
   const { scene, gl, size } = useThree();
   const camera = useThree((s) => s.camera) as PerspectiveCamera;
   const settings = qualitySettings[quality];
+
+  // The site is built one group per frame (as a transition), so creating the
+  // scene never lands as one long main-thread task. The canvas stays hidden
+  // until the warm-up after the last group, so this is invisible.
+  const groups = [
+    <Backdrop key="backdrop" progress={progressRef} />,
+    <DesignLayer key="design" progress={progressRef} />,
+    <BuildingSite key="building" progress={progressRef} />,
+    <ExplodedFloors key="floors" progress={progressRef} />,
+    <ConstructionSite key="site" progress={progressRef} />,
+    <InteriorHall key="interior" progress={progressRef} />,
+    <VerticalTraces key="traces" progress={progressRef} />,
+    <Landscape key="landscape" progress={progressRef} reflections={quality === "high"} />,
+  ];
+  const [mounted, setMounted] = useState(0);
+  useEffect(() => {
+    if (mounted >= groups.length) return;
+    const id = requestAnimationFrame(() => startTransition(() => setMounted((n) => n + 1)));
+    return () => cancelAnimationFrame(id);
+  }, [mounted, groups.length]);
 
   const sun = useRef<DirectionalLight>(null);
   const hemi = useRef<HemisphereLight>(null);
@@ -215,14 +257,8 @@ export function ExperienceScene({
       </mesh>
       <lineSegments geometry={grid} material={gridMat} />
 
-      <Backdrop progress={progressRef} />
-      <DesignLayer progress={progressRef} />
-      <BuildingSite progress={progressRef} />
-      <ExplodedFloors progress={progressRef} />
-      <ConstructionSite progress={progressRef} />
-      <InteriorHall progress={progressRef} />
-      <Landscape progress={progressRef} reflections={quality === "high"} />
-      <Warmup progress={progressRef} onReady={onReady} />
+      {groups.slice(0, mounted)}
+      {mounted === groups.length && <Warmup progress={progressRef} onReady={onReady} />}
     </>
   );
 }

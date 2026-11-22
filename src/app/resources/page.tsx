@@ -25,7 +25,7 @@ export default function ResourcesPage() {
               <details key={f.q} className="group py-2">
                 <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 text-base font-semibold text-navy [&::-webkit-details-marker]:hidden">
                   {f.q}
-                  <span aria-hidden className="font-display text-2xl text-gold transition-transform group-open:rotate-45">+</span>
+                  <span aria-hidden className="font-display text-2xl text-gold-ink transition-transform group-open:rotate-45">+</span>
                 </summary>
                 <p className="pb-5 text-sm leading-relaxed text-slate">{f.a}</p>
               </details>
@@ -33,7 +33,7 @@ export default function ResourcesPage() {
           </div>
         </div>
         {downloads.length > 0 && (
-          <div className="container-page mt-20">
+          <div className="container-page mt-14 lg:mt-20">
             <h2 className="display text-4xl text-navy">Downloads</h2>
             <ul className="mt-8 grid gap-4 md:grid-cols-2">
               {downloads.map((d) => (

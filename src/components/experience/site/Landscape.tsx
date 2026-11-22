@@ -26,7 +26,8 @@ import { sceneProgress, type ProgressController } from "@/lib/animation/scroll";
 import { getMaterials } from "../models/materials";
 import { paving } from "../models/textures";
 import { BoxInstances, useConst, type BoxItem } from "../models/primitives";
-import { benches, planters, steps, trees, uplights, worldBox, type V3 } from "./building";
+import { benches, planters, steps, trees, uplights, type V3 } from "./building";
+import { worldBox } from "./geometry";
 
 const ramp = (s: number, [a, b]: readonly [number, number]) => {
   const t = Math.min(1, Math.max(0, (s - a) / (b - a)));

@@ -20,7 +20,7 @@ export default function CapabilitiesPage() {
         intro="What Adidev can plan, coordinate, manage and execute — with in-house expertise clearly distinguished from qualified partner-supported delivery."
         crumbs={[{ label: "Home", href: "/" }, { label: "Capabilities" }]}
       />
-      <CapabilitiesSection showCta={false} />
+      <CapabilitiesSection standalone />
       <ExecutionSection />
       <CtaBanner />
     </>

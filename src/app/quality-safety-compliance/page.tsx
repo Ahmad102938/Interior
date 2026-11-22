@@ -20,7 +20,7 @@ export default function QualityPage() {
         intro="Clear practices and verified documents — only valid registrations, certifications and licences are published, each with issuer, validity and scope."
         crumbs={[{ label: "Home", href: "/" }, { label: "Quality & Safety" }]}
       />
-      <QualitySection />
+      <QualitySection standalone />
       <CtaBanner />
     </>
   );

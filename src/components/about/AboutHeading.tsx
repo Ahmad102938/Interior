@@ -29,7 +29,7 @@ export function AboutHeading({
   return (
     <header className={cn("grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10", className)} data-reveal>
       <div className="lg:col-span-7">
-        <p className={cn("eyebrow flex items-center gap-3", dark ? "text-gold-pale" : "text-gold")}>
+        <p className={cn("eyebrow flex items-center gap-3", dark ? "text-gold-pale" : "text-gold-ink")}>
           <span className="tabular-nums">{index}</span>
           <span aria-hidden className={cn("h-px w-10", dark ? "bg-gold-pale/50" : "bg-gold/60")} />
           {eyebrow}

@@ -33,7 +33,7 @@ export default function CareersPage() {
               ))}
             </ul>
             <p className="mt-8 text-sm text-slate">
-              {openings.length ? `${openings.length} current openings.` : "There are no published openings right now. Send your details below — choose “Careers” as the enquiry type and attach your resume."}
+              {openings.length ? `${openings.length} current openings.` : "There are no published openings right now. Send your details using the form — “Careers” is already selected, and you can attach your resume in step 2."}
             </p>
           </div>
           <EnquiryForm defaultType="Careers" />

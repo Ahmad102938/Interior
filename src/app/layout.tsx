@@ -39,12 +39,24 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#172C48",
+  // Draw edge to edge; bottom-anchored UI clears browser chrome via --safe-bottom (globals.css).
+  viewportFit: "cover",
 };
+
+/*
+ * Safari's floating bottom toolbar can sit over the page without shrinking
+ * 100svh. Measure how much of the small viewport the visible area actually
+ * loses at the bottom and expose it as --vv-bottom. Skipped while a field is
+ * focused (keyboard) or the page is pinch-zoomed; capped so it never swallows
+ * a panel.
+ */
+const viewportScript = `(function(){var d=document.documentElement,v=window.visualViewport,p=document.createElement("div");if(!v)return;p.setAttribute("aria-hidden","true");p.style.cssText="position:fixed;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none";function u(){var a=document.activeElement;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;if(Math.abs(v.scale-1)>0.01)return;var o=Math.round(Math.min(120,Math.max(0,p.getBoundingClientRect().height-v.height-v.offsetTop)));d.style.setProperty("--vv-bottom",o+"px")}document.body.appendChild(p);u();v.addEventListener("resize",u);addEventListener("orientationchange",u);addEventListener("pageshow",u)})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-IN" className={`${cormorant.variable} ${manrope.variable} antialiased`}>
+    <html lang="en-IN" className={`${cormorant.variable} ${manrope.variable} antialiased`} suppressHydrationWarning>
       <body className="min-h-svh">
+        <script dangerouslySetInnerHTML={{ __html: viewportScript }} />
         {/* Structured data limited to verified facts: name, website, positioning. */}
         <script
           type="application/ld+json"

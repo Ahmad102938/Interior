@@ -12,23 +12,26 @@ const blocks = [
   { ...quality.governance, Icon: Landmark, accent: "text-[#8fa6c6]", rule: "bg-navy" },
 ];
 
-export function QualitySection() {
+/** `standalone`: directly under the Quality page hero (same colour), which already carries the heading. */
+export function QualitySection({ standalone = false }: { standalone?: boolean }) {
   const certs = publishable(certifications);
   return (
-    <section id="quality" data-nav-theme="dark" className="section-y bg-charcoal text-white">
+    <section id="quality" data-nav-theme="dark" className={cn("section-y bg-charcoal text-white", standalone && "pt-0!")}>
       <div className="container-page">
-        <SectionHeading
-          index="06"
-          eyebrow="Quality, safety & governance"
-          title="Engineered with Discipline."
-          accent="Delivered with Responsibility."
-          tone="dark"
-          align="split"
-          intro="Clear practices on every site — from approved drawings and material verification to PPE, toolbox talks and documented handover."
-        />
-        <div className="mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2 lg:mt-20" data-reveal>
+        {!standalone && (
+          <SectionHeading
+            index="06"
+            eyebrow="Quality, safety & governance"
+            title="Engineered with Discipline."
+            accent="Delivered with Responsibility."
+            tone="dark"
+            align="split"
+            intro="Clear practices on every site — from approved drawings and material verification to PPE, toolbox talks and documented handover."
+          />
+        )}
+        <div className={cn("grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2", !standalone && "mt-14 lg:mt-20")} data-reveal>
           {blocks.map(({ title, items, Icon, accent, rule }) => (
-            <div key={title} className="relative bg-charcoal-light p-8 lg:p-10">
+            <div key={title} className="relative bg-charcoal-light p-6 sm:p-8 lg:p-10">
               <span aria-hidden className={cn("absolute top-0 left-0 h-0.5 w-16", rule)} />
               <Icon aria-hidden className={cn("size-6", accent)} strokeWidth={1.5} />
               <h3 className="display mt-5 text-3xl">{title}</h3>

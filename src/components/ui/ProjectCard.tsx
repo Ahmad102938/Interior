@@ -39,13 +39,13 @@ export function ProjectCard({ project, featured = false, className }: { project:
           <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-line pt-6 text-sm">
             {project.client && (
               <div>
-                <dt className="eyebrow text-gold">Client</dt>
+                <dt className="eyebrow text-gold-ink">Client</dt>
                 <dd className="mt-1.5 text-charcoal">{project.client}</dd>
               </div>
             )}
             {project.capacity && (
               <div>
-                <dt className="eyebrow text-gold">Capacity / area</dt>
+                <dt className="eyebrow text-gold-ink">Capacity / area</dt>
                 <dd className="mt-1.5 text-charcoal">{project.capacity}</dd>
               </div>
             )}

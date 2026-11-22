@@ -173,12 +173,12 @@ export function ExecutionSection() {
       className="relative bg-ivory"
       style={{ height: `calc(100svh + ${(N - 1) * STAGE_SVH}svh)` }}
     >
-      <div className="sticky top-0 flex h-svh flex-col overflow-hidden pt-[4.5rem] lg:pt-20">
+      <div className="sticky top-0 flex h-svh flex-col overflow-hidden pt-[4.5rem] pb-(--safe-bottom) lg:pt-20">
         <div className="container-page flex flex-1 flex-col justify-center gap-8 py-6 sm:gap-10 lg:gap-14 [@media(max-height:740px)]:gap-5 [@media(max-height:740px)]:py-4">
           {/* Heading */}
           <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-8">
             <div>
-              <p className="eyebrow flex items-center gap-3 text-gold">
+              <p className="eyebrow flex items-center gap-3 text-gold-ink">
                 <span className="tabular-nums">05</span>
                 <span aria-hidden className="h-px w-10 bg-gold/60" />
                 Execution framework

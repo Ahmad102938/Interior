@@ -11,10 +11,10 @@ export function EquipmentSection() {
   const items = publishable(equipment);
   if (items.length === 0) return null;
   return (
-    <div className="mt-20" data-reveal>
+    <div className="mt-14 lg:mt-20" data-reveal>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow text-gold">Equipment & technical resources</p>
+          <p className="eyebrow text-gold-ink">Equipment & technical resources</p>
           <h3 className="display mt-3 text-3xl text-navy lg:text-4xl">Resources behind the work.</h3>
         </div>
         <p className="max-w-md text-sm text-slate">Each resource is labelled as owned, leased, hired or partner-provided.</p>

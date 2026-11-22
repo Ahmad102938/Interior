@@ -29,7 +29,7 @@ export function StoryTrack({ trackRef, panelRefs, active }: Props) {
         {[null, ...storyChapters].map((c, i) => (
           <div
             key={c?.key ?? "intro"}
-            className="relative flex h-(--panel-h) w-full shrink-0 items-end pb-[max(2.5rem,env(safe-area-inset-bottom))] md:h-full md:w-screen md:items-center md:pb-0"
+            className="relative flex h-(--panel-h) w-full shrink-0 items-end pb-[calc(2.5rem+var(--safe-bottom))] md:h-full md:w-screen md:items-center md:pb-0"
             style={{ ["--panel-h" as string]: `${100 / STORY_PANELS}%` }}
           >
             <div
@@ -54,7 +54,7 @@ export function StoryTrack({ trackRef, panelRefs, active }: Props) {
 export function ChapterRail({ active, onSelect }: { active: number; onSelect: (panel: number) => void }) {
   return (
     <nav aria-label="Project stages" className="absolute inset-x-0 bottom-0 z-10 hidden md:block">
-      <div className="container-page pb-6 lg:pb-8">
+      <div className="container-page pb-[calc(1.5rem+var(--safe-bottom))] lg:pb-[calc(2rem+var(--safe-bottom))]">
         <div className="relative h-px bg-white/15">
           <div className="absolute inset-y-0 left-0 w-full origin-left bg-gold" style={{ transform: "scaleX(var(--rail-progress, 0))" }} />
         </div>

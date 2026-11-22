@@ -18,7 +18,7 @@ export function SectionHeading({ index, eyebrow, title, accent, intro, tone = "l
   return (
     <div className={cn(align === "split" && "grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end", className)}>
       <div>
-        <p className={cn("eyebrow flex items-center gap-3", dark ? "text-gold-pale" : "text-gold")}>
+        <p className={cn("eyebrow flex items-center gap-3", dark ? "text-gold-pale" : "text-gold-ink")}>
           {index && <span className="tabular-nums">{index}</span>}
           <span aria-hidden className={cn("h-px w-10", dark ? "bg-gold-pale/50" : "bg-gold/60")} />
           {eyebrow}

@@ -2,9 +2,9 @@ import type { VerticalKey } from "@/config/theme";
 import { cn } from "@/lib/utils";
 
 export const verticalClasses: Record<VerticalKey, { bg: string; text: string; accent: string; border: string; dot: string }> = {
-  telecom: { bg: "bg-navy", text: "text-navy", accent: "text-gold", border: "border-navy", dot: "bg-gold" },
+  telecom: { bg: "bg-navy", text: "text-navy", accent: "text-gold-pale", border: "border-navy", dot: "bg-gold" },
   solar: { bg: "bg-emerald", text: "text-emerald", accent: "text-gold-pale", border: "border-emerald", dot: "bg-gold-pale" },
-  civil: { bg: "bg-charcoal", text: "text-charcoal", accent: "text-gold", border: "border-charcoal", dot: "bg-gold" },
+  civil: { bg: "bg-charcoal", text: "text-charcoal", accent: "text-gold-pale", border: "border-charcoal", dot: "bg-gold" },
   interiors: { bg: "bg-maroon", text: "text-maroon", accent: "text-gold-pale", border: "border-maroon", dot: "bg-gold-pale" },
 };
 

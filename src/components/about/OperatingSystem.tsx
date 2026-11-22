@@ -43,7 +43,7 @@ export function OperatingSystem() {
           <ol className="border-t border-line">
             {disciplines.map((d, i) => (
               <li key={d} className="flex items-baseline gap-4 border-b border-line py-4">
-                <span className="font-display text-lg text-gold tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-display text-lg text-gold-ink tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-[0.9375rem] font-medium text-navy">{d}</span>
               </li>
             ))}

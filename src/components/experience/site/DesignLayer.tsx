@@ -24,7 +24,8 @@ import { STORY_PANELS, stageTimeline as T } from "@/config/experience";
 import { sceneProgress, type ProgressController } from "@/lib/animation/scroll";
 import { BoxInstances, useConst, type BoxItem } from "../models/primitives";
 import { cityWindows } from "../models/textures";
-import { LEVELS, ROOF, contextBlocks, roads, volCenter, volSize, worldBox } from "./building";
+import { LEVELS, ROOF, contextBlocks, roads, volCenter, volSize } from "./building";
+import { worldBox } from "./geometry";
 import { ramp, window01 } from "./stage";
 
 /**

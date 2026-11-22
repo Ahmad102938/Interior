@@ -64,7 +64,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
             <dl className="divide-y divide-line border-y border-line">
               {facts.map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-6 py-4 text-sm">
-                  <dt className="eyebrow text-gold">{k}</dt>
+                  <dt className="eyebrow text-gold-ink">{k}</dt>
                   <dd className="text-right text-charcoal">{v}</dd>
                 </div>
               ))}
