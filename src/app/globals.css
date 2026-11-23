@@ -201,3 +201,39 @@
   animation: panel-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   @media (prefers-reduced-motion: reduce) { animation: none; }
 }
+
+/* Horizontal process rail: fills left to right as the section scrolls through. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-rail-fill] {
+      transform-origin: left;
+      animation: rail-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 60%;
+    }
+  }
+}
+@keyframes rail-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Integrated delivery: a pulse travelling the connector (the wrapper moves, so only transform animates). */
+@keyframes flow-pulse {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

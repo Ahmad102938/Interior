@@ -1,0 +1,46 @@
+import type { Project } from "./types";
+
+/** DEVELOPMENT SAMPLES — layout placeholders only. Replace with approved case studies. */
+export const civilProjects: Project[] = [
+  {
+    id: "civ-001",
+    slug: "industrial-warehouse-peb",
+    name: "[Industrial warehouse & PEB works]",
+    location: { city: "[City]", state: "[State]" },
+    category: "industrial",
+    primaryVertical: "civil",
+    tags: ["civil"],
+    projectStatus: "completed",
+    metric: { label: "Built-up area", value: "[Verified sq ft]" },
+    summary: "[Approved introduction] RCC foundations, PEB-related civil works, flooring and external development.",
+    scope: ["RCC foundations and pedestals", "PEB-related civil works", "Roads, paving and drainage"],
+    highlights: ["[Verified execution highlight]"],
+    featuredImage: { src: "/images/verticals/civil.jpg", alt: "Sample image — steel-framed industrial shed (illustrative visualisation)", position: "55% 60%" },
+    gallery: [{ phase: "during", src: "/images/verticals/civil.jpg", alt: "Sample image — shed frame on RCC pedestals", caption: "Sample — replace with an approved execution photograph" }],
+    publicationStatus: "draft",
+  },
+  {
+    id: "civ-002",
+    slug: "commercial-building-rcc",
+    name: "[Commercial building — RCC frame]",
+    location: { city: "[City]", state: "[State]" },
+    category: "civil",
+    primaryVertical: "civil",
+    projectStatus: "ongoing",
+    summary: "[Approved introduction] Excavation, RCC foundations, columns, beams and slabs.",
+    scope: ["Excavation and earthwork", "RCC foundations, columns, beams and slabs"],
+    publicationStatus: "draft",
+  },
+  {
+    id: "civ-003",
+    slug: "facility-renovation-waterproofing",
+    name: "[Facility renovation & waterproofing]",
+    location: { city: "[City]", state: "[State]" },
+    category: "renovation",
+    primaryVertical: "civil",
+    projectStatus: "completed",
+    summary: "[Approved introduction] Repair, waterproofing and facility improvements to an operating building.",
+    scope: ["Renovation and repair", "Waterproofing and facility improvements"],
+    publicationStatus: "draft",
+  },
+];

@@ -3,9 +3,10 @@
 import { useRef, useState } from "react";
 import { Check } from "lucide-react";
 import { capabilities } from "@/data/capabilities";
+import { groupLabel } from "@/data/capabilityGroups";
 import { cn } from "@/lib/utils";
 
-const phaseOf = (i: number) => (i < 3 ? "Pre-construction" : i < 5 ? "Field execution" : "Close-out");
+const phaseOf = (i: number) => groupLabel(capabilities[i].group);
 const total = String(capabilities.length).padStart(2, "0");
 
 /**

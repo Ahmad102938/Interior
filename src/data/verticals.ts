@@ -11,12 +11,11 @@ export type Vertical = {
   summary: string;
   headline: string;
   highlights: string[];
-  services: string[];
-  process: string[];
   imageSlots: string[];
   industries: string[];
 };
 
+/** Division summaries used across the site. Full service-page content lives in data/services. */
 export const verticals: Vertical[] = [
   {
     key: "telecom",
@@ -38,18 +37,6 @@ export const verticals: Vertical[] = [
       "Fibre laying, trenching & duct works",
       "DG, battery, SMPS & power infrastructure",
     ],
-    services: [
-      "Telecom site development and site preparation.",
-      "Tower foundation and erection support.",
-      "Tower installation, upgradation, and allied works.",
-      "Fibre optic cable laying, trenching, and duct works.",
-      "Telecom equipment installation and integration coordination.",
-      "IBS / in-building telecom support, where applicable.",
-      "DG, AC, battery bank, inverter, and SMPS installation support.",
-      "Electrical and power infrastructure.",
-      "Testing, commissioning, and preventive / corrective maintenance.",
-    ],
-    process: ["Site Assessment", "Civil Readiness", "Installation", "Integration", "Testing", "Handover"],
     imageSlots: ["Telecom tower / site execution", "Fibre / trenching", "Power / equipment"],
     industries: ["Telecom & Telecommunications"],
   },
@@ -73,18 +60,6 @@ export const verticals: Vertical[] = [
       "MMS & PV module installation",
       "DC / AC electrical & inverter coordination",
     ],
-    services: [
-      "Solar project execution support.",
-      "Site clearing, preparation, levelling, and grading.",
-      "Piling, foundations, RCC, and allied civil works.",
-      "Module Mounting Structure (MMS) installation.",
-      "Solar PV module installation.",
-      "DC-side installation support.",
-      "AC-side electrical works and inverter installation coordination.",
-      "Testing, commissioning, operation, and maintenance support.",
-      "Rectification and associated site works.",
-    ],
-    process: ["Site Preparation", "Foundations", "MMS", "Module Installation", "Electrical Works", "Testing & Handover"],
     imageSlots: ["Solar farm / rooftop installation", "MMS / foundations", "PV modules / electrical"],
     industries: ["Renewable Energy"],
   },
@@ -107,18 +82,6 @@ export const verticals: Vertical[] = [
       "PEB civil works & structural steel support",
       "Roads, paving, drainage & external development",
     ],
-    services: [
-      "Site development and preparation.",
-      "Excavation, earthwork, levelling, grading, and backfilling.",
-      "RCC foundations, pedestals, columns, beams, and slabs.",
-      "Industrial sheds and warehouse construction.",
-      "PEB-related civil works and structural steel / fabrication support.",
-      "Commercial and industrial buildings.",
-      "Roads, paving, drainage, and external development.",
-      "Boundary works, renovation, repair, and maintenance.",
-      "Waterproofing and industrial / commercial facility improvements.",
-    ],
-    process: ["Requirement Study", "Drawings & BOQ", "Site Preparation", "Execution", "Quality Inspection", "Handover"],
     imageSlots: ["Civil / industrial construction", "RCC / foundations", "Industrial shed / warehouse"],
     industries: ["Industrial & Manufacturing", "Warehousing & Logistics", "Infrastructure & Real Estate"],
   },
@@ -142,20 +105,6 @@ export const verticals: Vertical[] = [
       "Ceilings, partitions, flooring & finishes",
       "Electrical, HVAC & MEP coordination",
     ],
-    services: [
-      "Requirement study, site measurement, and functional zoning.",
-      "Space planning and design coordination.",
-      "2D layouts, working drawings, elevations, and detailing.",
-      "3D visualisation, where available.",
-      "BOQ, cost estimation, and procurement coordination.",
-      "Masonry, plastering, flooring, tiling, and skirting.",
-      "False ceiling, partitions, painting, and wall finishes.",
-      "Electrical, lighting, HVAC, plumbing, and MEP coordination.",
-      "Fire and low-voltage systems coordination.",
-      "Furniture, fixtures, cabinetry, and office / retail / showroom fit-outs.",
-      "Renovation, snagging, and final handover.",
-    ],
-    process: ["Client Brief", "Space Planning", "Design", "BOQ & Procurement", "Execution", "Snagging & Handover"],
     imageSlots: ["Completed commercial interior", "Office / retail", "Site execution"],
     industries: ["Commercial & Retail"],
   },

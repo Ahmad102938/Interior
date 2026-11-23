@@ -1,26 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import type { Project, ProjectCategory } from "@/data/projects";
-import { projectCategories } from "@/data/projects";
+import { inCategory, projectCategories, type Project, type ProjectCategory } from "@/data/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 
-/** Editorial portfolio: one dominant featured project + varied supporting grid, with filters. */
 /**
- * `viewAllHref` closes the supporting grid with a "View all" tile, so a
- * limited gallery always ends on a full row (featured + 5 + tile).
+ * Home-page portfolio preview: one dominant featured project + supporting grid,
+ * with a quick category filter. `viewAllHref` closes the grid with a "View all"
+ * tile, so a limited gallery always ends on a full row (featured + 5 + tile).
+ * The full, URL-driven explorer lives on /projects.
  */
 export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Project[]; limit?: number; viewAllHref?: string }) {
+  const available = projectCategories.filter((c) => projects.some((p) => inCategory(p, c.key)));
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
-  const available = projectCategories.filter((c) => projects.some((p) => p.category === c.key));
-  const list = useMemo(() => {
-    const filtered = filter === "all" ? projects : projects.filter((p) => p.category === filter);
-    return limit ? filtered.slice(0, limit) : filtered;
-  }, [projects, filter, limit]);
+  const filtered = filter === "all" ? projects : projects.filter((p) => inCategory(p, filter));
+  const list = limit ? filtered.slice(0, limit) : filtered;
   const [featured, ...rest] = list;
 
   return (
@@ -39,7 +37,7 @@ export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Pro
       <div aria-live="polite" className="mt-8">
         {featured ? (
           <div className="grid gap-6">
-            <ProjectCard project={featured} featured />
+            <ProjectCard project={featured} wide />
             {(rest.length > 0 || viewAllHref) && (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {rest.map((p) => (

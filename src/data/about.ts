@@ -1,5 +1,6 @@
 import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
+import { industries } from "./industries";
 
 /**
  * About page content. Sourced from the ADIDEV Editable Website Master
@@ -67,15 +68,8 @@ export const verticalRoles: Record<VerticalKey, string> = {
     "Turning commercial floor plates into working offices, retail spaces and showrooms — planning, technical coordination, finishing and execution as one package.",
 };
 
-/** Industries served, and which verticals each draws on (descriptions live on /industries). */
-export const industryMap: { name: string; verticals: VerticalKey[] }[] = [
-  { name: "Telecommunications", verticals: ["telecom"] },
-  { name: "Renewable energy", verticals: ["solar", "civil"] },
-  { name: "Industrial & manufacturing", verticals: ["civil", "interiors"] },
-  { name: "Commercial & retail", verticals: ["interiors", "civil"] },
-  { name: "Warehousing & logistics", verticals: ["civil"] },
-  { name: "Infrastructure & real estate", verticals: ["civil", "solar", "telecom"] },
-];
+/** Industries served, and which verticals each draws on (single source: industries.ts; detail lives on /industries). */
+export const industryMap: { name: string; verticals: VerticalKey[] }[] = industries.map((i) => ({ name: i.name, verticals: i.relatedVerticals }));
 
 /** The six disciplines that connect every vertical (detail lives on /capabilities). */
 export const disciplines = [

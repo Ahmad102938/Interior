@@ -47,6 +47,10 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
   const startedAt = useRef(0);
   useEffect(() => {
     startedAt.current = Date.now();
+    // Service pages link here with ?vertical=… — preselect it (the select stays uncontrolled).
+    const v = new URLSearchParams(location.search).get("vertical");
+    const select = form.current?.querySelector<HTMLSelectElement>('select[name="vertical"]');
+    if (select && verticalOptions.some((o) => o.value === v)) select.value = v!;
   }, []);
 
   function goTo(i: number, focusField?: string) {

@@ -1,11 +1,10 @@
-import { projects } from "@/data/projects";
-import { publishable } from "@/lib/content";
+import { listedProjects } from "@/data/projects";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { ProjectGallery } from "./ProjectGallery";
 
 export function ProjectsSection() {
-  const list = publishable(projects).sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const list = listedProjects;
   return (
     <section id="projects" data-nav-theme="light" className="section-y bg-ivory">
       <div className="container-page">

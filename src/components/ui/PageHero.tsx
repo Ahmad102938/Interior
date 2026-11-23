@@ -14,9 +14,11 @@ type Props = {
   image?: { src: string; alt: string; caption?: string };
   crumbs?: { label: string; href?: string }[];
   children?: React.ReactNode;
+  /** Right-hand visual on large screens (e.g. an image composition). */
+  aside?: React.ReactNode;
 };
 
-export function PageHero({ eyebrow, title, accent, intro, bg = "bg-navy", accentClass = "text-gold-pale", image, crumbs, children }: Props) {
+export function PageHero({ eyebrow, title, accent, intro, bg = "bg-navy", accentClass = "text-gold-pale", image, crumbs, children, aside }: Props) {
   return (
     <section data-nav-theme="overlay" className={cn("relative overflow-hidden text-white", bg)}>
       {image && (
@@ -49,22 +51,25 @@ export function PageHero({ eyebrow, title, accent, intro, bg = "bg-navy", accent
             </ol>
           </nav>
         )}
-        <div className="max-w-3xl">
-          <p className={cn("eyebrow flex items-center gap-3", accentClass)}>
-            <span aria-hidden className="h-px w-10 bg-current opacity-60" />
-            {eyebrow}
-          </p>
-          <h1 className="display mt-6 text-[2.75rem] sm:text-6xl lg:text-7xl">
-            {title}
-            {accent && (
-              <>
-                <br />
-                <em className={cn("font-normal", accentClass)}>{accent}</em>
-              </>
-            )}
-          </h1>
-          {intro && <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 lg:text-lg">{intro}</p>}
-          {children}
+        <div className={cn(aside && "lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-14 xl:gap-20")}>
+          <div className="max-w-3xl">
+            <p className={cn("eyebrow flex items-center gap-3", accentClass)}>
+              <span aria-hidden className="h-px w-10 bg-current opacity-60" />
+              {eyebrow}
+            </p>
+            <h1 className="display mt-6 text-[2.75rem] sm:text-6xl lg:text-7xl">
+              {title}
+              {accent && (
+                <>
+                  <br />
+                  <em className={cn("font-normal", accentClass)}>{accent}</em>
+                </>
+              )}
+            </h1>
+            {intro && <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/75 lg:text-lg">{intro}</p>}
+            {children}
+          </div>
+          {aside}
         </div>
       </div>
     </section>
