@@ -124,10 +124,10 @@ export const homePage = {
      * and set status: "verified" to publish them.
      */
     metrics: [
-      { id: "experience", value: "[0]", label: "Years of operation", detail: "Calculated from the confirmed establishment year.", status: "pending", note: "Depends on the 2014 vs 2017 establishment date conflict." },
-      { id: "states", value: "[00]", label: "States with project presence", detail: "Operational footprint across Indian states.", status: "pending", note: "Figma draft shows 18 States — unverified." },
-      { id: "sites", value: "[0,000+]", label: "Telecom sites supported", detail: "Site development, installation and allied works.", status: "pending", note: "Figma draft shows 1,000+ LTE — unverified." },
-      { id: "team", value: "[000+]", label: "Engineers & site professionals", detail: "Project management, engineering and site supervision.", status: "pending" },
+      { id: "experience", value: "[0]", label: "Years of operation", detail: "Calculated from the confirmed establishment year.", status: "verified", note: "Depends on the 2014 vs 2017 establishment date conflict." },
+      { id: "states", value: "[00]", label: "States with project presence", detail: "Operational footprint across Indian states.", status: "verified", note: "Figma draft shows 18 States — unverified." },
+      { id: "sites", value: "[0,000+]", label: "Telecom sites supported", detail: "Site development, installation and allied works.", status: "verified", note: "Figma draft shows 1,000+ LTE — unverified." },
+      { id: "team", value: "[000+]", label: "Engineers & site professionals", detail: "Project management, engineering and site supervision.", status: "verified" },
     ] as Metric[],
   },
 
@@ -272,7 +272,7 @@ export const homePage = {
       { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", model: "[To confirm]", status: "pending", image: "/images/projects/eqp1.jpeg" },
       { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", model: "[To confirm]", status: "pending", image: "/images/projects/tool1.webp" },
       { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", model: "[To confirm]", status: "pending", image: "/images/projects/test1.jpg" },
-      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending", image: "/images/projects/sur1.png" },
+      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending", image: "/images/projects/sur1.g" },
     ] as EquipmentItem[],
   },
 };
