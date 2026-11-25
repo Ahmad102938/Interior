@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { company } from "@/data/company";
+import { company } from "@/content/company";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -22,16 +22,15 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
   title: {
-    default: `ADIDEV — ${company.positioning}`,
-    template: "%s | ADIDEV",
+    default: `${company.seo.siteName} — ${company.positioning}`,
+    template: `%s | ${company.seo.siteName}`,
   },
-  description:
-    "Adidev delivers integrated engineering, infrastructure and project execution solutions across telecom infrastructure, solar and renewable energy, civil construction and commercial interior fit-out.",
+  description: company.seo.description,
   openGraph: {
     type: "website",
-    siteName: "ADIDEV",
+    siteName: company.seo.siteName,
     locale: "en_IN",
-    title: `ADIDEV — ${company.tagline.join(" ")}`,
+    title: `${company.seo.siteName} — ${company.tagline.join(" ")}`,
     description: company.heroIntro,
   },
   alternates: { canonical: "/" },
@@ -61,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "ADIDEV", url: company.siteUrl, slogan: company.tagline.join(" ") }),
+            __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: company.seo.siteName, url: company.siteUrl, slogan: company.tagline.join(" ") }),
           }}
         />
         <Navbar />

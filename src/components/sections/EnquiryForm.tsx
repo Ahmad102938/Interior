@@ -7,17 +7,17 @@ import {
   ACCEPT_ATTR,
   enquiryTypes,
   readFields,
-  timelineOptions,
   validateFields,
   validateFile,
   verticalOptions,
   type EnquiryErrors,
 } from "@/lib/validation/enquiry";
 import { cn } from "@/lib/utils";
+import { enquiryForm as t } from "@/content/pages/forms";
 
 type ErrKey = keyof EnquiryErrors;
 
-const STEPS = ["Enquiry", "Project details", "Contact"] as const;
+const STEPS = t.steps;
 const LAST = STEPS.length - 1;
 const STEP_FIELDS: ErrKey[][] = [
   ["enquiryType", "vertical"],
@@ -25,13 +25,7 @@ const STEP_FIELDS: ErrKey[][] = [
   ["fullName", "company", "email", "phone", "consent"],
 ];
 
-const ROUTES: { value: (typeof enquiryTypes)[number]; title: string; copy: string }[] = [
-  { value: "Project", title: "Project enquiry", copy: "New projects, work packages and quotations." },
-  { value: "Vendor", title: "Vendor registration", copy: "Suppliers and subcontractors seeking empanelment." },
-  { value: "Partnership", title: "Business partnership", copy: "Collaboration on larger or specialised scopes." },
-  { value: "General", title: "General enquiry", copy: "Anything else — we will route it to the right team." },
-  { value: "Careers", title: "Careers", copy: "Send your details and attach your resume." },
-];
+const ROUTES = t.routes;
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
@@ -116,9 +110,9 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
         const srv = firstError(body.errors);
         if (srv && srv.step !== step) goTo(srv.step, srv.name);
       }
-      setStatus({ kind: "error", message: body.error ?? "Please correct the highlighted fields." });
+      setStatus({ kind: "error", message: body.error ?? t.errors.generic });
     } catch {
-      setStatus({ kind: "error", message: "Network error — your enquiry has not been sent. Please try again." });
+      setStatus({ kind: "error", message: t.errors.network });
     }
   }
 
@@ -126,9 +120,9 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
     return (
       <div role="status" className="border border-line bg-white p-8 text-center lg:p-12">
         <CheckCircle2 aria-hidden className="mx-auto size-10 text-emerald" strokeWidth={1.5} />
-        <p className="display mt-5 text-3xl text-navy">Enquiry received.</p>
+        <p className="display mt-5 text-3xl text-navy">{t.success.title}</p>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate">
-          Our team will review your enquiry and contact you regarding the project requirements.
+          {t.success.copy}
         </p>
       </div>
     );
@@ -144,9 +138,9 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
       className={cn("relative scroll-mt-28 border p-5 sm:p-8 xl:p-10", tone === "dark" ? "border-white/10 bg-ivory-soft" : "border-line bg-white")}
     >
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="display text-3xl text-navy">Request a quote</h2>
+        <h2 className="display text-3xl text-navy">{t.title}</h2>
         <p className="text-xs text-slate">
-          <span aria-hidden className="text-maroon">*</span> Required
+          <span aria-hidden className="text-maroon">*</span> {t.requiredLabel}
         </p>
       </div>
 
@@ -185,7 +179,7 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
         <Step index={0} active={step}>
           <fieldset>
             <legend className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-navy">
-              What is this about?<span aria-hidden className="ml-1 text-maroon">*</span>
+              {t.typeQuestion}<span aria-hidden className="ml-1 text-maroon">*</span>
             </legend>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               {ROUTES.map((r) => (
@@ -208,14 +202,14 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
             </div>
             {errors.enquiryType && <p className="mt-2 text-xs font-medium text-maroon">{errors.enquiryType}</p>}
           </fieldset>
-          <Field label="Business vertical" name="vertical" error={errors.vertical} required={isProject} className="mt-4">
+          <Field label={t.fields.vertical} name="vertical" error={errors.vertical} required={isProject} className="mt-4">
             <select name="vertical" defaultValue="" className={input(errors.vertical)}>
               <option value="" disabled>
-                Select…
+                {t.fields.selectPlaceholder}
               </option>
               {verticalOptions.map((v) => (
                 <option key={v.value} value={v.value}>
-                  {v.label}
+                  {t.fields.verticalLabels[v.value] ?? v.label}
                 </option>
               ))}
             </select>
@@ -224,30 +218,30 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
 
         <Step index={1} active={step}>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <Field label="Project location" name="location" error={errors.location} required={isProject}>
-              <input name="location" placeholder="City, State" className={input(errors.location)} />
+            <Field label={t.fields.location.label} name="location" error={errors.location} required={isProject}>
+              <input name="location" placeholder={t.fields.location.placeholder} className={input(errors.location)} />
             </Field>
-            <Field label="Project type" name="projectType" error={errors.projectType}>
-              <input name="projectType" placeholder="e.g. warehouse, rooftop solar" className={input(errors.projectType)} />
+            <Field label={t.fields.projectType.label} name="projectType" error={errors.projectType}>
+              <input name="projectType" placeholder={t.fields.projectType.placeholder} className={input(errors.projectType)} />
             </Field>
-            <Field label="Area / capacity" name="capacity" error={errors.capacity}>
-              <input name="capacity" placeholder="e.g. 20,000 sq ft or 2 MW" className={input(errors.capacity)} />
+            <Field label={t.fields.capacity.label} name="capacity" error={errors.capacity}>
+              <input name="capacity" placeholder={t.fields.capacity.placeholder} className={input(errors.capacity)} />
             </Field>
-            <Field label="Expected timeline" name="timeline" error={errors.timeline}>
+            <Field label={t.fields.timeline} name="timeline" error={errors.timeline}>
               <select name="timeline" defaultValue="" className={input(errors.timeline)}>
-                <option value="">Select…</option>
-                {timelineOptions.map((t) => (
+                <option value="">{t.fields.selectPlaceholder}</option>
+                {t.fields.timelineOptions.map((t) => (
                   <option key={t}>{t}</option>
                 ))}
               </select>
             </Field>
-            <Field label="Project requirements" name="requirements" error={errors.requirements} required className="sm:col-span-2">
+            <Field label={t.fields.requirements} name="requirements" error={errors.requirements} required className="sm:col-span-2">
               <textarea name="requirements" rows={3} className={cn(input(errors.requirements), "min-h-24 py-3")} />
             </Field>
-            <Field label="Drawings / BOQ / documents (optional)" name="document" error={errors.document} className="sm:col-span-2">
+            <Field label={t.fields.document.label} name="document" error={errors.document} className="sm:col-span-2">
               <label className={cn("flex min-h-12 cursor-pointer items-center gap-3 border border-dashed px-4 text-sm transition-colors hover:border-navy has-focus-visible:border-navy", errors.document ? "border-maroon" : "border-navy/25")}>
                 <Paperclip aria-hidden className="size-4 shrink-0 text-slate" />
-                <span className={cn("truncate", fileName ? "text-navy" : "text-slate")}>{fileName || "Attach a file — PDF, DOC, XLS, DWG, JPG or PNG, up to 10 MB"}</span>
+                <span className={cn("truncate", fileName ? "text-navy" : "text-slate")}>{fileName || t.fields.document.placeholder}</span>
                 <input
                   id="field-document"
                   name="document"
@@ -264,16 +258,16 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
 
         <Step index={2} active={step}>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <Field label="Full name" name="fullName" error={errors.fullName} required>
+            <Field label={t.fields.fullName} name="fullName" error={errors.fullName} required>
               <input name="fullName" autoComplete="name" className={input(errors.fullName)} />
             </Field>
-            <Field label="Company / organisation" name="company" error={errors.company}>
+            <Field label={t.fields.company} name="company" error={errors.company}>
               <input name="company" autoComplete="organization" className={input(errors.company)} />
             </Field>
-            <Field label="Official email" name="email" error={errors.email} required>
+            <Field label={t.fields.email} name="email" error={errors.email} required>
               <input name="email" type="email" autoComplete="email" inputMode="email" className={input(errors.email)} />
             </Field>
-            <Field label="Mobile number" name="phone" error={errors.phone} required>
+            <Field label={t.fields.phone} name="phone" error={errors.phone} required>
               <input name="phone" type="tel" autoComplete="tel" inputMode="tel" className={input(errors.phone)} />
             </Field>
           </div>
@@ -288,11 +282,11 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
                 className="mt-1 size-4 shrink-0 accent-maroon"
               />
               <span>
-                I agree that Adidev may use these details to respond to my enquiry, as described in the{" "}
-                <Link href="/privacy-policy" className="text-maroon underline underline-offset-2">
-                  privacy policy
+                {t.consent.before}{" "}
+                <Link href={t.consent.linkHref} className="text-maroon underline underline-offset-2">
+                  {t.consent.linkLabel}
                 </Link>
-                . Please do not upload confidential drawings unless required.
+                {t.consent.after}
               </span>
             </label>
             {errors.consent && (
@@ -327,7 +321,7 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
             className="flex min-h-13 items-center gap-2 border border-navy/20 px-5 text-sm font-semibold uppercase tracking-[0.14em] text-navy transition-colors hover:border-navy"
           >
             <ArrowLeft aria-hidden className="size-4" />
-            <span className="max-sm:sr-only">Back</span>
+            <span className="max-sm:sr-only">{t.buttons.back}</span>
           </button>
         )}
         <button
@@ -337,13 +331,13 @@ export function EnquiryForm({ defaultType = "Project", tone = "light" }: { defau
         >
           {step < LAST ? (
             <>
-              Continue <span className="font-normal normal-case tracking-normal text-white/60">— {STEPS[step + 1]}</span>
+              {t.buttons.continue} <span className="font-normal normal-case tracking-normal text-white/60">— {STEPS[step + 1]}</span>
               <ArrowRight aria-hidden className="size-4" />
             </>
           ) : status.kind === "sending" ? (
-            "Submitting…"
+            t.buttons.sending
           ) : (
-            "Submit enquiry"
+            t.buttons.submit
           )}
         </button>
       </div>

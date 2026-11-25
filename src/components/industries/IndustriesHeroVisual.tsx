@@ -1,10 +1,8 @@
 import Image from "next/image";
+import { industriesPage } from "@/content/pages/industries";
 
-const shots = {
-  main: { src: "/images/posters/stage-5.jpg", alt: "Completed commercial building at dusk — illustrative visualisation" },
-  plan: { src: "/images/posters/stage-2.jpg", alt: "Coordinated floor plates and building services model — illustrative visualisation" },
-  interior: { src: "/images/posters/stage-4.jpg", alt: "Fitted-out workplace interior — illustrative visualisation" },
-};
+/** Edit in src/content/pages/industries.ts (hero.images). */
+const shots = industriesPage.hero.images;
 
 /** Drafting-style corner mark in antique gold. */
 function Corner({ className }: { className: string }) {
@@ -20,20 +18,22 @@ export function IndustriesHeroVisual() {
   return (
     <figure className="relative mt-14 hidden h-[30rem] lg:mt-0 lg:block xl:h-[32rem]">
       <div className="absolute inset-y-0 right-0 left-[14%] overflow-hidden">
-        <Image src={shots.main.src} alt={shots.main.alt} fill priority sizes="(min-width: 1280px) 560px, 46vw" className="object-cover object-[60%_50%]" />
+        <Image src={shots.main.src} alt={shots.main.alt} fill priority sizes="(min-width: 1280px) 560px, 46vw" className="object-cover" style={{ objectPosition: shots.main.position }} />
         <div aria-hidden className="absolute inset-0 bg-linear-to-r from-navy/55 via-navy/10 to-transparent" />
       </div>
       <div className="absolute top-8 left-0 aspect-[4/3] w-[42%] overflow-hidden shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/10">
-        <Image src={shots.plan.src} alt={shots.plan.alt} fill sizes="240px" className="object-cover object-[55%_45%]" />
+        <Image src={shots.plan.src} alt={shots.plan.alt} fill sizes="240px" className="object-cover" style={{ objectPosition: shots.plan.position }} />
       </div>
       <div className="absolute bottom-10 left-[6%] aspect-[5/4] w-[34%] overflow-hidden shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/10">
-        <Image src={shots.interior.src} alt={shots.interior.alt} fill sizes="200px" className="object-cover object-[40%_60%]" />
+        <Image src={shots.interior.src} alt={shots.interior.alt} fill sizes="200px" className="object-cover" style={{ objectPosition: shots.interior.position }} />
       </div>
       <Corner className="-top-3 -right-3 border-t border-r" />
       <Corner className="-right-3 -bottom-3 border-r border-b" />
-      <figcaption className="absolute right-4 bottom-4 bg-black/40 px-2 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/75">
-        Illustrative visualisation
-      </figcaption>
+      {shots.main.caption && (
+        <figcaption className="absolute right-4 bottom-4 bg-black/40 px-2 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/75">
+          {shots.main.caption}
+        </figcaption>
+      )}
     </figure>
   );
 }

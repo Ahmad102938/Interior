@@ -1,25 +1,26 @@
 import type { Metadata } from "next";
-import { faqs } from "@/data/capabilities";
+import { faqs } from "@/content/capabilities";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { resourcesPage as page } from "@/content/pages/resources";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "FAQs & Resources",
-  description: "Frequently asked questions about Adidev services, project process, enquiries and approved downloads.",
+  ...page.meta,
   alternates: { canonical: "/resources" },
 };
 
-/** Downloads are added here only once an approved, current file exists in /public. */
-const downloads: { title: string; href: string; meta: string }[] = [];
+/** Downloads are edited in src/content/pages/resources.ts. */
+const downloads = page.downloads;
 
 export default function ResourcesPage() {
   return (
     <>
-      <PageHero eyebrow="FAQs & resources" title="Answers and" accent="approved downloads." crumbs={[{ label: "Home", href: "/" }, { label: "Resources" }]} />
+      <PageHero {...page.hero} crumbs={crumbsFor("resources")} />
       <section data-nav-theme="light" className="section-y bg-ivory">
         <div className="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeading eyebrow="Frequently asked questions" title="Before you enquire." />
+          <SectionHeading {...page.faqHeading} />
           <div className="divide-y divide-line border-y border-line">
             {faqs.map((f) => (
               <details key={f.q} className="group py-2">
@@ -34,7 +35,7 @@ export default function ResourcesPage() {
         </div>
         {downloads.length > 0 && (
           <div className="container-page mt-14 lg:mt-20">
-            <h2 className="display text-4xl text-navy">Downloads</h2>
+            <h2 className="display text-4xl text-navy">{page.downloadsTitle}</h2>
             <ul className="mt-8 grid gap-4 md:grid-cols-2">
               {downloads.map((d) => (
                 <li key={d.href}>

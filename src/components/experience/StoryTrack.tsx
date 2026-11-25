@@ -1,9 +1,11 @@
 "use client";
 
-import { storyChapters } from "@/data/story";
+import { homePage } from "@/content/pages/home";
 import { STORY_PANELS } from "@/config/experience";
 import { cn } from "@/lib/utils";
 import { ChapterPanel, IntroPanel } from "./StoryPanel";
+
+const storyChapters = homePage.hero.chapters;
 
 type Props = {
   trackRef: React.Ref<HTMLDivElement>;

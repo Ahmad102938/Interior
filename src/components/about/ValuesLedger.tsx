@@ -1,4 +1,4 @@
-import { values } from "@/data/about";
+import { values, aboutPage } from "@/content/pages/about";
 import { AboutHeading } from "./AboutHeading";
 
 /** Core values as an even 3×2 ledger — operating commitments, not slogans. */
@@ -6,8 +6,8 @@ export function ValuesLedger() {
   return (
     <section data-nav-theme="light" className="section-y bg-white">
       <div className="container-page">
-        <AboutHeading index="02" eyebrow="Core values" title="Six commitments" accent="on every site.">
-          The standards our teams hold themselves to — on drawings, on site and with every client.
+        <AboutHeading index="02" {...aboutPage.values.heading}>
+          {aboutPage.values.intro}
         </AboutHeading>
         <ol className="mt-14 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3" data-reveal>
           {values.map((v, i) => (

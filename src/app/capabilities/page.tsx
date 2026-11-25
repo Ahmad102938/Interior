@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { capabilities } from "@/data/capabilities";
-import { capabilityDelivery, deliveryModel } from "@/data/deliveryModels";
-import { services } from "@/data/services";
+import { capabilities } from "@/content/capabilities";
+import { capabilityDelivery, deliveryModel } from "@/content/deliveryModels";
+import { services } from "@/content/services";
 import { isPublishable } from "@/lib/content";
 import { PageHero } from "@/components/ui/PageHero";
 import { Button } from "@/components/ui/Button";
@@ -14,11 +14,11 @@ import { DeliveryModel } from "@/components/capabilities/DeliveryModel";
 import { ExecutionMethodology } from "@/components/capabilities/ExecutionMethodology";
 import { CapabilityProjects } from "@/components/capabilities/CapabilityProjects";
 import { CapabilitiesCta } from "@/components/capabilities/CapabilitiesCta";
+import { capabilitiesPage as page } from "@/content/pages/capabilities";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "Engineering & Project Capabilities",
-  description:
-    "Engineering and design coordination, BOQ and cost management, project planning, procurement and vendors, site execution, and quality and handover — and how they connect from requirement to handover.",
+  ...page.meta,
   alternates: { canonical: "/capabilities" },
 };
 
@@ -34,30 +34,21 @@ export default function CapabilitiesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Engineering capabilities"
-        title="Plan. Coordinate."
-        accent="Execute. Hand over."
-        intro="Discover how ADIDEV brings together engineering coordination, cost management, project planning, resource coordination and on-ground execution to support infrastructure projects."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Capabilities" }]}
+        {...page.hero.heading}
+        crumbs={crumbsFor("capabilities")}
         aside={<CapabilitiesHeroVisual />}
       >
         <div className="mt-9 flex flex-wrap gap-3">
-          <Button href="#capabilities">Explore capabilities</Button>
-          <Button href="/request-a-quote" variant="outline-light">
-            Discuss a project
+          <Button href={page.hero.primary.href}>{page.hero.primary.label}</Button>
+          <Button href={page.hero.secondary.href} variant="outline-light">
+            {page.hero.secondary.label}
           </Button>
         </div>
       </PageHero>
 
       <section id="capabilities" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
         <div className="container-page">
-          <SectionHeading
-            align="split"
-            eyebrow="Six capabilities"
-            title="What ADIDEV can plan,"
-            accent="coordinate, manage and execute."
-            intro="Six capabilities in three groups — from defining the requirement to handing over a documented, inspected project."
-          />
+          <SectionHeading align="split" {...page.explorer.heading} />
           <div className="mt-12 lg:mt-16">
             <CapabilityExplorer items={capabilities} delivery={delivery} />
           </div>
@@ -68,13 +59,7 @@ export default function CapabilitiesPage() {
 
       <section data-nav-theme="light" className="section-y bg-white">
         <div className="container-page">
-          <SectionHeading
-            align="split"
-            eyebrow="Across the verticals"
-            title="One Engineering Framework."
-            accent="Four Business Verticals."
-            intro="The same six capabilities sit behind every division. Which of them a project draws on — and how much — depends on its approved scope."
-          />
+          <SectionHeading align="split" {...page.crossVertical.heading} />
           <div className="mt-12 lg:mt-16">
             <CrossVertical caps={capabilities.map(({ number, title }) => ({ number, title }))} divisions={divisions} />
           </div>

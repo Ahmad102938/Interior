@@ -7,8 +7,6 @@ export const company = {
   tagline: ["Building Infrastructure.", "Empowering Progress."] as const,
   heroIntro:
     "Delivering integrated engineering, infrastructure and project execution solutions across telecommunications, renewable energy, civil construction and commercial environments.",
-  overview:
-    "Adidev supports the development, execution and maintenance of projects across telecom, renewable energy, civil construction and commercial fit-outs.",
   howWeWork:
     "We understand requirements, coordinate technical resources, manage execution and deliver against approved drawings, specifications and agreed timelines.",
   vision:
@@ -16,6 +14,12 @@ export const company = {
   mission:
     "To provide integrated, quality-focused project solutions through responsible execution, technical coordination and client collaboration.",
   values: ["Quality", "Safety", "Integrity", "Innovation", "Commitment", "Collaboration"],
+  /** Default browser-tab / Google text for the whole site (pages can override). */
+  seo: {
+    siteName: "ADIDEV",
+    description:
+      "Adidev delivers integrated engineering, infrastructure and project execution solutions across telecom infrastructure, solar and renewable energy, civil construction and commercial interior fit-out.",
+  },
   website: "www.adidev.co.in",
   siteUrl: "https://www.adidev.co.in",
 
@@ -38,41 +42,6 @@ export type Metric = {
   status: Status;
   note?: string;
 };
-
-/** Company scale metrics. All pending until management verifies the figures. */
-export const metrics: Metric[] = [
-  {
-    id: "experience",
-    value: "[00]",
-    label: "Years of operation",
-    detail: "Calculated from the confirmed establishment year.",
-    status: "pending",
-    note: "Depends on the 2014 vs 2017 establishment date conflict.",
-  },
-  {
-    id: "states",
-    value: "[00]",
-    label: "States with project presence",
-    detail: "Operational footprint across Indian states.",
-    status: "pending",
-    note: "Figma draft shows 18 States — unverified.",
-  },
-  {
-    id: "sites",
-    value: "[0,000+]",
-    label: "Telecom sites supported",
-    detail: "Site development, installation and allied works.",
-    status: "pending",
-    note: "Figma draft shows 1,000+ LTE — unverified.",
-  },
-  {
-    id: "team",
-    value: "[000+]",
-    label: "Engineers & site professionals",
-    detail: "Project management, engineering and site supervision.",
-    status: "pending",
-  },
-];
 
 export type ContactFact = { label: string; value: string; href?: string; status: Status };
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { aboutPage } from "@/content/pages/about";
 import { AboutIntro } from "@/components/about/AboutIntro";
 import { AboutStory } from "@/components/about/AboutStory";
 import { VisionMission } from "@/components/about/VisionMission";
@@ -10,9 +11,7 @@ import { ResponsibleExecution } from "@/components/about/ResponsibleExecution";
 import { AboutJourney } from "@/components/about/AboutJourney";
 import { AboutCta } from "@/components/about/AboutCta";
 
-const title = "About ADIDEV | Integrated Engineering & Infrastructure Solutions";
-const description =
-  "Discover ADIDEV's integrated capabilities across telecom infrastructure, solar and renewable energy, civil construction, and commercial interior fit-out.";
+const { title, description } = aboutPage.meta;
 
 export const metadata: Metadata = {
   title: { absolute: title },

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { brand, verticalTheme } from "@/config/theme";
-import { verticals } from "@/data/verticals";
-import { disciplines } from "@/data/about";
+import { verticals } from "@/content/verticals";
+import { disciplines, aboutPage } from "@/content/pages/about";
 import { AboutHeading } from "./AboutHeading";
 
 const C = 300; // centre of the 600×600 diagram
@@ -35,8 +35,8 @@ export function OperatingSystem() {
   return (
     <section data-nav-theme="light" className="section-y overflow-hidden bg-white">
       <div className="container-page">
-        <AboutHeading index="04" eyebrow="How it connects" title="Six disciplines" accent="run through every vertical.">
-          Whether the work is a telecom site or an office floor, the same coordinated disciplines plan it, cost it, resource it, build it and hand it over.
+        <AboutHeading index="04" {...aboutPage.operatingSystem.heading}>
+          {aboutPage.operatingSystem.intro}
         </AboutHeading>
         <div className="mt-14 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div data-reveal>
@@ -48,17 +48,17 @@ export function OperatingSystem() {
               </li>
             ))}
           </ol>
-          <p className="mt-6 text-xs leading-relaxed text-slate">In-house expertise is distinguished from qualified partner- or vendor-supported delivery on each project.</p>
-          <Link href="/capabilities" className="mt-4 inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy">
-            Capability detail
+          <p className="mt-6 text-xs leading-relaxed text-slate">{aboutPage.operatingSystem.note}</p>
+          <Link href={aboutPage.operatingSystem.link.href} className="mt-4 inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy">
+            {aboutPage.operatingSystem.link.label}
             <ArrowUpRight aria-hidden className="size-4" />
           </Link>
         </div>
 
         <figure data-reveal>
           <svg viewBox="0 0 600 600" role="img" aria-labelledby="os-title os-desc" className="mx-auto w-full max-w-[36rem]">
-            <title id="os-title">ADIDEV integrated operating system</title>
-            <desc id="os-desc">Four business verticals around six shared disciplines, all connected to one delivery team.</desc>
+            <title id="os-title">{aboutPage.operatingSystem.diagramTitle}</title>
+            <desc id="os-desc">{aboutPage.operatingSystem.diagramDescription}</desc>
             {/* Outer ring: verticals */}
             {verticals.map((v, i) => {
               const a0 = i * 90 + 4;
@@ -93,10 +93,10 @@ export function OperatingSystem() {
             <circle cx={C} cy={C} r={74} fill={brand.navy} />
             <circle cx={C} cy={C} r={82} fill="none" stroke={brand.gold} strokeOpacity={0.5} />
             <text x={C} y={C - 6} textAnchor="middle" fill="#ffffff" fontSize="22" style={{ fontFamily: "var(--font-display)" }}>
-              One delivery
+              {aboutPage.operatingSystem.centre[0]}
             </text>
             <text x={C} y={C + 20} textAnchor="middle" fill={brand.paleGold} fontSize="22" fontStyle="italic" style={{ fontFamily: "var(--font-display)" }}>
-              team
+              {aboutPage.operatingSystem.centre[1]}
             </text>
             {/* Discipline nodes */}
             {nodes.map(([x, y], i) => (

@@ -2,6 +2,10 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CapabilityExplorer } from "./CapabilityExplorer";
+import { homePage } from "@/content/pages/home";
+import { SectionBackdrop } from "@/components/ui/SectionBackdrop";
+
+const c = homePage.capabilities;
 
 /**
  * Engineering capabilities: a compact index of six disciplines grouped by
@@ -22,6 +26,7 @@ export function CapabilitiesSection({ standalone = false }: { standalone?: boole
           : "flex min-h-svh flex-col justify-center pt-[calc(4.5rem+clamp(1rem,3svh,2rem))] pb-[calc(clamp(1.5rem,4svh,3rem)+var(--safe-bottom))] lg:pt-[calc(5rem+clamp(0.75rem,3svh,2.5rem))]",
       )}
     >
+      <SectionBackdrop image={c.backgroundImage} overlay="bg-navy/85" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.07]"
@@ -37,21 +42,20 @@ export function CapabilitiesSection({ standalone = false }: { standalone?: boole
               <p className="eyebrow flex items-center gap-3 text-gold-pale">
                 <span className="tabular-nums">04</span>
                 <span aria-hidden className="h-px w-10 bg-gold-pale/50" />
-                Engineering capabilities
+                {c.heading.eyebrow}
               </p>
               <h2 className="display mt-[clamp(0.75rem,2svh,1.25rem)] text-[min(8vw,max(1.75rem,4.6svh))] sm:text-[clamp(2.25rem,5.4svh,3.5rem)]">
-                One Integrated Approach.
+                {c.heading.title}
                 <br />
-                <em className="font-normal text-gold-pale">Complete Project Control.</em>
+                <em className="font-normal text-gold-pale">{c.heading.accent}</em>
               </h2>
             </div>
             <div className="hidden space-y-4 sm:block [@media(max-height:740px)]:max-lg:hidden">
               <p className="max-w-xl text-[0.9375rem] leading-relaxed text-white/70">
-                Planning, engineering coordination, procurement, field execution and handover managed as one connected system — so decisions made early carry
-                through to site.
+                {c.heading.intro}
               </p>
               <div className="hidden flex-wrap items-center gap-x-6 gap-y-2 lg:flex">
-                <p className="max-w-sm text-xs leading-relaxed text-white/50 [@media(max-height:800px)]:hidden">In-house expertise is clearly distinguished from qualified partner- or vendor-supported delivery on every project.</p>
+                <p className="max-w-sm text-xs leading-relaxed text-white/50 [@media(max-height:800px)]:hidden">{c.note}</p>
                 <CtaLink />
               </div>
             </div>
@@ -75,10 +79,10 @@ export function CapabilitiesSection({ standalone = false }: { standalone?: boole
 function CtaLink() {
   return (
     <Link
-      href="/capabilities"
+      href={c.cta.href}
       className="inline-flex min-h-11 items-center gap-2 border-b border-gold-pale/40 text-xs font-semibold tracking-[0.14em] text-white uppercase transition-colors hover:border-gold-pale hover:text-gold-pale"
     >
-      Explore capabilities
+      {c.cta.label}
       <ArrowUpRight aria-hidden className="size-4" />
     </Link>
   );

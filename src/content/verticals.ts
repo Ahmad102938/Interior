@@ -1,3 +1,4 @@
+import { verticalImages } from "./media";
 import type { VerticalKey } from "@/config/theme";
 
 export type Vertical = {
@@ -114,4 +115,5 @@ export const verticalBySlug = (slug: string) => verticals.find((v) => v.slug ===
 export const verticalByKey = (key: VerticalKey) => verticals.find((v) => v.key === key)!;
 export const serviceHref = (v: Pick<Vertical, "slug">) => `/services/${v.slug}`;
 /** Interim illustrative render per vertical — replace with approved project photography. */
-export const verticalImage = (v: Pick<Vertical, "key">) => `/images/verticals/${v.key}.jpg`;
+/** Image per vertical — edit in src/content/media.ts (verticalImages). */
+export const verticalImage = (v: Pick<Vertical, "key">) => verticalImages[v.key].src;

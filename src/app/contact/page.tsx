@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { contactPage } from "@/content/pages/contact";
 
 export const metadata: Metadata = {
-  title: "Contact Adidev",
-  description: "Project enquiries, vendor registration, partnerships and general enquiries.",
+  ...contactPage.meta,
   alternates: { canonical: "/contact" },
 };
 

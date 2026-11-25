@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import type { GalleryImage, GalleryPhase, ProjectVideo } from "@/data/projects";
+import type { GalleryImage, GalleryPhase, ProjectVideo } from "@/content/projects";
 import { cn } from "@/lib/utils";
+import { projectsPage } from "@/content/pages/projects";
 
+const labels = projectsPage.detail.phases;
 const PHASES: { key: GalleryPhase; label: string }[] = [
-  { key: "before", label: "Before" },
-  { key: "during", label: "During" },
-  { key: "after", label: "After" },
+  { key: "before", label: labels.before },
+  { key: "during", label: labels.during },
+  { key: "after", label: labels.after },
 ];
 
 /**
@@ -45,7 +47,7 @@ export function ProjectMedia({ images, videos = [], name }: { images: GalleryIma
         <>
           {phases.length > 1 && (
             <div role="group" aria-label="Project stage" className="mb-6 inline-flex border border-navy/15 bg-white p-0.5">
-              {[{ key: "all" as const, label: "All" }, ...phases].map((p) => (
+              {[{ key: "all" as const, label: labels.all }, ...phases].map((p) => (
                 <button
                   key={p.key}
                   type="button"

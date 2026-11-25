@@ -3,11 +3,14 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChevronDown, Search, X } from "lucide-react";
-import { categoryOf, projectCategories, type Project } from "@/data/projects";
+import { categoryOf, projectCategories, type Project } from "@/content/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { projectsPage } from "@/content/pages/projects";
 import { applyQuery, isFiltered, LISTING_KEY, PAGE_SIZE, parseQuery, toSearch, type Query } from "./query";
+
+const t = projectsPage.explorer;
 
 const BASE = "/projects";
 // Extra controls appear only once the real portfolio is large enough to need them.
@@ -81,7 +84,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
         {/* Categories: compact chips from tablet up; a native select on phones */}
         <div className="hidden md:block">
           <p id="cat-label" className="sr-only">
-            Project category
+            {t.categoryLabel}
           </p>
           <ul aria-labelledby="cat-label" className="flex flex-wrap gap-2">
             {[undefined, ...projectCategories.map((c) => c.key)].map((key) => {
@@ -98,7 +101,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
                     )}
                   >
                     {cat ? <span aria-hidden className={cn("size-1.5", verticalClasses[cat.vertical].bg, active && "ring-1 ring-white/60")} /> : active && <span aria-hidden className="size-1.5 bg-gold" />}
-                    {cat ? cat.label : "All projects"}
+                    {cat ? cat.label : t.allCategories}
                     <span className={cn("tabular-nums", active ? "text-gold-pale" : "text-slate")}>{catCount(key)}</span>
                   </a>
                 </li>
@@ -109,7 +112,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
 
         <div className="flex flex-wrap items-center gap-3">
           <label className="relative min-w-0 flex-1 basis-full md:hidden">
-            <span className="sr-only">Project category</span>
+            <span className="sr-only">{t.categoryLabel}</span>
             <select
               value={query.category ?? ""}
               onChange={(e) => go({ category: (e.target.value || undefined) as Query["category"] })}
@@ -138,7 +141,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
                     active ? "bg-maroon text-white" : "text-navy hover:bg-ivory",
                   )}
                 >
-                  {s === "completed" ? "Completed" : s === "ongoing" ? "Ongoing" : "All statuses"}
+                  {s === "completed" ? t.statuses.completed : s === "ongoing" ? t.statuses.ongoing : t.statuses.all}
                   <span className={cn("tabular-nums", active ? "text-gold-pale" : "text-slate")}>{statusCount(s)}</span>
                 </a>
               );
@@ -147,13 +150,13 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
 
           {showLocation && (
             <label className="relative">
-              <span className="sr-only">Location</span>
+              <span className="sr-only">{t.locationLabel}</span>
               <select
                 value={query.location ?? ""}
                 onChange={(e) => go({ location: e.target.value || undefined })}
                 className="h-10 appearance-none border border-navy/15 bg-white pr-9 pl-3 text-xs font-semibold uppercase tracking-[0.1em] text-navy"
               >
-                <option value="">All locations</option>
+                <option value="">{t.allLocations}</option>
                 {states.map((s) => (
                   <option key={s} value={s}>
                     {s}
@@ -166,13 +169,13 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
 
           {showSearch && (
             <label className="relative ml-auto w-full sm:w-64">
-              <span className="sr-only">Search by project name or location</span>
+              <span className="sr-only">{t.searchLabel}</span>
               <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-navy/50" />
               <input
                 ref={searchRef}
                 type="search"
                 defaultValue={query.q}
-                placeholder="Search projects or locations"
+                placeholder={t.searchPlaceholder}
                 onChange={(e) => {
                   clearTimeout(debounce.current);
                   const v = e.target.value.trim();
@@ -189,12 +192,12 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
         <p aria-live="polite" className="text-sm text-slate">
           {list.length === 0 ? (
-            "No projects found for the selected filters."
+            t.noResults
           ) : (
             <>
               Showing <strong className="font-semibold text-navy tabular-nums">{shown.length}</strong> of <span className="tabular-nums">{list.length}</span> {list.length === 1 ? "project" : "projects"}
               {query.category && <> in {categoryOf(query.category).label}</>}
-              {query.status && <> · {query.status === "completed" ? "Completed" : "Ongoing"}</>}
+              {query.status && <> · {query.status === "completed" ? t.statuses.completed : t.statuses.ongoing}</>}
               {query.location && <> · {query.location}</>}
               {query.q && <> · “{query.q}”</>}
             </>
@@ -203,7 +206,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
         {filtered && (
           <a {...linkProps({ category: undefined, status: undefined, location: undefined, q: undefined })} className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy">
             <X aria-hidden className="size-3.5" />
-            Clear filters
+            {t.clearFilters}
           </a>
         )}
       </div>
@@ -229,7 +232,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
                 }}
                 className="inline-flex min-h-12 items-center gap-2 border border-navy/25 bg-white px-6 text-xs font-semibold uppercase tracking-[0.14em] text-navy transition-colors hover:border-navy hover:bg-navy hover:text-white"
               >
-                Load more projects
+                {t.loadMore}
                 <span className="text-slate tabular-nums">({list.length - shown.length})</span>
               </a>
             </div>
@@ -237,12 +240,12 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
         </>
       ) : (
         <div className="mt-6 flex flex-col items-start gap-4 border border-line bg-white p-6 sm:p-10">
-          <p className="display text-[1.75rem] text-navy sm:text-3xl">No projects found for the selected filters.</p>
+          <p className="display text-[1.75rem] text-navy sm:text-3xl">{t.noResults}</p>
           <a
             {...linkProps({ category: undefined, status: undefined, location: undefined, q: undefined })}
             className="inline-flex min-h-12 items-center gap-2 bg-navy px-6 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-navy-deep"
           >
-            Clear filters
+            {t.clearFilters}
           </a>
         </div>
       )}

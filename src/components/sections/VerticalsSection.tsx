@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { verticals, serviceHref, verticalImage } from "@/data/verticals";
+import { verticals, serviceHref } from "@/content/verticals";
+import { homePage } from "@/content/pages/home";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MediaSlot } from "@/components/ui/MediaSlot";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
@@ -15,25 +16,20 @@ export function VerticalsSection() {
   return (
     <section id="verticals" data-nav-theme="light" className="section-y bg-white">
       <div className="container-page">
-        <SectionHeading
-          index="02"
-          eyebrow="Business verticals"
-          title="Four Pillars"
-          accent="of Execution."
-          intro="Four clear service pathways, each delivered with the same planning discipline, technical coordination and site supervision."
-          align="split"
-        />
+        <SectionHeading index="02" {...homePage.verticals.heading} align="split" />
         <div className="mt-14 flex flex-col gap-6 lg:mt-20 lg:gap-8">
           {verticals.map((v, i) => {
             const c = verticalClasses[v.key];
             const flip = i % 2 === 1;
+            const img = homePage.verticals.images[v.key];
             return (
               <article key={v.key} data-reveal className={cn("grid overflow-hidden text-white lg:grid-cols-12", c.bg)}>
                 <MediaSlot
-                  src={verticalImage(v)}
-                  alt={`${v.title} — illustrative visualisation`}
+                  src={img.src}
+                  alt={img.alt}
                   slot={v.imageSlots[0]}
-                  caption="Illustrative visualisation"
+                  caption={img.caption}
+                  position={img.position}
                   className={cn("min-h-64 sm:min-h-80 lg:col-span-7 lg:min-h-[30rem]", flip && "lg:order-2")}
                   sizes="(min-width: 1024px) 58vw, 100vw"
                 />
@@ -57,7 +53,7 @@ export function VerticalsSection() {
                     href={serviceHref(v)}
                     className="group mt-auto inline-flex min-h-12 items-center gap-3 self-start pt-8 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-white hover:text-gold-pale"
                   >
-                    Explore service
+                    {homePage.verticals.cardCta}
                     <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </Link>
                 </div>

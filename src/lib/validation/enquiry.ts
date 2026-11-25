@@ -1,7 +1,12 @@
 /**
  * Shared enquiry validation — used by the form (instant feedback) and the API
  * route (authoritative). No external schema library needed for this size.
+ * Error messages are edited in src/content/pages/forms.ts (validation).
  */
+import { enquiryForm } from "@/content/pages/forms";
+
+const v = enquiryForm.validation;
+
 export const enquiryTypes = ["Project", "Vendor", "Partnership", "General", "Careers"] as const;
 export const verticalOptions = [
   { value: "telecom", label: "Telecom Infrastructure" },
@@ -10,7 +15,6 @@ export const verticalOptions = [
   { value: "interiors", label: "Commercial Interior & Fit-Out" },
   { value: "other", label: "Other" },
 ] as const;
-export const timelineOptions = ["Immediate", "Within 3 months", "3–6 months", "6–12 months", "Not yet decided"] as const;
 
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx", "xls", "xlsx", "dwg", "jpg", "jpeg", "png"] as const;
@@ -57,29 +61,29 @@ export function readFields(fd: FormData): EnquiryFields {
 
 export function validateFields(f: EnquiryFields): EnquiryErrors {
   const e: EnquiryErrors = {};
-  if (f.fullName.length < 2) e.fullName = "Please enter your full name.";
-  if (f.fullName.length > 120) e.fullName = "Name is too long.";
-  if (!EMAIL.test(f.email)) e.email = "Please enter a valid email address.";
+  if (f.fullName.length < 2) e.fullName = v.fullName;
+  if (f.fullName.length > 120) e.fullName = v.nameTooLong;
+  if (!EMAIL.test(f.email)) e.email = v.email;
   const digits = f.phone.replace(/\D/g, "");
-  if (!PHONE.test(f.phone) || digits.length < 8 || digits.length > 15) e.phone = "Please enter a valid contact number.";
-  if (!enquiryTypes.includes(f.enquiryType as (typeof enquiryTypes)[number])) e.enquiryType = "Please choose an enquiry type.";
+  if (!PHONE.test(f.phone) || digits.length < 8 || digits.length > 15) e.phone = v.phone;
+  if (!enquiryTypes.includes(f.enquiryType as (typeof enquiryTypes)[number])) e.enquiryType = v.enquiryType;
   if (f.enquiryType === "Project") {
-    if (!verticalOptions.some((v) => v.value === f.vertical)) e.vertical = "Please choose a business vertical.";
-    if (f.location.length < 2) e.location = "Please enter the project location.";
+    if (!verticalOptions.some((v) => v.value === f.vertical)) e.vertical = v.vertical;
+    if (f.location.length < 2) e.location = v.location;
   }
-  if (f.requirements.length < 10) e.requirements = "Please describe your requirements (at least 10 characters).";
-  if (f.requirements.length > 4000) e.requirements = "Please keep requirements under 4,000 characters.";
+  if (f.requirements.length < 10) e.requirements = v.requirementsShort;
+  if (f.requirements.length > 4000) e.requirements = v.requirementsLong;
   for (const k of ["company", "location", "projectType", "capacity", "timeline"] as const) {
-    if (f[k].length > 200) e[k] = "This field is too long.";
+    if (f[k].length > 200) e[k] = v.tooLong;
   }
-  if (f.consent !== "yes") e.consent = "Please confirm you agree to us processing your enquiry.";
+  if (f.consent !== "yes") e.consent = v.consent;
   return e;
 }
 
 export function validateFile(file: { name: string; size: number } | null | undefined): string | undefined {
   if (!file || file.size === 0) return undefined;
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
-  if (!(ALLOWED_EXTENSIONS as readonly string[]).includes(ext)) return `Allowed file types: ${ALLOWED_EXTENSIONS.join(", ").toUpperCase()}.`;
-  if (file.size > MAX_FILE_BYTES) return "File must be 10 MB or smaller.";
+  if (!(ALLOWED_EXTENSIONS as readonly string[]).includes(ext)) return `${v.fileType} ${ALLOWED_EXTENSIONS.join(", ").toUpperCase()}.`;
+  if (file.size > MAX_FILE_BYTES) return v.fileTooBig;
   return undefined;
 }

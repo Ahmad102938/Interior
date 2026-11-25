@@ -1,10 +1,10 @@
-import { mission, vision } from "@/data/about";
+import { aboutPage, mission, vision } from "@/content/pages/about";
 
 /** Vision and mission as two mirrored statements on one navy field. */
 export function VisionMission() {
   const items = [
-    { label: "Vision", text: vision },
-    { label: "Mission", text: mission },
+    { label: aboutPage.visionMission.visionLabel, text: vision },
+    { label: aboutPage.visionMission.missionLabel, text: mission },
   ];
   return (
     <section data-nav-theme="dark" aria-label="Vision and mission" className="section-y bg-navy text-white">

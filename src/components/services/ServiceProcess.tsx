@@ -1,8 +1,9 @@
-import type { ServiceConfig, Surface } from "@/data/services";
+import type { ServiceConfig, Surface } from "@/content/services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 import { surface } from "./shared";
+import { servicesPage } from "@/content/pages/services";
 
 /**
  * The division's six-stage workflow: horizontal on desktop, vertical on phones.
@@ -17,7 +18,7 @@ export function ServiceProcess({ s, tone }: { s: ServiceConfig; tone: Surface })
     <section id="process" data-nav-theme={sf.navTheme} className={cn("section-y scroll-mt-32", sf.className)}>
       <div className="container-page">
         <SectionHeading
-          eyebrow="Execution process"
+          eyebrow={servicesPage.detail.process.eyebrow}
           title={`${steps.length} stages,`}
           accent={`${steps[0].title.toLowerCase()} to ${steps[steps.length - 1].title.toLowerCase()}.`}
           align="split"

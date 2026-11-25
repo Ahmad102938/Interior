@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, ChevronRight, FileDown, MapPin } from "lucide-react";
-import { categoryOf, inCategory, isListed, isPublic, listedProjects, locationLabel, projectBySlug, projects, statusLabel, type Project } from "@/data/projects";
-import { services } from "@/data/services";
-import { company } from "@/data/company";
+import { categoryOf, inCategory, isListed, isPublic, listedProjects, locationLabel, projectBySlug, projects, statusLabel, type Project } from "@/content/projects";
+import { services } from "@/content/services";
+import { company } from "@/content/company";
 import { HeroShell } from "@/components/ui/PageHero";
 import { Button } from "@/components/ui/Button";
 import { MediaSlot } from "@/components/ui/MediaSlot";
@@ -18,6 +18,10 @@ import { Corners, quoteHref } from "@/components/services/shared";
 import { BackToProjects } from "@/components/projects/BackToProjects";
 import { ProjectMedia } from "@/components/projects/ProjectMedia";
 import { cn } from "@/lib/utils";
+import { projectsPage } from "@/content/pages/projects";
+import { breadcrumbLabels } from "@/content/navigation";
+
+const copy = projectsPage.detail;
 
 // Cache Components requires at least one param; unpublished slugs 404 below.
 export function generateStaticParams() {
@@ -80,8 +84,8 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: company.siteUrl },
-      { "@type": "ListItem", position: 2, name: "Projects", item: `${company.siteUrl}/projects` },
+      { "@type": "ListItem", position: 1, name: breadcrumbLabels.home, item: company.siteUrl },
+      { "@type": "ListItem", position: 2, name: breadcrumbLabels.projects, item: `${company.siteUrl}/projects` },
       { "@type": "ListItem", position: 3, name: p.name, item: `${company.siteUrl}/projects/${p.slug}` },
     ],
   };
@@ -98,13 +102,13 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
               <ol className="flex flex-wrap items-center gap-1.5 text-xs text-white/55">
                 <li>
                   <Link href="/" className="hover:text-white">
-                    Home
+                    {breadcrumbLabels.home}
                   </Link>
                 </li>
                 <li className="flex items-center gap-1.5">
                   <ChevronRight aria-hidden className="size-3" />
                   <Link href="/projects" className="hover:text-white">
-                    Projects
+                    {breadcrumbLabels.projects}
                   </Link>
                 </li>
                 <li className="flex items-center gap-1.5">
@@ -136,11 +140,11 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
               <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 lg:text-lg">{p.summary}</p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href={quoteHref(p.primaryVertical)} className={cn(p.primaryVertical === "interiors" && "border-gold-pale bg-gold-pale text-maroon hover:border-white hover:bg-white")}>
-                  Request a quote
+                  {copy.primaryLabel}
                 </Button>
                 {hasMedia && (
                   <Button href="#gallery" variant="outline-light">
-                    View gallery
+                    {copy.galleryLabel}
                   </Button>
                 )}
               </div>
@@ -165,7 +169,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
           <aside className="lg:col-start-2 lg:row-start-1">
             <div className="lg:sticky lg:top-28">
               <div className="border-t-2 border-gold bg-ivory p-6 sm:p-8">
-                <h2 className="eyebrow text-gold-ink">Project information</h2>
+                <h2 className="eyebrow text-gold-ink">{copy.infoLabel}</h2>
                 <dl className="mt-4 divide-y divide-navy/10">
                   {facts.map(([k, v]) => (
                     <div key={k} className="grid grid-cols-[7.5rem_1fr] gap-4 py-3 text-sm">
@@ -199,7 +203,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
           <div className="lg:col-start-1 lg:row-start-1">
             {p.overview && (
               <div>
-                <SectionHeading eyebrow="Overview" title="The" accent="project." />
+                <SectionHeading {...copy.overview} />
                 <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-slate lg:text-[1.0625rem]">
                   {p.overview.map((para) => (
                     <p key={para}>{para}</p>
@@ -209,8 +213,8 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
             )}
 
             <div className={cn(p.overview && "mt-16 lg:mt-20")}>
-              <h2 className="display text-4xl text-navy lg:text-5xl">Scope of work</h2>
-              <p className="mt-3 max-w-xl text-sm text-slate">The activities Adidev undertook on this project.</p>
+              <h2 className="display text-4xl text-navy lg:text-5xl">{copy.scope.title}</h2>
+              <p className="mt-3 max-w-xl text-sm text-slate">{copy.scope.intro}</p>
               <ol className="mt-8 grid gap-px border border-line bg-line sm:grid-cols-2 sm:[&>li:last-child:nth-child(odd)]:col-span-2">
                 {p.scope.map((s, i) => (
                   <li key={s} className="flex gap-4 bg-white p-5">
@@ -223,7 +227,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
 
             {p.highlights && p.highlights.length > 0 && (
               <div className="mt-16 lg:mt-20">
-                <h2 className="display text-4xl text-navy lg:text-5xl">Execution highlights</h2>
+                <h2 className="display text-4xl text-navy lg:text-5xl">{copy.highlightsTitle}</h2>
                 <ol className="mt-8 space-y-px">
                   {p.highlights.map((h, i) => (
                     <li key={`${h}-${i}`} className="relative flex gap-6 border-l-2 border-line py-4 pl-6">
@@ -242,7 +246,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
       {hasMedia && (
         <section id="gallery" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
           <div className="container-page">
-            <SectionHeading eyebrow="Gallery" title="On" accent="site." className="mb-10 lg:mb-12" />
+            <SectionHeading {...copy.gallery} className="mb-10 lg:mb-12" />
             <ProjectMedia images={p.gallery ?? []} videos={p.videos} name={p.name} />
           </div>
         </section>
@@ -265,7 +269,7 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
           {related.length > 0 && (
             <div className="mt-16 lg:mt-20">
               <div className="flex flex-wrap items-end justify-between gap-4">
-                <h2 className="display text-4xl text-navy lg:text-5xl">Related projects</h2>
+                <h2 className="display text-4xl text-navy lg:text-5xl">{copy.relatedTitle}</h2>
                 <Link href={`/projects?category=${p.category}`} className="inline-flex min-h-11 items-center gap-2 border-b border-navy/25 text-xs font-semibold uppercase tracking-[0.14em] text-navy hover:border-maroon hover:text-maroon">
                   More in {cat.label}
                   <ArrowUpRight aria-hidden className="size-4" />
@@ -287,12 +291,12 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
       <section data-nav-theme="dark" className="bg-maroon text-white">
         <div className="container-page flex flex-col gap-8 py-14 lg:flex-row lg:items-center lg:justify-between lg:py-20">
           <div>
-            <h2 className="display text-4xl lg:text-5xl">Planning a similar project?</h2>
-            <p className="mt-3 max-w-xl text-white/75">Connect with ADIDEV to discuss your project requirements and execution scope.</p>
+            <h2 className="display text-4xl lg:text-5xl">{copy.cta.title}</h2>
+            <p className="mt-3 max-w-xl text-white/75">{copy.cta.copy}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button href={quoteHref(p.primaryVertical)} className="border-gold-pale bg-gold-pale text-maroon hover:border-white hover:bg-white">
-              Request a quote
+              {copy.primaryLabel}
             </Button>
             <BackToProjects className="px-2 text-gold-pale hover:text-white" />
           </div>

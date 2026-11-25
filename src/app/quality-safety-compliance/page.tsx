@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { QualitySection } from "@/components/sections/QualitySection";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { qualityPage as page } from "@/content/pages/quality";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "Quality, Safety & Compliance",
-  description: "Quality assurance, health & safety, environmental responsibility and verified certifications.",
+  ...page.meta,
   alternates: { canonical: "/quality-safety-compliance" },
 };
 
@@ -13,12 +14,9 @@ export default function QualityPage() {
   return (
     <>
       <PageHero
-        eyebrow="Quality, safety & compliance"
-        title="Discipline on"
-        accent="every site."
+        {...page.hero}
         bg="bg-charcoal"
-        intro="Clear practices and verified documents — only valid registrations, certifications and licences are published, each with issuer, validity and scope."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Quality & Safety" }]}
+        crumbs={crumbsFor("quality")}
       />
       <QualitySection standalone />
       <CtaBanner />

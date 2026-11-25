@@ -38,3 +38,44 @@ export const footerQuickLinks = [
   { label: "Resources", href: "/resources" },
   { label: "Contact Us", href: "/contact" },
 ];
+
+/** Labels in the header and mobile menu. */
+export const headerContent = {
+  skipLink: "Skip to content",
+  quoteCta: { label: "Request a Quote", href: "/request-a-quote" },
+  menuLabel: "Menu",
+  closeLabel: "Close",
+  verticalsLabel: "Business verticals",
+};
+
+/** Footer headings and the bottom bar. Contact rows come from company.ts. */
+export const footerContent = {
+  servicesTitle: "Services",
+  companyTitle: "Company",
+  contactTitle: "Contact",
+  /** Shown after "© <year>". */
+  copyright: "Adidev. All Rights Reserved.",
+  legalLinks: [
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms & Conditions", href: "/terms" },
+  ],
+};
+
+/** Breadcrumb names ("Home / Services / …") used at the top of inner pages. */
+export const breadcrumbLabels = {
+  home: "Home",
+  about: "About",
+  services: "Services",
+  projects: "Projects",
+  industries: "Industries",
+  capabilities: "Capabilities",
+  quality: "Quality & Safety",
+  careers: "Careers",
+  clients: "Clients & Partners",
+  resources: "Resources",
+  privacy: "Privacy Policy",
+  terms: "Terms & Conditions",
+};
+
+/** Home › <page> */
+export const crumbsFor = (page: keyof typeof breadcrumbLabels) => [{ label: breadcrumbLabels.home, href: "/" }, { label: breadcrumbLabels[page] }];

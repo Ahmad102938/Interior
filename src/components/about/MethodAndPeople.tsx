@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { functions, method, type FunctionKey } from "@/data/about";
-import { leadership } from "@/data/capabilities";
+import { functions, method, type FunctionKey, aboutPage } from "@/content/pages/about";
+import { leadership } from "@/content/capabilities";
 import { publishable } from "@/lib/content";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { cn } from "@/lib/utils";
@@ -37,8 +37,8 @@ export function MethodAndPeople() {
   return (
     <section id="people" data-nav-theme="light" className="section-y bg-ivory">
       <div className="container-page">
-        <AboutHeading index="05" eyebrow="Method & people" title="How a project moves —" accent="and who moves it.">
-          Five stages take a project from brief to handover. Each is led by the teams best placed for it, so responsibility is clear at every step.
+        <AboutHeading index="05" {...aboutPage.method.heading}>
+          {aboutPage.method.intro}
         </AboutHeading>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -77,7 +77,7 @@ export function MethodAndPeople() {
           {/* Organisation */}
           <aside aria-label="Organisation" className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
             <div className="border border-line bg-white p-6 lg:p-8">
-              <p className="eyebrow text-slate">Our organisation</p>
+              <p className="eyebrow text-slate">{aboutPage.method.organisationLabel}</p>
               {/* Leadership node */}
               <div className="mt-5 bg-navy px-5 py-4 text-white">
                 {leaders.length > 0 ? (
@@ -91,7 +91,7 @@ export function MethodAndPeople() {
                     </div>
                   ))
                 ) : (
-                  <p className="font-display text-xl">Leadership & management</p>
+                  <p className="font-display text-xl">{aboutPage.method.leadershipFallback}</p>
                 )}
               </div>
               <span aria-hidden className="mx-auto block h-6 w-px bg-gold/60" />

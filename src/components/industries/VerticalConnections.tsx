@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { industries, industryHref } from "@/data/industries";
-import { serviceHref, verticals } from "@/data/verticals";
+import { industries, industryHref } from "@/content/industries";
+import { serviceHref, verticals } from "@/content/verticals";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { industriesPage } from "@/content/pages/industries";
 
 /**
  * The four business verticals (WHAT) against the sectors they typically
@@ -14,14 +15,7 @@ export function VerticalConnections() {
   return (
     <section data-nav-theme="dark" className="section-y bg-navy text-white">
       <div className="container-page">
-        <SectionHeading
-          tone="dark"
-          align="split"
-          eyebrow="Business verticals"
-          title="Capabilities that"
-          accent="connect industries."
-          intro="Four business verticals carry our delivery into each sector. The links below show typical relationships — the exact scope is confirmed for every project."
-        />
+        <SectionHeading tone="dark" align="split" {...industriesPage.verticals.heading} />
         <ol className="mt-12 grid gap-px bg-white/10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {verticals.map((v) => {
             const served = industries.filter((i) => i.relatedVerticals.includes(v.key));
@@ -42,7 +36,7 @@ export function VerticalConnections() {
                   ))}
                 </ul>
                 <div className="mt-auto pt-7">
-                  <p className="eyebrow text-[0.625rem] text-white/45">Typically serves</p>
+                  <p className="eyebrow text-[0.625rem] text-white/45">{industriesPage.verticals.servesLabel}</p>
                   <ul className="mt-2">
                     {served.map((i) => (
                       <li key={i.slug}>

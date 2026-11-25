@@ -89,34 +89,6 @@ export const executionStages = [
   { number: "05", title: "Inspect & Handover", copy: "Inspections, testing where applicable, snag closure, documents and handover." },
 ];
 
-export const whyAdidev = [
-  { title: "Integrated capabilities", copy: "Multiple engineering and execution capabilities under one organisation." },
-  { title: "Coordinated delivery", copy: "Planning, technical coordination, procurement, and site execution support." },
-  { title: "Practical site approach", copy: "Solutions aligned with actual site conditions and project requirements." },
-  { title: "Flexible project support", copy: "Support for individual work packages and broader project requirements." },
-  { title: "Resource coordination", copy: "Coordination of materials, vendors, manpower, and execution resources." },
-  { title: "Quality-focused working", copy: "Attention to specifications, workmanship, safety, and handover." },
-];
-
-export const quality = {
-  qa: {
-    title: "Quality assurance",
-    items: ["Approved drawings and BOQ", "Material verification", "Workmanship inspection", "Stage-wise checks", "Defect / snag closure", "Testing records"],
-  },
-  hse: {
-    title: "Health & safety",
-    items: ["Site induction & toolbox talks", "PPE", "Risk identification", "Safe handling", "Housekeeping", "Incident reporting and corrective actions"],
-  },
-  sustainability: {
-    title: "Environmental responsibility",
-    items: ["Responsible material use", "Waste management", "Resource efficiency", "Renewable energy support", "Responsible site practices"],
-  },
-  governance: {
-    title: "Governance & compliance",
-    items: ["Documented approvals", "Compliance documentation", "Transparent reporting", "Handover records"],
-  },
-};
-
 export type Certification = { name: string; issuer: string; scope: string; validity: string; status: Status };
 
 /** Only add certifications whose validity and scope have been verified. */
@@ -137,22 +109,6 @@ export const teamFunctions = [
 export const leadership: { name: string; designation: string; bio: string; status: Status }[] = [
   { name: "[Approved Name]", designation: "[Designation]", bio: "[Approved biography]", status: "pending" },
 ];
-
-export type ResourceModel = "Owned" | "Leased" | "Hired" | "Partner-provided" | "[To confirm]";
-
-export const equipment: { title: string; copy: string; model: ResourceModel; status: Status }[] = [
-  { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", model: "[To confirm]", status: "pending" },
-  { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", model: "[To confirm]", status: "pending" },
-  { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", model: "[To confirm]", status: "pending" },
-  { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending" },
-];
-
-export const clientLogos: { name: string; logo?: string; status: Status }[] = Array.from({ length: 8 }, (_, i) => ({
-  name: `[Approved client ${i + 1}]`,
-  status: "pending" as Status,
-}));
-
-export const testimonials: { quote: string; author: string; role: string; status: Status }[] = [];
 
 export const faqs = [
   { q: "Which services does Adidev cover?", a: "Telecom infrastructure, solar & renewable energy, civil construction & infrastructure, and commercial interior & fit-out — from individual work packages to broader project requirements." },

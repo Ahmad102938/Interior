@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { aboutIntro, companyFacts } from "@/data/about";
+import { aboutIntro, companyFacts, aboutPage } from "@/content/pages/about";
 import { publishable } from "@/lib/content";
 import { PendingBadge } from "@/components/ui/PendingBadge";
+import { breadcrumbLabels } from "@/content/navigation";
 
 /**
  * Refined opening — not a second cinematic hero. Two equal-height columns:
@@ -27,13 +28,13 @@ export function AboutIntro() {
           <ol className="flex items-center gap-1.5 text-xs text-white/55">
             <li>
               <Link href="/" className="hover:text-white">
-                Home
+                {breadcrumbLabels.home}
               </Link>
             </li>
             <li className="flex items-center gap-1.5">
               <ChevronRight aria-hidden className="size-3" />
               <span aria-current="page" className="text-white/80">
-                About
+                {breadcrumbLabels.about}
               </span>
             </li>
           </ol>
@@ -66,16 +67,17 @@ export function AboutIntro() {
             <div className="relative min-h-[22rem] flex-1 overflow-hidden lg:min-h-[32rem]">
               <Image
                 data-reveal-image
-                src="/images/posters/stage-5.jpg"
-                alt="Illustrative visualisation of a completed ADIDEV-style building at dusk"
+                src={aboutPage.intro.image.src}
+                alt={aboutPage.intro.image.alt}
                 fill
                 priority
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover object-[60%_50%]"
+                className="object-cover"
+                style={{ objectPosition: aboutPage.intro.image.position }}
               />
               <span aria-hidden className="absolute inset-3 border border-gold-pale/30" />
             </div>
-            <figcaption className="mt-3 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/45">Illustrative visualisation</figcaption>
+            {aboutPage.intro.image.caption && <figcaption className="mt-3 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/45">{aboutPage.intro.image.caption}</figcaption>}
           </figure>
         </div>
 

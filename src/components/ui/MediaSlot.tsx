@@ -15,6 +15,8 @@ type Props = {
   priority?: boolean;
   /** Small caption over a real image, e.g. to mark an illustrative render. */
   caption?: string;
+  /** CSS object-position — which part of the photo stays in frame. */
+  position?: string;
 };
 
 const tints: Record<VerticalKey | "neutral", string> = {
@@ -29,11 +31,11 @@ const tints: Record<VerticalKey | "neutral", string> = {
  * Image slot. Renders next/image for real assets, or a restrained technical
  * placeholder (line drawing + slot description) that is clearly replaceable.
  */
-export function MediaSlot({ src, alt, slot, vertical, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority, caption }: Props) {
+export function MediaSlot({ src, alt, slot, vertical, className, sizes = "(min-width: 1024px) 50vw, 100vw", priority, caption, position }: Props) {
   if (src) {
     return (
       <div className={cn("relative overflow-hidden bg-navy", className)}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" style={{ objectPosition: position }} />
         {caption && (
           <p className="absolute bottom-3 left-3 bg-black/45 px-2 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/80 backdrop-blur-sm">
             {caption}

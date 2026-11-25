@@ -10,7 +10,7 @@ export const telecom: ServiceConfig = {
     "Delivering telecom site development, tower-related civil and structural works, fibre infrastructure, equipment coordination and associated power systems.",
   metaDescription:
     "Telecom site development, tower foundation and erection support, fibre optic trenching and duct works, equipment installation coordination, telecom power systems, testing and maintenance.",
-  heroImage: { src: "/images/verticals/telecom.jpg", alt: "Lattice telecom tower with antenna platforms — illustrative visualisation", position: "61% 30%" },
+  heroImage: { src: "/images/verticals/telecom.jpg", alt: "Lattice telecom tower with antenna platforms — illustrative visualisation", position: "61% 30%", caption: "Illustrative visualisation" },
   overview: {
     title: ["The physical layer", "of the network."],
     body: [

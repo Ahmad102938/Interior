@@ -1,37 +1,36 @@
 import { ShieldCheck, ClipboardCheck, Leaf, Landmark } from "lucide-react";
-import { certifications, quality } from "@/data/capabilities";
+import { certifications } from "@/content/capabilities";
 import { publishable } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { cn } from "@/lib/utils";
+import { homePage } from "@/content/pages/home";
+import { SectionBackdrop } from "@/components/ui/SectionBackdrop";
+import { MediaSlot } from "@/components/ui/MediaSlot";
 
-const blocks = [
-  { ...quality.qa, Icon: ClipboardCheck, accent: "text-gold", rule: "bg-gold" },
-  { ...quality.hse, Icon: ShieldCheck, accent: "text-[#5fae86]", rule: "bg-emerald" },
-  { ...quality.sustainability, Icon: Leaf, accent: "text-[#5fae86]", rule: "bg-emerald" },
-  { ...quality.governance, Icon: Landmark, accent: "text-[#8fa6c6]", rule: "bg-navy" },
-];
+const icons = { clipboard: ClipboardCheck, shield: ShieldCheck, leaf: Leaf, landmark: Landmark };
+const tones = {
+  gold: { accent: "text-gold", rule: "bg-gold" },
+  emerald: { accent: "text-[#5fae86]", rule: "bg-emerald" },
+  navy: { accent: "text-[#8fa6c6]", rule: "bg-navy" },
+};
+/** Content: src/content/pages/home.ts → quality.blocks */
+const blocks = homePage.quality.blocks.map((b) => ({ ...b, Icon: icons[b.icon], ...tones[b.tone] }));
 
 /** `standalone`: directly under the Quality page hero (same colour), which already carries the heading. */
 export function QualitySection({ standalone = false }: { standalone?: boolean }) {
   const certs = publishable(certifications);
   return (
-    <section id="quality" data-nav-theme="dark" className={cn("section-y bg-charcoal text-white", standalone && "pt-0!")}>
-      <div className="container-page">
+    <section id="quality" data-nav-theme="dark" className={cn("section-y relative overflow-hidden bg-charcoal text-white", standalone && "pt-0!")}>
+      <SectionBackdrop image={homePage.quality.backgroundImage} overlay="bg-charcoal/90" />
+      <div className="container-page relative">
         {!standalone && (
-          <SectionHeading
-            index="06"
-            eyebrow="Quality, safety & governance"
-            title="Engineered with Discipline."
-            accent="Delivered with Responsibility."
-            tone="dark"
-            align="split"
-            intro="Clear practices on every site — from approved drawings and material verification to PPE, toolbox talks and documented handover."
-          />
+          <SectionHeading index="06" {...homePage.quality.heading} tone="dark" align="split" />
         )}
         <div className={cn("grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-2", !standalone && "mt-14 lg:mt-20")} data-reveal>
-          {blocks.map(({ title, items, Icon, accent, rule }) => (
+          {blocks.map(({ title, items, Icon, accent, rule, image }) => (
             <div key={title} className="relative bg-charcoal-light p-6 sm:p-8 lg:p-10">
+              {image && <MediaSlot src={image.src} alt={image.alt} slot={title} position={image.position} caption={image.caption} className="-mx-6 -mt-6 mb-6 aspect-[16/7] sm:-mx-8 sm:-mt-8 lg:-mx-10 lg:-mt-10" sizes="(min-width: 768px) 50vw, 100vw" />}
               <span aria-hidden className={cn("absolute top-0 left-0 h-0.5 w-16", rule)} />
               <Icon aria-hidden className={cn("size-6", accent)} strokeWidth={1.5} />
               <h3 className="display mt-5 text-3xl">{title}</h3>
@@ -49,7 +48,7 @@ export function QualitySection({ standalone = false }: { standalone?: boolean })
 
         {certs.length > 0 && (
           <div className="mt-10" data-reveal>
-            <p className="eyebrow text-gold-pale">Certifications & compliance</p>
+            <p className="eyebrow text-gold-pale">{homePage.quality.certificationsLabel}</p>
             <ul className="mt-5 grid gap-4 md:grid-cols-2">
               {certs.map((c) => (
                 <li key={c.name} className="flex flex-wrap items-center justify-between gap-4 border border-white/10 bg-charcoal-light p-5">

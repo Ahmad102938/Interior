@@ -3,12 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import { inCategory, type Project } from "@/data/projects";
-import type { Industry } from "@/data/industries";
-import type { Vertical } from "@/data/verticals";
+import { inCategory, type Project } from "@/content/projects";
+import type { Industry } from "@/content/industries";
+import type { Vertical } from "@/content/verticals";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { industriesPage } from "@/content/pages/industries";
+
+const copy = industriesPage.projects;
 
 type Props = {
   /** Approved projects only (filtered on the server). */
@@ -37,7 +40,7 @@ export function IndustryProjects({ projects, industries, verticals, only }: Prop
       {!only && (
         <div role="group" aria-label="Filter projects by industry" className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0">
           <Chip active={filter === "all"} onClick={() => setFilter("all")}>
-            All industries
+            {copy.allLabel}
           </Chip>
           {industries.map((i) => (
             <Chip key={i.slug} active={filter === i.slug} onClick={() => setFilter(i.slug)} dot={verticalClasses[i.relatedVerticals[0]].bg}>
@@ -61,13 +64,13 @@ export function IndustryProjects({ projects, industries, verticals, only }: Prop
         ) : (
           <div className="flex flex-col gap-6 border border-line bg-white p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <p className="display text-[1.75rem] text-navy sm:text-3xl">Project references are being prepared for publication.</p>
+              <p className="display text-[1.75rem] text-navy sm:text-3xl">{copy.empty.title}</p>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate">
-                Only approved case studies are published. Select a sector above to see what we deliver there, or ask for references relevant to your scope.
+                {copy.empty.copy}
               </p>
             </div>
-            <Link href="/request-a-quote" className="inline-flex min-h-12 shrink-0 items-center gap-2 self-start bg-navy px-6 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-navy-deep lg:self-auto">
-              Request references
+            <Link href={copy.empty.cta.href} className="inline-flex min-h-12 shrink-0 items-center gap-2 self-start bg-navy px-6 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-navy-deep lg:self-auto">
+              {copy.empty.cta.label}
               <ArrowUpRight aria-hidden className="size-4" />
             </Link>
           </div>
@@ -82,10 +85,10 @@ function CapabilityOverview({ industry, verticals }: { industry: Industry; verti
   return (
     <div className="grid gap-8 border border-line bg-white p-6 sm:p-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
       <div>
-        <p className="eyebrow text-gold-ink">No public reference yet</p>
+        <p className="eyebrow text-gold-ink">{copy.noReference.eyebrow}</p>
         <p className="display mt-3 text-[1.75rem] text-navy sm:text-3xl">{industry.name}</p>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-slate">
-          Approved project references for this sector will appear here. Until then, these are the requirements we support — references can be shared on request.
+          {copy.noReference.copy}
         </p>
         <div className="mt-6 flex flex-wrap gap-x-6 gap-y-1">
           {related.map((v) => (

@@ -10,7 +10,7 @@ export const civil: ServiceConfig = {
     "Delivering civil and structural solutions for industrial, commercial and infrastructure development, from site preparation and foundations to large-scale structural execution.",
   metaDescription:
     "Civil and structural construction: site development, excavation and earthwork, RCC foundations and frames, industrial sheds and warehouses, PEB-related civil works, roads, drainage, boundary works, renovation and waterproofing.",
-  heroImage: { src: "/images/posters/stage-3.jpg", alt: "Multi-storey structure under construction with tower crane and site plant — illustrative visualisation", position: "45% 55%" },
+  heroImage: { src: "/images/posters/stage-3.jpg", alt: "Multi-storey structure under construction with tower crane and site plant — illustrative visualisation", position: "45% 55%", caption: "Illustrative visualisation" },
   overview: {
     title: ["Structure first.", "Everything else follows."],
     body: [
@@ -75,7 +75,7 @@ export const civil: ServiceConfig = {
     eyebrow: "Industrial buildings & warehouses",
     title: ["Anatomy of an", "industrial shed."],
     intro: "The civil and structural scope behind a typical shed or warehouse. Select a point to see the capability it relates to.",
-    image: { src: "/images/verticals/civil.jpg", alt: "Steel-framed industrial shed on RCC pedestals with starter bars — illustrative visualisation" },
+    image: { src: "/images/verticals/civil.jpg", alt: "Steel-framed industrial shed on RCC pedestals with starter bars — illustrative visualisation", caption: "Illustrative visualisation" },
     callouts: [
       { label: "Site preparation & levelling", copy: "Site development, excavation, earthwork, levelling and grading for the building platform.", covers: ["01", "02", "03"], at: [45, 84] },
       { label: "RCC foundations & pedestals", copy: "RCC foundations and pedestals, with reinforcement set for the columns above.", covers: ["04", "05"], at: [67, 90] },

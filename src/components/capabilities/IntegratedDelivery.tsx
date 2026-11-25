@@ -1,7 +1,8 @@
-import { deliveryFlow } from "@/data/capabilities";
-import { capabilityGroups } from "@/data/capabilityGroups";
+import { deliveryFlow } from "@/content/capabilities";
+import { capabilityGroups } from "@/content/capabilityGroups";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
+import { capabilitiesPage } from "@/content/pages/capabilities";
 
 /** Group indicator colours: navy-light for pre-construction, emerald for execution, maroon for completion. */
 const groupTone: Record<string, string> = {
@@ -25,14 +26,7 @@ export function IntegratedDelivery() {
         style={{ backgroundImage: "linear-gradient(#d8c398 1px, transparent 1px), linear-gradient(90deg, #d8c398 1px, transparent 1px)", backgroundSize: "64px 64px" }}
       />
       <div className="container-page relative">
-        <SectionHeading
-          tone="dark"
-          align="split"
-          eyebrow="Integrated delivery"
-          title="One Integrated Approach."
-          accent="Connected Project Delivery."
-          intro="Each capability hands a defined output to the next, so decisions made at the requirement stage carry through to site and handover."
-        />
+        <SectionHeading tone="dark" align="split" {...capabilitiesPage.integrated.heading} />
 
         <ol className="relative mt-14 grid gap-8 lg:mt-20 lg:grid-cols-7 lg:gap-4">
           {/* Connectors: vertical on small screens, horizontal on large */}
@@ -74,7 +68,7 @@ export function IntegratedDelivery() {
         </div>
 
         <p className="mt-12 max-w-2xl border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-white/65 lg:mt-14">
-          The line is not one-way: progress tracking and reporting (03) and stage-wise checks (06) run alongside site execution and feed back into the plan.
+          {capabilitiesPage.integrated.note}
         </p>
       </div>
     </section>

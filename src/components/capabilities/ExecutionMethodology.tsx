@@ -1,6 +1,7 @@
 import { BadgeCheck, ClipboardList, HardHat, PencilRuler, Truck } from "lucide-react";
-import { executionStages } from "@/data/capabilities";
+import { executionStages } from "@/content/capabilities";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { capabilitiesPage } from "@/content/pages/capabilities";
 
 const icons = [ClipboardList, PencilRuler, Truck, HardHat, BadgeCheck];
 
@@ -13,13 +14,7 @@ export function ExecutionMethodology() {
   return (
     <section id="execution" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
       <div className="container-page">
-        <SectionHeading
-          align="split"
-          eyebrow="Execution methodology"
-          title="Five stages,"
-          accent="brief to handover."
-          intro="Where the capabilities describe what Adidev can do, the methodology is the order in which a project moves — documented and coordinated with the client at every stage."
-        />
+        <SectionHeading align="split" {...capabilitiesPage.methodology.heading} />
         <ol className="relative mt-12 grid gap-10 lg:mt-16 lg:grid-cols-5 lg:gap-8">
           <span aria-hidden className="absolute top-6 bottom-6 left-6 w-px bg-navy/15 lg:hidden" />
           <span aria-hidden data-spine-fill className="absolute top-6 bottom-6 left-6 w-px bg-gold lg:hidden" />

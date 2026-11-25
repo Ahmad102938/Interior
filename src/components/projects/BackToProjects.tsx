@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LISTING_KEY } from "./query";
+import { projectsPage } from "@/content/pages/projects";
 
 const noop = () => () => {};
 const read = () => {
@@ -21,7 +22,7 @@ export function BackToProjects({ className }: { className?: string }) {
   return (
     <Link href={href} className={cn("group inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em]", className)}>
       <ArrowLeft aria-hidden className="size-4 transition-transform group-hover:-translate-x-0.5" />
-      Back to projects
+      {projectsPage.detail.backLabel}
     </Link>
   );
 }

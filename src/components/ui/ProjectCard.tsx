@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { categoryOf, isPublic, locationLabel, projectHref, statusLabel, type Project } from "@/data/projects";
+import { categoryOf, isPublic, locationLabel, projectHref, statusLabel, type Project } from "@/content/projects";
 import { cn } from "@/lib/utils";
 import { MediaSlot } from "./MediaSlot";
 import { PendingBadge } from "./PendingBadge";
 import { verticalClasses } from "./VerticalBadge";
+import { projectsPage } from "@/content/pages/projects";
 
 /**
  * Portfolio card. One link ("View case study") stretched over the card, so the
@@ -60,7 +61,7 @@ export function ProjectCard({ project: p, wide = false, className, headingLevel:
           href={projectHref(p)}
           className="mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-xs font-semibold uppercase tracking-[0.14em] text-maroon outline-none after:absolute after:inset-0 group-hover:text-navy"
         >
-          View case study
+          {projectsPage.card.cta}
           <span className="sr-only">: {p.name}</span>
           <ArrowUpRight aria-hidden className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </Link>

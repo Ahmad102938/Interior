@@ -1,6 +1,7 @@
 import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
 import type { ProjectCategory } from "./projects";
+import type { ImageAsset } from "./types";
 
 /**
  * Industries = WHERE Adidev works. Services (verticals.ts) = WHAT it delivers;
@@ -25,7 +26,7 @@ export type Industry = {
   relatedVerticals: VerticalKey[];
   /** Project categories that count as references for this industry. */
   projectCategories: ProjectCategory[];
-  image: { src: string; alt: string; position?: string };
+  image: ImageAsset;
   publicationStatus: Status;
 };
 
@@ -46,7 +47,7 @@ export const industries: Industry[] = [
     brandAccent: "telecom",
     relatedVerticals: ["telecom"],
     projectCategories: ["telecom"],
-    image: { src: "/images/verticals/telecom.jpg", alt: "Lattice telecom tower — illustrative visualisation", position: "72% 35%" },
+    image: { src: "/images/verticals/telecom.jpg", alt: "Lattice telecom tower — illustrative visualisation", position: "72% 35%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
   {
@@ -65,7 +66,7 @@ export const industries: Industry[] = [
     brandAccent: "solar",
     relatedVerticals: ["solar"],
     projectCategories: ["solar"],
-    image: { src: "/images/verticals/solar.jpg", alt: "Rows of ground-mounted solar arrays — illustrative visualisation", position: "50% 60%" },
+    image: { src: "/images/verticals/solar.jpg", alt: "Rows of ground-mounted solar arrays — illustrative visualisation", position: "50% 60%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
   {
@@ -84,7 +85,7 @@ export const industries: Industry[] = [
     brandAccent: "civil",
     relatedVerticals: ["civil"],
     projectCategories: ["industrial", "renovation"],
-    image: { src: "/images/posters/stage-3.jpg", alt: "Structural frame under construction with tower crane — illustrative visualisation", position: "42% 55%" },
+    image: { src: "/images/posters/stage-3.jpg", alt: "Structural frame under construction with tower crane — illustrative visualisation", position: "42% 55%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
   {
@@ -103,7 +104,7 @@ export const industries: Industry[] = [
     brandAccent: "interiors",
     relatedVerticals: ["interiors", "civil"],
     projectCategories: ["interiors"],
-    image: { src: "/images/verticals/interiors.jpg", alt: "Open commercial floor with glazed meeting room — illustrative visualisation", position: "55% 50%" },
+    image: { src: "/images/verticals/interiors.jpg", alt: "Open commercial floor with glazed meeting room — illustrative visualisation", position: "55% 50%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
   {
@@ -122,7 +123,7 @@ export const industries: Industry[] = [
     brandAccent: "civil",
     relatedVerticals: ["civil"],
     projectCategories: ["industrial"],
-    image: { src: "/images/verticals/civil.jpg", alt: "Steel-framed industrial shed on RCC pedestals — illustrative visualisation", position: "58% 78%" },
+    image: { src: "/images/verticals/civil.jpg", alt: "Steel-framed industrial shed on RCC pedestals — illustrative visualisation", position: "58% 78%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
   {
@@ -141,7 +142,7 @@ export const industries: Industry[] = [
     brandAccent: "telecom",
     relatedVerticals: ["civil"],
     projectCategories: ["civil"],
-    image: { src: "/images/posters/stage-1.jpg", alt: "Building massing set out on a site plan — illustrative visualisation", position: "50% 45%" },
+    image: { src: "/images/posters/stage-1.jpg", alt: "Building massing set out on a site plan — illustrative visualisation", position: "50% 45%", caption: "Illustrative visualisation" },
     publicationStatus: "provisional",
   },
 ];

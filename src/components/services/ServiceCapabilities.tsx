@@ -1,10 +1,11 @@
 import { ChevronDown } from "lucide-react";
-import type { ServiceConfig, Surface } from "@/data/services";
+import type { ServiceConfig, Surface } from "@/content/services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 import { CapabilityGroup } from "./CapabilityGroup";
 import { formatCovers, surface } from "./shared";
+import { servicesPage } from "@/content/pages/services";
 
 /**
  * Numbered capability ledger, grouped. Desktop: group label beside its rows
@@ -19,7 +20,7 @@ export function ServiceCapabilities({ s, tone }: { s: ServiceConfig; tone: Surfa
   return (
     <section id="capabilities" data-nav-theme={sf.navTheme} className={cn("section-y scroll-mt-32", sf.className)}>
       <div className="container-page">
-        <SectionHeading eyebrow="Capabilities" title="What we" accent="deliver." align="split" intro={s.capabilities.intro} />
+        <SectionHeading {...servicesPage.detail.capabilities} align="split" intro={s.capabilities.intro} />
         <div className="mt-12 border-t border-navy/15 lg:mt-16">
           {s.capabilities.groups.map((g, gi) => (
             <CapabilityGroup

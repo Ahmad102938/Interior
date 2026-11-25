@@ -1,9 +1,11 @@
-import { capabilities, equipment } from "@/data/capabilities";
-import { capabilityDelivery, deliveryModels, type DeliveryModelKey } from "@/data/deliveryModels";
+import { capabilities } from "@/content/capabilities";
+import { homePage } from "@/content/pages/home";
+import { capabilityDelivery, deliveryModels, type DeliveryModelKey } from "@/content/deliveryModels";
 import { publishable } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { cn } from "@/lib/utils";
+import { capabilitiesPage } from "@/content/pages/capabilities";
 
 /** Each arrangement has its own glyph (shape, not colour), so labels read without colour. */
 function Glyph({ model, className }: { model: DeliveryModelKey; className?: string }) {
@@ -32,19 +34,12 @@ function Glyph({ model, className }: { model: DeliveryModelKey; className?: stri
 export function DeliveryModel() {
   const verified = capabilityDelivery.filter((d) => d.status === "verified" && d.model);
   const review = publishable(capabilityDelivery).filter((d) => d.status !== "verified");
-  const resources = publishable(equipment);
+  const resources = publishable(homePage.equipment.items);
 
   return (
     <section data-nav-theme="dark" className="section-y bg-charcoal text-white">
       <div className="container-page">
-        <SectionHeading
-          tone="dark"
-          align="split"
-          eyebrow="Delivery model"
-          title="Clear Responsibilities."
-          accent="Coordinated Execution."
-          intro="Projects can draw on different arrangements of expertise and resources, depending on scope and technical requirements. Adidev coordinates the appropriate expertise and resources for the approved scope — and each proposal states which arrangement applies."
-        />
+        <SectionHeading tone="dark" align="split" {...capabilitiesPage.deliveryModel.heading} />
 
         <ul className="mt-12 grid gap-px bg-white/10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {deliveryModels.map((m) => (
@@ -85,7 +80,7 @@ export function DeliveryModel() {
 
         {resources.length > 0 && (
           <div className="mt-14 border-t border-white/10 pt-10 lg:mt-16">
-            <p className="eyebrow text-gold-pale">Equipment & technical resources</p>
+            <p className="eyebrow text-gold-pale">{capabilitiesPage.deliveryModel.resourcesLabel}</p>
             <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {resources.map((e) => (
                 <li key={e.title}>

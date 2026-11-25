@@ -27,10 +27,10 @@ npm run build && npm start   # production — pending content hidden
   - Bloom/vignette via `@react-three/postprocessing` on tablet/desktop only
   - `models/` — shared PBR material library, procedural textures, instancing primitives
   - `ExperienceFallback.tsx` — reduced-motion / Data Saver / no-WebGL story
-- `src/data/story.ts` — hero storyline copy
+- `src/content/pages/home.ts` — hero storyline copy and everything else on the homepage
 - `src/config/experience.ts` — camera keyframes, zone layout, atmospheres, quality tiers
 - `src/config/theme.ts` + `src/app/globals.css` — brand tokens and vertical colour mapping
-- `src/data/` — all business content, each fact with a verification status
+- `src/content/` — **all site content**: page copy (`pages/*.ts`), images (`media.ts`), projects, services, industries, company facts. See `src/content/README.md` for how to edit text and add photos
 - `src/app/api/enquiry/route.ts` — validated enquiry intake (needs `ENQUIRY_WEBHOOK_URL`)
 - `docs/CONTENT_VERIFICATION.md` — what is pending management approval
 

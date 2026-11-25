@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { verticals, serviceHref, verticalImage } from "@/data/verticals";
-import { industryMap, verticalRoles } from "@/data/about";
+import { verticals, serviceHref, verticalImage } from "@/content/verticals";
+import { industryMap, verticalRoles, aboutPage } from "@/content/pages/about";
 import { verticalTheme } from "@/config/theme";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
@@ -17,8 +17,8 @@ export function VerticalsMatrix() {
   return (
     <section data-nav-theme="light" className="section-y bg-ivory">
       <div className="container-page">
-        <AboutHeading index="03" eyebrow="What we do" title="Four verticals." accent="Equal depth.">
-          Each vertical has its own specialists — and shares the same planning, procurement, site and quality disciplines.
+        <AboutHeading index="03" {...aboutPage.verticals.heading}>
+          {aboutPage.verticals.intro}
         </AboutHeading>
 
         <ul className="mt-14 grid gap-4 md:grid-cols-2">
@@ -64,7 +64,7 @@ export function VerticalsMatrix() {
         <div className="mt-12 border-t border-line pt-10 lg:mt-16" data-reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <h3 className="eyebrow text-navy">Industries we serve</h3>
+              <h3 className="eyebrow text-navy">{aboutPage.verticals.industriesLabel}</h3>
               <ul aria-hidden className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
                 {verticals.map((v) => (
                   <li key={v.key} className="flex items-center gap-2 text-xs text-slate">
@@ -74,8 +74,8 @@ export function VerticalsMatrix() {
                 ))}
               </ul>
             </div>
-            <Link href="/industries" className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy">
-              Industry detail
+            <Link href={aboutPage.verticals.industriesLink.href} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy">
+              {aboutPage.verticals.industriesLink.label}
               <ArrowUpRight aria-hidden className="size-4" />
             </Link>
           </div>

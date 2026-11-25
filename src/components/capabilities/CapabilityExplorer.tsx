@@ -2,11 +2,12 @@
 
 import { useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
-import type { Capability } from "@/data/capabilities";
-import { capabilityGroups, groupLabel } from "@/data/capabilityGroups";
+import type { Capability } from "@/content/capabilities";
+import { capabilityGroups, groupLabel } from "@/content/capabilityGroups";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { cn } from "@/lib/utils";
 import { CapabilityVisual } from "./CapabilityVisual";
+import { capabilitiesPage } from "@/content/pages/capabilities";
 
 /** Verified delivery-model label per capability (server-filtered); `pending` marks development-only placeholders. */
 export type DeliveryNote = { number: string; label?: string; pending: boolean };
@@ -156,7 +157,7 @@ function Detail({ c, total, note, on }: { c: Capability; total: string; note: De
 function Activities({ items }: { items: string[] }) {
   return (
     <>
-      <p className="eyebrow mt-6 text-[0.625rem] text-slate">Supporting activities</p>
+      <p className="eyebrow mt-6 text-[0.625rem] text-slate">{capabilitiesPage.explorer.activitiesLabel}</p>
       <ul className="mt-3 grid gap-x-6 gap-y-2.5 sm:grid-cols-2">
         {items.map((it) => (
           <li key={it} className="flex items-start gap-2.5 text-sm text-charcoal">
@@ -174,7 +175,7 @@ function NoteLine({ note }: { note: DeliveryNote }) {
   if (!note.label && !note.pending) return null;
   return (
     <p className="mt-6 flex flex-wrap items-center gap-2 border-t border-line pt-4 text-xs text-slate">
-      <span className="font-semibold uppercase tracking-[0.12em] text-navy">Delivery model</span>
+      <span className="font-semibold uppercase tracking-[0.12em] text-navy">{capabilitiesPage.explorer.deliveryLabel}</span>
       {note.label ?? "To be confirmed by management"}
       {note.pending && <PendingBadge status="pending" />}
     </p>

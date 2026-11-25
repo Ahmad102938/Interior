@@ -1,5 +1,5 @@
 import type { VerticalKey } from "@/config/theme";
-import type { Surface } from "@/data/services";
+import type { Surface } from "@/content/services";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 

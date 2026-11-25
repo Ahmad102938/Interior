@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ArrowDown } from "lucide-react";
-import { executionStages } from "@/data/capabilities";
+import { executionStages } from "@/content/capabilities";
 import { cn } from "@/lib/utils";
+import { homePage } from "@/content/pages/home";
+
+const copy = homePage.execution;
 
 const N = executionStages.length;
 /** Pinned scroll distance per stage (svh). Kept short — one gesture moves one stage. */
@@ -169,7 +173,7 @@ export function ExecutionSection() {
       ref={sectionRef}
       id="execution"
       data-nav-theme="light"
-      aria-label="Execution framework"
+      aria-label={copy.heading.eyebrow}
       className="relative bg-ivory"
       style={{ height: `calc(100svh + ${(N - 1) * STAGE_SVH}svh)` }}
     >
@@ -181,16 +185,16 @@ export function ExecutionSection() {
               <p className="eyebrow flex items-center gap-3 text-gold-ink">
                 <span className="tabular-nums">05</span>
                 <span aria-hidden className="h-px w-10 bg-gold/60" />
-                Execution framework
+                {copy.heading.eyebrow}
               </p>
               <h2 className="display mt-4 text-[2.25rem] text-navy [@media(max-height:740px)]:mt-3 [@media(max-height:740px)]:text-[2rem] sm:text-5xl lg:mt-5 lg:text-[3.5rem] xl:text-[4rem]">
-                From Requirements
+                {copy.heading.title}
                 <br />
-                <em className="font-normal text-maroon">to Handover.</em>
+                <em className="font-normal text-maroon">{copy.heading.accent}</em>
               </h2>
             </div>
             <p className="max-w-xl text-[0.9375rem] leading-relaxed text-slate max-sm:hidden lg:text-[1.0625rem]">
-              A clear five-stage process so every client understands how a project moves from brief to completion.
+              {copy.heading.intro}
             </p>
           </div>
 
@@ -215,7 +219,7 @@ export function ExecutionSection() {
                     type="button"
                     onClick={() => goToRef.current(i)}
                     aria-current={on ? "step" : undefined}
-                    aria-label={`Stage ${s.number}: ${s.title}`}
+                    aria-label={`${copy.stageLabel} ${s.number}: ${s.title}`}
                     className={cn(
                       "relative z-10 grid size-10 shrink-0 place-items-center rounded-full border font-display text-base transition-[background-color,border-color,color,transform] duration-400 ease-(--ease-premium)",
                       on
@@ -301,9 +305,22 @@ export function ExecutionSection() {
                     <h3 className="display text-3xl text-navy sm:text-4xl">{s.title}</h3>
                     <p className="mt-2 max-w-2xl text-[0.9375rem] leading-relaxed text-slate sm:mt-3 sm:text-base">{s.copy}</p>
                   </div>
-                  <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-slate max-lg:hidden">
-                    Stage {s.number} <span className="text-navy/30">/ 0{N}</span>
-                  </p>
+                  {copy.stageImages[s.number] ? (
+                    <div className="relative aspect-[4/3] w-56 overflow-hidden max-lg:hidden xl:w-64 [@media(max-height:800px)]:w-44">
+                      <Image
+                        src={copy.stageImages[s.number].src}
+                        alt={copy.stageImages[s.number].alt}
+                        fill
+                        sizes="256px"
+                        className="object-cover"
+                        style={{ objectPosition: copy.stageImages[s.number].position }}
+                      />
+                    </div>
+                  ) : (
+                    <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-slate max-lg:hidden">
+                      {copy.stageLabel} {s.number} <span className="text-navy/30">/ 0{N}</span>
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -317,7 +334,7 @@ export function ExecutionSection() {
             )}
           >
             <ArrowDown className="size-3.5 motion-safe:animate-bounce" />
-            Scroll to advance
+            {copy.scrollHint}
           </p>
         </div>
       </div>

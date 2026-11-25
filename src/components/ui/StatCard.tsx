@@ -1,4 +1,4 @@
-import type { Metric } from "@/data/company";
+import type { Metric } from "@/content/company";
 import { PendingBadge } from "./PendingBadge";
 
 export function StatCard({ metric }: { metric: Metric }) {

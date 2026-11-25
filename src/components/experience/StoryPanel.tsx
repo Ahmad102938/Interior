@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { storyIntro, storyOutro, type StoryChapter } from "@/data/story";
+import { homePage, type StoryChapter } from "@/content/pages/home";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+
+const storyIntro = homePage.hero.intro;
+const storyOutro = homePage.hero.outro;
 
 /** Opening frame copy — HTML over the 3D world, never rendered in the canvas. */
 export function IntroPanel({ className }: { className?: string }) {

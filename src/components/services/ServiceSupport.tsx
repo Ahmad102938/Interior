@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight, Check } from "lucide-react";
-import type { ServiceConfig, Surface } from "@/data/services";
-import { capabilities } from "@/data/capabilities";
+import type { ServiceConfig, Surface } from "@/content/services";
+import { capabilities } from "@/content/capabilities";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 import { surface } from "./shared";
+import { servicesPage } from "@/content/pages/services";
+
+const t = servicesPage.detail.support;
 
 /**
  * A short selection of the company-wide capabilities behind this division, and
@@ -21,11 +24,8 @@ export function ServiceSupport({ s, tone }: { s: ServiceConfig; tone: Surface })
     <section id="support" data-nav-theme={sf.navTheme} className={cn("section-y scroll-mt-32", sf.className)}>
       <div className="container-page">
         <SectionHeading
-          eyebrow="Behind the delivery"
-          title="Engineering that"
-          accent="supports the site."
+          {...t.heading}
           align="split"
-          intro="Every project draws on capabilities shared across Adidev. These matter most for this division."
         />
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
           {picked.map((cap) => (
@@ -36,13 +36,13 @@ export function ServiceSupport({ s, tone }: { s: ServiceConfig; tone: Surface })
               <p className="mt-3 text-sm leading-relaxed text-slate">{cap.summary}</p>
               <p className="mt-4 text-xs leading-relaxed text-charcoal/80">{cap.items.join(" · ")}</p>
               <span className="mt-auto inline-flex items-center gap-2 pt-6 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-maroon group-hover:text-navy">
-                Capabilities
+                {t.cardCta}
                 <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </span>
             </Link>
           ))}
           <div className={cn("flex flex-col p-6 text-white sm:p-8", c.bg === "bg-navy" ? "bg-charcoal" : "bg-navy")} data-reveal>
-            <p className="eyebrow text-gold-pale">Quality checks on this work</p>
+            <p className="eyebrow text-gold-pale">{t.qualityLabel}</p>
             <ul className="mt-5 space-y-3">
               {s.qualityChecks.map((q) => (
                 <li key={q} className="flex gap-3 text-sm leading-relaxed text-white/85">
@@ -52,10 +52,10 @@ export function ServiceSupport({ s, tone }: { s: ServiceConfig; tone: Surface })
               ))}
             </ul>
             <Link
-              href="/quality-safety-compliance"
+              href={t.qualityLink.href}
               className="mt-auto inline-flex min-h-11 items-center gap-2 self-start pt-6 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-gold-pale hover:text-white"
             >
-              Quality &amp; safety
+              {t.qualityLink.label}
               <ArrowUpRight aria-hidden className="size-4" />
             </Link>
           </div>

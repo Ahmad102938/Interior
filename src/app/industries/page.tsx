@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { industries } from "@/data/industries";
-import { listedProjects } from "@/data/projects";
-import { verticals } from "@/data/verticals";
+import { industries } from "@/content/industries";
+import { listedProjects } from "@/content/projects";
+import { verticals } from "@/content/verticals";
 import { PageHero } from "@/components/ui/PageHero";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -11,10 +11,11 @@ import { IndustryExplorer } from "@/components/industries/IndustryExplorer";
 import { VerticalConnections } from "@/components/industries/VerticalConnections";
 import { IndustryProjects } from "@/components/industries/IndustryProjects";
 import { DeliveryApproach } from "@/components/industries/DeliveryApproach";
+import { industriesPage as page } from "@/content/pages/industries";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "Industries We Serve",
-  description: "Telecom, renewable energy, industrial & manufacturing, commercial & retail, warehousing & logistics, and infrastructure & real estate.",
+  ...page.meta,
   alternates: { canonical: "/industries" },
 };
 
@@ -22,17 +23,14 @@ export default function IndustriesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Industries we serve"
-        title="Where we"
-        accent="deliver."
-        intro="Explore the sectors and operating environments where Adidev brings engineering coordination, infrastructure expertise and project execution capabilities."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Industries" }]}
+        {...page.hero.heading}
+        crumbs={crumbsFor("industries")}
         aside={<IndustriesHeroVisual />}
       >
         <div className="mt-9 flex flex-wrap gap-3">
-          <Button href="#industries">Explore industries</Button>
-          <Button href="/projects" variant="outline-light">
-            View projects
+          <Button href={page.hero.primary.href}>{page.hero.primary.label}</Button>
+          <Button href={page.hero.secondary.href} variant="outline-light">
+            {page.hero.secondary.label}
           </Button>
         </div>
       </PageHero>
@@ -42,13 +40,7 @@ export default function IndustriesPage() {
 
       <section data-nav-theme="light" className="section-y bg-white">
         <div className="container-page">
-          <SectionHeading
-            eyebrow="Project proof"
-            title="Experience"
-            accent="in the field."
-            align="split"
-            intro="Approved project references, filtered by sector. Names, clients and figures are published only once verified."
-          />
+          <SectionHeading {...page.projects.heading} align="split" />
           <div className="mt-12 lg:mt-16">
             <IndustryProjects projects={listedProjects} industries={industries} verticals={verticals.map(({ key, title, slug }) => ({ key, title, slug }))} />
           </div>
@@ -56,7 +48,7 @@ export default function IndustriesPage() {
       </section>
 
       <DeliveryApproach />
-      <CtaBanner title="Have a project in mind?" copy="Tell us about your requirements and the environment in which you are planning to work." />
+      <CtaBanner {...page.cta} />
     </>
   );
 }

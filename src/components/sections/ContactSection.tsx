@@ -1,8 +1,9 @@
-import { contact } from "@/data/company";
+import { contact } from "@/content/company";
 import { isPublishable } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { EnquiryForm } from "./EnquiryForm";
+import { sharedContent } from "@/content/pages/shared";
 
 export function ContactSection({ index = "08", headingLevel = "h2" }: { index?: string; headingLevel?: "h1" | "h2" }) {
   const rows = [contact.office, contact.phone, contact.email, contact.regional, contact.website].filter((c) => isPublishable(c.status));
@@ -14,11 +15,8 @@ export function ContactSection({ index = "08", headingLevel = "h2" }: { index?: 
           <SectionHeading
             as={headingLevel}
             index={index}
-            eyebrow="Contact / request a quote"
-            title="Let's Build"
-            accent="Something Together."
+            {...sharedContent.contact.heading}
             tone="dark"
-            intro="Share your requirement, drawings or BOQ. Our team will review your enquiry and contact you regarding the project requirements."
           />
           <dl className="mt-10 divide-y divide-white/10 border-y border-white/10">
             {rows.map((r) => (

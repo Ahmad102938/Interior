@@ -1,4 +1,7 @@
 import { Button } from "@/components/ui/Button";
+import { aboutPage } from "@/content/pages/about";
+
+const c = aboutPage.cta;
 
 /** Closing invitation — a calm, centred light panel ahead of the maroon footer. */
 export function AboutCta() {
@@ -7,16 +10,16 @@ export function AboutCta() {
       <div className="container-page flex flex-col items-center text-center" data-reveal>
         <span aria-hidden className="h-px w-14 bg-gold" />
         <h2 className="display mt-8 text-[2.5rem] text-navy sm:text-5xl lg:text-[3.5rem]">
-          Talk to the team
+          {c.title}
           <br />
-          <em className="font-normal text-maroon">that plans it and builds it.</em>
+          <em className="font-normal text-maroon">{c.accent}</em>
         </h2>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <Button href="/request-a-quote" variant="primary">
-            Request a quote
+          <Button href={c.primary.href} variant="primary">
+            {c.primary.label}
           </Button>
-          <Button href="/projects" variant="outline-dark">
-            View projects
+          <Button href={c.secondary.href} variant="outline-dark">
+            {c.secondary.label}
           </Button>
         </div>
       </div>

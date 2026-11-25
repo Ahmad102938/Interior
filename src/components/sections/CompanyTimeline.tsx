@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Milestone } from "@/data/history";
+import type { Milestone } from "@/content/history";
 import { PendingBadge } from "@/components/ui/PendingBadge";
+import { aboutPage } from "@/content/pages/about";
 
 /** Horizontal, swipeable company timeline with keyboard-accessible controls. */
 export function CompanyTimeline({ items }: { items: Milestone[] }) {
@@ -16,7 +17,7 @@ export function CompanyTimeline({ items }: { items: Milestone[] }) {
   return (
     <div className="border border-navy/10 bg-navy text-white">
       <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4 lg:px-8">
-        <p className="eyebrow text-gold-pale">Company journey</p>
+        <p className="eyebrow text-gold-pale">{aboutPage.journey.timelineLabel}</p>
         <div className="flex gap-2">
           <button type="button" aria-label="Previous milestones" onClick={() => scrollBy(-1)} className="grid size-11 place-items-center border border-white/20 transition-colors hover:border-gold-pale hover:text-gold-pale">
             <ArrowLeft className="size-4" aria-hidden />

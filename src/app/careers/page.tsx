@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/PageHero";
 import { EnquiryForm } from "@/components/sections/EnquiryForm";
+import { careersPage as page } from "@/content/pages/careers";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "Careers",
-  description: "Engineering, project, site, design and support roles at Adidev.",
+  ...page.meta,
   alternates: { canonical: "/careers" },
 };
 
-const areas = [
-  { title: "Engineering opportunities", copy: "Civil, electrical, telecom, solar, and technical coordination roles." },
-  { title: "Project & site roles", copy: "Project management, site execution, supervision, and quality." },
-  { title: "Design & support roles", copy: "Design coordination, procurement, business development, and administration." },
-];
-
-/** Publish current openings only. Empty until HR supplies live roles. */
-const openings: { role: string; location: string; department: string }[] = [];
+const { areas, openings } = page;
 
 export default function CareersPage() {
   return (
     <>
-      <PageHero eyebrow="Careers" title="Build infrastructure" accent="with us." intro="We welcome engineers, site professionals and coordinators who take pride in careful, safe execution." crumbs={[{ label: "Home", href: "/" }, { label: "Careers" }]} />
+      <PageHero {...page.hero} crumbs={crumbsFor("careers")} />
       <section data-nav-theme="light" className="section-y bg-ivory">
         <div className="container-page grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <div>
@@ -33,7 +27,7 @@ export default function CareersPage() {
               ))}
             </ul>
             <p className="mt-8 text-sm text-slate">
-              {openings.length ? `${openings.length} current openings.` : "There are no published openings right now. Send your details using the form — “Careers” is already selected, and you can attach your resume in step 2."}
+              {openings.length ? page.openingsText.replace("{count}", String(openings.length)) : page.noOpeningsText}
             </p>
           </div>
           <EnquiryForm defaultType="Careers" />

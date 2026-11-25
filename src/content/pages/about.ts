@@ -1,6 +1,8 @@
 import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
-import { industries } from "./industries";
+import { industries } from "../industries";
+import { renders } from "../media";
+import type { Cta, ImageAsset } from "../types";
 
 /**
  * About page content. Sourced from the ADIDEV Editable Website Master
@@ -125,3 +127,56 @@ export const companyFacts: { label: string; value: string; status: Status; note?
   { label: "Team strength", value: "[Verified team size]", status: "pending" },
   { label: "Offices", value: "[Verified office locations]", status: "pending" },
 ];
+
+/** Section headings, labels and images for /about, in page order. */
+export const aboutPage = {
+  meta: {
+    title: "About ADIDEV | Integrated Engineering & Infrastructure Solutions",
+    description:
+      "Discover ADIDEV's integrated capabilities across telecom infrastructure, solar and renewable energy, civil construction, and commercial interior fit-out.",
+  },
+  intro: {
+    /** Hero image beside the intro. */
+    image: { ...renders.completed, alt: "Illustrative visualisation of a completed ADIDEV-style building at dusk", position: "60% 50%" } as ImageAsset,
+  },
+  visionMission: { visionLabel: "Vision", missionLabel: "Mission" },
+  story: { eyebrow: "Who we are", quoteLabel: "How we work", lifecycleLabel: "One team across the whole project lifecycle" },
+  values: {
+    heading: { eyebrow: "Core values", title: "Six commitments", accent: "on every site." },
+    intro: "The standards our teams hold themselves to — on drawings, on site and with every client.",
+  },
+  verticals: {
+    heading: { eyebrow: "What we do", title: "Four verticals.", accent: "Equal depth." },
+    intro: "Each vertical has its own specialists — and shares the same planning, procurement, site and quality disciplines.",
+    industriesLabel: "Industries we serve",
+    industriesLink: { label: "Industry detail", href: "/industries" } satisfies Cta,
+  },
+  operatingSystem: {
+    heading: { eyebrow: "How it connects", title: "Six disciplines", accent: "run through every vertical." },
+    intro: "Whether the work is a telecom site or an office floor, the same coordinated disciplines plan it, cost it, resource it, build it and hand it over.",
+    note: "In-house expertise is distinguished from qualified partner- or vendor-supported delivery on each project.",
+    link: { label: "Capability detail", href: "/capabilities" } satisfies Cta,
+    /** Centre of the diagram (two lines). */
+    centre: ["One delivery", "team"],
+    /** Screen-reader title/description of the diagram. */
+    diagramTitle: "ADIDEV integrated operating system",
+    diagramDescription: "Four business verticals around six shared disciplines, all connected to one delivery team.",
+  },
+  method: {
+    heading: { eyebrow: "Method & people", title: "How a project moves —", accent: "and who moves it." },
+    intro: "Five stages take a project from brief to handover. Each is led by the teams best placed for it, so responsibility is clear at every step.",
+    organisationLabel: "Our organisation",
+    leadershipFallback: "Leadership & management",
+  },
+  responsible: {
+    heading: { eyebrow: "Responsible execution", title: "How we work on site", accent: "matters as much as what we build." },
+    link: { label: "Quality, safety & compliance", href: "/quality-safety-compliance" } satisfies Cta,
+  },
+  journey: { heading: { eyebrow: "Our journey", title: "From one discipline", accent: "to an integrated model." }, timelineLabel: "Company journey" },
+  cta: {
+    title: "Talk to the team",
+    accent: "that plans it and builds it.",
+    primary: { label: "Request a quote", href: "/request-a-quote" } satisfies Cta,
+    secondary: { label: "View projects", href: "/projects" } satisfies Cta,
+  },
+};

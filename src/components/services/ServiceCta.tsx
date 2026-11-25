@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { ServiceConfig } from "@/data/services";
-import { services } from "@/data/services";
+import type { ServiceConfig } from "@/content/services";
+import { services } from "@/content/services";
 import { Button } from "@/components/ui/Button";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 import { quoteHref } from "./shared";
+import { servicesPage } from "@/content/pages/services";
+
+const t = servicesPage.detail.enquiry;
 
 /** Contextual enquiry in the division's colour, then the other three divisions. */
 export function ServiceCta({ s }: { s: ServiceConfig }) {
@@ -19,23 +22,23 @@ export function ServiceCta({ s }: { s: ServiceConfig }) {
           <div className="max-w-2xl">
             <p className="eyebrow flex items-center gap-3 text-gold-pale">
               <span aria-hidden className="h-px w-10 bg-gold-pale/50" />
-              Enquire
+              {t.eyebrow}
             </p>
             <h2 className="display mt-5 text-[2.5rem] sm:text-5xl lg:text-6xl">{s.enquiry.title}</h2>
             <p className="mt-4 max-w-xl text-white/75">{s.enquiry.copy}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button href={quoteHref(s.key)} className="border-gold-pale bg-gold-pale text-navy-deep hover:border-white hover:bg-white">
-              Request a quote
+              {t.primaryLabel}
             </Button>
-            <Button href="/contact" variant="outline-light">
-              Contact us
+            <Button href={t.secondary.href} variant="outline-light">
+              {t.secondary.label}
             </Button>
           </div>
         </div>
 
         <nav aria-label="Other services" className="mt-14 border-t border-white/15 pt-8 lg:mt-20">
-          <p className="eyebrow text-white/70">Other divisions</p>
+          <p className="eyebrow text-white/70">{t.otherLabel}</p>
           <ul className="mt-4 grid gap-px sm:grid-cols-3">
             {others.map((o) => (
               <li key={o.key}>

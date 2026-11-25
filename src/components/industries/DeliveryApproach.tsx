@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { executionStages } from "@/data/capabilities";
+import { executionStages } from "@/content/capabilities";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { industriesPage } from "@/content/pages/industries";
+
+const c = industriesPage.approach;
 
 /**
  * Compact, connected five-stage timeline. The full execution framework lives
@@ -11,14 +14,7 @@ export function DeliveryApproach() {
   return (
     <section data-nav-theme="dark" className="section-y bg-charcoal text-white">
       <div className="container-page">
-        <SectionHeading
-          tone="dark"
-          align="split"
-          eyebrow="Integrated delivery"
-          title="One method,"
-          accent="every environment."
-          intro="Whether the site is a tower, a solar field, a warehouse or a showroom, projects move through the same five documented stages."
-        />
+        <SectionHeading tone="dark" align="split" {...c.heading} />
         <ol className="relative mt-12 grid gap-8 lg:mt-16 lg:grid-cols-5 lg:gap-6">
           {/* Connector: vertical on small screens, horizontal on large */}
           <span aria-hidden className="absolute top-2 bottom-2 left-[0.4375rem] w-px bg-white/15 lg:top-[0.4375rem] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-full" />
@@ -34,10 +30,10 @@ export function DeliveryApproach() {
           ))}
         </ol>
         <Link
-          href="/capabilities#execution"
+          href={c.link.href}
           className="mt-10 inline-flex min-h-11 items-center gap-2 border-b border-gold-pale/40 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:border-gold-pale hover:text-gold-pale lg:mt-12"
         >
-          The full execution framework
+          {c.link.label}
           <ArrowUpRight aria-hidden className="size-4" />
         </Link>
       </div>

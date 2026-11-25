@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react";
 import { Check } from "lucide-react";
-import { capabilities } from "@/data/capabilities";
-import { groupLabel } from "@/data/capabilityGroups";
+import { capabilities } from "@/content/capabilities";
+import { groupLabel } from "@/content/capabilityGroups";
 import { cn } from "@/lib/utils";
 
 const phaseOf = (i: number) => groupLabel(capabilities[i].group);

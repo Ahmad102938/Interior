@@ -1,7 +1,7 @@
 import { Fragment, Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { services, serviceBySlug, type SectionKey, type ServiceConfig, type Surface } from "@/data/services";
+import { services, serviceBySlug, type SectionKey, type ServiceConfig, type Surface } from "@/content/services";
 import { HeroShell } from "@/components/ui/PageHero";
 import { ServiceHero } from "@/components/services/ServiceHero";
 import { ServiceSubnav } from "@/components/services/ServiceSubnav";
@@ -13,6 +13,9 @@ import { ServiceProjects } from "@/components/services/ServiceProjects";
 import { ServiceSupport } from "@/components/services/ServiceSupport";
 import { ServiceCta } from "@/components/services/ServiceCta";
 import { quoteHref } from "@/components/services/shared";
+import { servicesPage } from "@/content/pages/services";
+
+const subnav = servicesPage.detail.subnav;
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -39,12 +42,12 @@ export default function ServicePage({ params }: PageProps<"/services/[slug]">) {
 }
 
 const sections: Record<SectionKey, { id: string; label: (s: ServiceConfig) => string; render: (s: ServiceConfig, tone: Surface) => React.ReactNode }> = {
-  overview: { id: "overview", label: () => "Overview", render: (s, t) => <ServiceOverview s={s} tone={t} /> },
-  capabilities: { id: "capabilities", label: () => "Capabilities", render: (s, t) => <ServiceCapabilities s={s} tone={t} /> },
+  overview: { id: "overview", label: () => subnav.overview, render: (s, t) => <ServiceOverview s={s} tone={t} /> },
+  capabilities: { id: "capabilities", label: () => subnav.capabilities, render: (s, t) => <ServiceCapabilities s={s} tone={t} /> },
   feature: { id: "scope", label: (s) => s.feature.navLabel, render: (s, t) => <ServiceFeature s={s} tone={t} /> },
-  process: { id: "process", label: () => "Process", render: (s, t) => <ServiceProcess s={s} tone={t} /> },
-  projects: { id: "projects", label: () => "Projects", render: (s, t) => <ServiceProjects s={s} tone={t} /> },
-  support: { id: "support", label: () => "Support", render: (s, t) => <ServiceSupport s={s} tone={t} /> },
+  process: { id: "process", label: () => subnav.process, render: (s, t) => <ServiceProcess s={s} tone={t} /> },
+  projects: { id: "projects", label: () => subnav.projects, render: (s, t) => <ServiceProjects s={s} tone={t} /> },
+  support: { id: "support", label: () => subnav.support, render: (s, t) => <ServiceSupport s={s} tone={t} /> },
 };
 
 /** One data-driven template; each division sets its own section order and surfaces. */
@@ -52,7 +55,7 @@ async function ServiceContent({ params }: { params: PageProps<"/services/[slug]"
   const { slug } = await params;
   const s = serviceBySlug(slug);
   if (!s) notFound();
-  const nav = [...s.layout.map(({ section }) => ({ id: sections[section].id, label: sections[section].label(s) })), { id: "enquire", label: "Enquire" }];
+  const nav = [...s.layout.map(({ section }) => ({ id: sections[section].id, label: sections[section].label(s) })), { id: "enquire", label: subnav.enquire }];
 
   return (
     <>

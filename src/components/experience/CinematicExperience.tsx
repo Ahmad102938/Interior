@@ -22,6 +22,7 @@ import { ChapterRail, ChapterRailVertical, StoryTrack } from "./StoryTrack";
 import { ExperienceFallback, posterFor } from "./ExperienceFallback";
 import { tagsAt as siteTags } from "./site/building";
 import { Callout } from "./Callout";
+import { sharedContent } from "@/content/pages/shared";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -336,7 +337,7 @@ export function CinematicExperience() {
                 active === 0 ? "opacity-100" : "opacity-0",
               )}
             >
-              Scroll to explore
+              {sharedContent.heroFallback.scrollHint}
               <span className="relative block h-10 w-px overflow-hidden bg-white/20">
                 <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2s_ease-in-out_infinite] bg-gold-pale" />
               </span>
@@ -349,7 +350,7 @@ export function CinematicExperience() {
                 active === 0 ? "opacity-100" : "opacity-0",
               )}
             >
-              <span className="text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-white/55 [writing-mode:vertical-rl]">Scroll</span>
+              <span className="text-[0.625rem] font-semibold uppercase tracking-[0.22em] text-white/55 [writing-mode:vertical-rl]">{sharedContent.heroFallback.scrollShort}</span>
               <span className="relative block h-10 w-px overflow-hidden bg-white/20">
                 <span className="absolute inset-x-0 top-0 h-1/2 animate-[scrollcue_2s_ease-in-out_infinite] bg-gold-pale" />
               </span>

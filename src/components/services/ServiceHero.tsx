@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import type { ServiceConfig } from "@/data/services";
+import type { ServiceConfig } from "@/content/services";
 import { Button } from "@/components/ui/Button";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
 import { Corners, quoteHref } from "./shared";
+import { servicesPage } from "@/content/pages/services";
+import { breadcrumbLabels } from "@/content/navigation";
+
+const t = servicesPage.detail.hero;
 
 /**
  * Service hero: the division's colour as the environment, the headline on the
@@ -31,13 +35,13 @@ export function ServiceHero({ s }: { s: ServiceConfig }) {
           <ol className="flex flex-wrap items-center gap-1.5 text-xs text-white/55">
             <li>
               <Link href="/" className="hover:text-white">
-                Home
+                {breadcrumbLabels.home}
               </Link>
             </li>
             <li className="flex items-center gap-1.5">
               <ChevronRight aria-hidden className="size-3" />
               <Link href="/services" className="hover:text-white">
-                Services
+                {breadcrumbLabels.services}
               </Link>
             </li>
             <li className="flex items-center gap-1.5">
@@ -65,10 +69,10 @@ export function ServiceHero({ s }: { s: ServiceConfig }) {
             <div className="mt-9 flex flex-wrap gap-3">
               {/* Maroon is the default primary; on the maroon division it becomes pale gold */}
               <Button href={quoteHref(s.key)} className={cn(s.key === "interiors" && "border-gold-pale bg-gold-pale text-maroon hover:border-white hover:bg-white")}>
-                Request a quote
+                {t.primaryLabel}
               </Button>
-              <Button href="#capabilities" variant="outline-light">
-                Explore capabilities
+              <Button href={t.secondary.href} variant="outline-light">
+                {t.secondary.label}
               </Button>
             </div>
           </div>
@@ -86,7 +90,7 @@ export function ServiceHero({ s }: { s: ServiceConfig }) {
               />
               <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/45 to-transparent" />
               <figcaption className="absolute right-4 bottom-4 left-4 flex items-center justify-between gap-4 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/80">
-                <span>Illustrative visualisation</span>
+                <span>{s.heroImage.caption}</span>
                 <span className="tabular-nums text-gold-pale">{s.serviceNumber} / 04</span>
               </figcaption>
             </div>

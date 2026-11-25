@@ -1,4 +1,4 @@
-import { inCategory, locationLabel, projectCategories, type Project, type ProjectCategory } from "@/data/projects";
+import { inCategory, locationLabel, projectCategories, type Project, type ProjectCategory } from "@/content/projects";
 
 /** Listing state, mirrored in the URL: /projects?category=solar&status=completed&page=2 */
 export type Query = {

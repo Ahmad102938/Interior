@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { inCategory, projectCategories, type Project, type ProjectCategory } from "@/data/projects";
+import { inCategory, projectCategories, type Project, type ProjectCategory } from "@/content/projects";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { sharedContent } from "@/content/pages/shared";
+
+const viewAll = sharedContent.projectGallery.viewAll;
 
 /**
  * Home-page portfolio preview: one dominant featured project + supporting grid,
@@ -25,7 +28,7 @@ export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Pro
     <div>
       <div role="group" aria-label="Filter projects by category" className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:flex-wrap md:px-0">
         <FilterButton active={filter === "all"} onClick={() => setFilter("all")} className="bg-navy">
-          All projects
+          {sharedContent.projectGallery.allLabel}
         </FilterButton>
         {available.map((c) => (
           <FilterButton key={c.key} active={filter === c.key} onClick={() => setFilter(c.key)} className={verticalClasses[c.vertical].bg}>
@@ -48,7 +51,7 @@ export function ProjectGallery({ projects, limit, viewAllHref }: { projects: Pro
             )}
           </div>
         ) : (
-          <p className="border border-line bg-white p-6 text-slate sm:p-8">No published projects in this category yet.</p>
+          <p className="border border-line bg-white p-6 text-slate sm:p-8">{sharedContent.projectGallery.emptyCategory}</p>
         )}
       </div>
     </div>
@@ -70,14 +73,14 @@ function ViewAllTile({ href }: { href: string }) {
         }}
       />
       <span aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-0 bg-maroon transition-[height] duration-700 ease-(--ease-premium) group-hover:h-full" />
-      <p className="eyebrow text-gold-pale">Portfolio</p>
+      <p className="eyebrow text-gold-pale">{viewAll.eyebrow}</p>
       <div>
         <p className="display text-[2.25rem] leading-[1.05]">
-          View all
+          {viewAll.title}
           <br />
-          <em className="font-normal text-gold-pale">projects</em>
+          <em className="font-normal text-gold-pale">{viewAll.accent}</em>
         </p>
-        <p className="mt-3 text-sm text-white/60">Telecom, solar, civil and interiors</p>
+        <p className="mt-3 text-sm text-white/60">{viewAll.copy}</p>
       </div>
       <span className="grid size-14 place-items-center self-end rounded-full border border-gold-pale/50 transition-colors duration-500 group-hover:border-white group-hover:bg-white group-hover:text-maroon">
         <ArrowUpRight aria-hidden className="size-5 transition-transform duration-500 group-hover:rotate-45" />

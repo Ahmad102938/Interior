@@ -6,6 +6,9 @@ import { ArrowUpRight } from "lucide-react";
 import type { VerticalKey } from "@/config/theme";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { capabilitiesPage } from "@/content/pages/capabilities";
+
+const copy = capabilitiesPage.crossVertical;
 
 type Cap = { number: string; title: string };
 type Division = { key: VerticalKey; number: string; title: string; href: string; emphasis: string[] };
@@ -23,7 +26,7 @@ export function CrossVertical({ caps, divisions }: { caps: Cap[]; divisions: Div
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
       <div className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
-        <p className="eyebrow text-gold-ink">The framework</p>
+        <p className="eyebrow text-gold-ink">{copy.frameworkLabel}</p>
         <ol className="mt-4 border-t border-navy/15">
           {caps.map((c) => {
             const on = !!active?.emphasis.includes(c.number);
@@ -37,7 +40,7 @@ export function CrossVertical({ caps, divisions }: { caps: Cap[]; divisions: Div
           })}
         </ol>
         <p className="mt-4 hidden text-xs leading-relaxed text-slate lg:block" aria-live="polite">
-          {active ? `Typical emphasis for ${active.title}. All six may apply, depending on the approved scope.` : "Point to a division to highlight the capabilities its work typically leans on."}
+          {active ? copy.activeHint.replace("{division}", active.title) : copy.hint}
         </p>
       </div>
 
@@ -56,12 +59,12 @@ export function CrossVertical({ caps, divisions }: { caps: Cap[]; divisions: Div
                 <span aria-hidden className="absolute top-0 left-0 h-0.5 w-12 bg-gold-pale transition-[width] duration-500 group-hover:w-full" />
                 <span className="font-display text-lg text-gold-pale tabular-nums">{d.number}</span>
                 <span className="display mt-2 text-[1.75rem] leading-tight">{d.title}</span>
-                <span className="mt-5 text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-white/75">Typical emphasis</span>
+                <span className="mt-5 text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-white/75">{copy.emphasisLabel}</span>
                 <span className="mt-2 text-sm leading-relaxed text-white/80">
                   {d.emphasis.map((n) => caps.find((c) => c.number === n)?.title).join(" · ")}
                 </span>
                 <span className="mt-auto inline-flex items-center gap-2 pt-6 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-gold-pale group-hover:text-white">
-                  View service
+                  {copy.cardCta}
                   <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </span>
               </Link>

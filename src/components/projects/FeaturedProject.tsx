@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { categoryOf, isPublic, locationLabel, projectHref, type Project } from "@/data/projects";
+import { categoryOf, isPublic, locationLabel, projectHref, type Project } from "@/content/projects";
 import { MediaSlot } from "@/components/ui/MediaSlot";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { StatusBadge } from "@/components/ui/ProjectCard";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { projectsPage } from "@/content/pages/projects";
 
 /**
  * Editorial lead: a dominant photograph with the project's story set on an
@@ -20,7 +21,7 @@ export function FeaturedProject({ project: p }: { project: Project }) {
       <div className="container-page">
         <p className="eyebrow flex items-center gap-3 text-gold-ink">
           <span aria-hidden className="h-px w-10 bg-gold/60" />
-          Featured project
+          {projectsPage.featured.eyebrow}
         </p>
         <article className="group relative mt-8 grid lg:mt-10 lg:grid-cols-12">
           <div className="relative aspect-[16/10] overflow-hidden bg-navy lg:col-span-9 lg:col-start-1 lg:row-start-1 lg:aspect-auto lg:min-h-[36rem]">
@@ -64,7 +65,7 @@ export function FeaturedProject({ project: p }: { project: Project }) {
               href={projectHref(p)}
               className="mt-8 inline-flex min-h-12 items-center gap-2.5 bg-navy px-6 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors after:absolute after:inset-0 hover:bg-maroon"
             >
-              View case study
+              {projectsPage.featured.cta}
               <span className="sr-only">: {p.name}</span>
               <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>

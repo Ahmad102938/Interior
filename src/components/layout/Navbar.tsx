@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
-import { isActivePath, mainNav } from "@/data/navigation";
+import { headerContent, isActivePath, mainNav } from "@/content/navigation";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
@@ -68,7 +68,7 @@ export function Navbar() {
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-10 focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy"
       >
-        Skip to content
+        {headerContent.skipLink}
       </a>
 
       <div className="container-page flex h-[4.5rem] items-center gap-6 lg:h-20">
@@ -132,8 +132,8 @@ export function Navbar() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 lg:ml-2 xl:ml-4">
-          <Button href="/request-a-quote" variant="primary" arrow={false} className="hidden h-11 min-h-0 px-5 text-xs sm:inline-flex">
-            Request a Quote
+          <Button href={headerContent.quoteCta.href} variant="primary" arrow={false} className="hidden h-11 min-h-0 px-5 text-xs sm:inline-flex">
+            {headerContent.quoteCta.label}
           </Button>
           <MobileMenu tone={light ? "dark" : "light"} />
         </div>

@@ -1,10 +1,14 @@
 import Image from "next/image";
-import { storyChapters } from "@/data/story";
 import { cn } from "@/lib/utils";
+import { homePage } from "@/content/pages/home";
+import { sharedContent } from "@/content/pages/shared";
 import { ChapterPanel, IntroPanel } from "./StoryPanel";
 
-/** Stills of the hero site at each stage (0 = blueprint … 5 = interior). */
-export const posterFor = (stage: number) => `/images/posters/stage-${stage}.jpg`;
+const storyChapters = homePage.hero.chapters;
+const posters = homePage.hero.posters;
+
+/** Stills of the hero site at each stage (0 = blueprint … 5 = interior). Edit in src/content/pages/home.ts (hero.posters). */
+export const posterFor = (stage: number) => posters[stage] ?? posters[0];
 
 const stageBg: Record<string, string> = {
   design: "bg-navy",
@@ -32,8 +36,8 @@ export function ExperienceFallback({ className }: { className?: string }) {
 
       <div className="pb-16 md:pb-24">
         <div className="container-page flex items-end justify-between pb-6">
-          <p className="eyebrow text-gold-pale">Design → Plan → Build → Handover → Interior</p>
-          <p className="text-xs text-white/50 md:hidden">Swipe →</p>
+          <p className="eyebrow text-gold-pale">{sharedContent.heroFallback.stagesLabel}</p>
+          <p className="text-xs text-white/50 md:hidden">{sharedContent.heroFallback.swipeHint}</p>
         </div>
         <ol className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 md:grid md:grid-cols-2 md:overflow-visible md:px-10 xl:grid-cols-5 xl:px-14 [scrollbar-width:none]">
           {storyChapters.map((c, i) => (

@@ -5,8 +5,8 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { isActivePath, mainNav } from "@/data/navigation";
-import { contact } from "@/data/company";
+import { headerContent, isActivePath, mainNav } from "@/content/navigation";
+import { contact } from "@/content/company";
 import { isPublishable } from "@/lib/content";
 import { Logo } from "@/components/ui/Logo";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
@@ -82,7 +82,7 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
           tone === "dark" ? "border-navy/20 text-navy hover:border-navy" : "border-white/25 text-white hover:border-white/60",
         )}
       >
-        <span className="hidden lg:inline">Menu</span>
+        <span className="hidden lg:inline">{headerContent.menuLabel}</span>
         <Menu className="size-5" aria-hidden />
       </button>
 
@@ -107,7 +107,7 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
                   onClick={() => close()}
                   className="flex h-11 min-w-11 items-center justify-center gap-2.5 border border-white/25 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:border-white/60"
                 >
-                  <span className="hidden lg:inline">Close</span>
+                  <span className="hidden lg:inline">{headerContent.closeLabel}</span>
                   <X className="size-5" aria-hidden />
                 </button>
               </div>
@@ -152,7 +152,7 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
               <div className="flex flex-col gap-10">
                 <section aria-labelledby="menu-services">
                   <h2 id="menu-services" className="eyebrow text-gold-pale">
-                    Business verticals
+                    {headerContent.verticalsLabel}
                   </h2>
                   <ul className="mt-4 grid gap-1">
                     {mainNav
@@ -177,10 +177,10 @@ export function MobileMenu({ tone }: { tone: "light" | "dark" }) {
 
                 <div className="mt-auto grid gap-3">
                   <Link
-                    href="/request-a-quote"
+                    href={headerContent.quoteCta.href}
                     className="flex min-h-13 items-center justify-center gap-2 bg-maroon text-sm font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-maroon-light"
                   >
-                    Request a Quote
+                    {headerContent.quoteCta.label}
                     <ArrowUpRight aria-hidden className="size-4" />
                   </Link>
                   {phone && (

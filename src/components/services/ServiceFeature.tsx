@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ServiceConfig, Surface } from "@/data/services";
+import type { ServiceConfig, Surface } from "@/content/services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
 import { CalloutFigure } from "./CalloutFigure";
@@ -66,7 +66,7 @@ function InteriorJourney({ steps }: { steps: Steps }) {
                 </div>
                 <div className={cn("relative aspect-[4/3] overflow-hidden", flip && "lg:order-1")} data-reveal-image>
                   <Image src={st.image.src} alt={st.image.alt} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" style={{ objectPosition: st.image.position }} />
-                  <p className="absolute bottom-3 left-3 bg-black/45 px-2 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/80">Illustrative visualisation</p>
+                  {st.image.caption && <p className="absolute bottom-3 left-3 bg-black/45 px-2 py-1 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white/80">{st.image.caption}</p>}
                 </div>
               </div>
             ) : (

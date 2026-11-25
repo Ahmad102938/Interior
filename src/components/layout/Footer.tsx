@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { company, contact } from "@/data/company";
-import { footerQuickLinks } from "@/data/navigation";
-import { verticals, serviceHref } from "@/data/verticals";
+import { company, contact } from "@/content/company";
+import { footerContent as t, footerQuickLinks } from "@/content/navigation";
+import { verticals, serviceHref } from "@/content/verticals";
 import { isPublishable } from "@/lib/content";
 import { Logo } from "@/components/ui/Logo";
 import { PendingBadge } from "@/components/ui/PendingBadge";
@@ -19,10 +19,10 @@ export function Footer() {
             {company.tagline[0]} {company.tagline[1]}
           </p>
         </div>
-        <FooterList title="Services" links={verticals.map((v) => ({ label: v.title, href: serviceHref(v) }))} />
-        <FooterList title="Company" links={footerQuickLinks} />
+        <FooterList title={t.servicesTitle} links={verticals.map((v) => ({ label: v.title, href: serviceHref(v) }))} />
+        <FooterList title={t.companyTitle} links={footerQuickLinks} />
         <div>
-          <h2 className="eyebrow text-gold-pale">Contact</h2>
+          <h2 className="eyebrow text-gold-pale">{t.contactTitle}</h2>
           <ul className="mt-5 space-y-3 text-sm text-white/80">
             {contactRows.map((c) => (
               <li key={c.label} className="flex flex-wrap items-center gap-2">
@@ -51,10 +51,13 @@ export function Footer() {
       </div>
       <div className="border-t border-white/15">
         <div className="container-page flex flex-col gap-3 pt-6 pb-[calc(1.5rem+var(--safe-bottom))] text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>© <CopyrightYear /> Adidev. All Rights Reserved.</p>
+          <p>© <CopyrightYear /> {t.copyright}</p>
           <p className="flex gap-5">
-            <Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-white">Terms & Conditions</Link>
+            {t.legalLinks.map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-white">
+                {l.label}
+              </Link>
+            ))}
           </p>
         </div>
       </div>

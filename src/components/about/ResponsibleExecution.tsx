@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { responsibility } from "@/data/about";
-import { certifications } from "@/data/capabilities";
+import { responsibility, aboutPage } from "@/content/pages/about";
+import { certifications } from "@/content/capabilities";
 import { publishable } from "@/lib/content";
 import { PendingBadge } from "@/components/ui/PendingBadge";
 import { AboutHeading } from "./AboutHeading";
@@ -12,9 +12,9 @@ export function ResponsibleExecution() {
   return (
     <section data-nav-theme="dark" className="section-y bg-navy text-white">
       <div className="container-page">
-        <AboutHeading index="06" eyebrow="Responsible execution" title="How we work on site" accent="matters as much as what we build." tone="dark" end>
-          <Link href="/quality-safety-compliance" className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold-pale hover:text-white">
-            Quality, safety & compliance
+        <AboutHeading index="06" {...aboutPage.responsible.heading} tone="dark" end>
+          <Link href={aboutPage.responsible.link.href} className="inline-flex min-h-11 items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold-pale hover:text-white">
+            {aboutPage.responsible.link.label}
             <ArrowUpRight aria-hidden className="size-4" />
           </Link>
         </AboutHeading>

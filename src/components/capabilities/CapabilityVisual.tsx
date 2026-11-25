@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { mediaLabels } from "@/content/media";
+import { capabilitiesPage } from "@/content/pages/capabilities";
 
 /**
  * One visual per capability: our renders where they show the activity, and
@@ -7,11 +9,8 @@ import { cn } from "@/lib/utils";
  * carry no figures, rates or dates — they show the kind of work, not a record.
  */
 
-const images: Record<string, { src: string; alt: string; position?: string }> = {
-  "01": { src: "/images/posters/stage-0.jpg", alt: "Coordinated site and building layout drawing — illustrative visualisation", position: "60% 45%" },
-  "05": { src: "/images/posters/stage-3.jpg", alt: "Structure under construction with crane, plant and site teams — illustrative visualisation", position: "48% 55%" },
-  "06": { src: "/images/posters/stage-5.jpg", alt: "Completed building at handover — illustrative visualisation", position: "55% 50%" },
-};
+/** Edit in src/content/pages/capabilities.ts (explorer.images). */
+const images = capabilitiesPage.explorer.images;
 
 const grid = {
   backgroundImage: "linear-gradient(rgba(23,44,72,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(23,44,72,0.06) 1px, transparent 1px)",
@@ -32,9 +31,11 @@ export function CapabilityVisual({ number, className, sizes = "(min-width: 1024p
           {number === "04" && <SupplyFlow />}
         </div>
       )}
-      <figcaption className={cn("absolute bottom-3 left-3 px-2 py-1 text-[0.5625rem] font-semibold uppercase tracking-[0.16em]", img ? "bg-black/45 text-white/85" : "bg-white/80 text-slate")}>
-        {img ? "Illustrative visualisation" : "Illustrative diagram"}
-      </figcaption>
+      {(!img || img.caption) && (
+        <figcaption className={cn("absolute bottom-3 left-3 px-2 py-1 text-[0.5625rem] font-semibold uppercase tracking-[0.16em]", img ? "bg-black/45 text-white/85" : "bg-white/80 text-slate")}>
+          {img ? img.caption : mediaLabels.diagram}
+        </figcaption>
+      )}
     </figure>
   );
 }

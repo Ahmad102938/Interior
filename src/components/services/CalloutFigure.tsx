@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Callout } from "@/data/services";
+import type { Callout } from "@/content/services";
 import { cn } from "@/lib/utils";
 import { formatCovers } from "./shared";
 

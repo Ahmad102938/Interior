@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { categoryOf, listedProjects, projectCategories } from "@/data/projects";
-import { services } from "@/data/services";
+import { categoryOf, listedProjects, projectCategories } from "@/content/projects";
+import { services } from "@/content/services";
 import { PageHero } from "@/components/ui/PageHero";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -13,10 +13,11 @@ import { FeaturedProject } from "@/components/projects/FeaturedProject";
 import { ProjectsHeroVisual } from "@/components/projects/ProjectsHeroVisual";
 import { ProjectExplorer, ProjectExplorerFromUrl } from "@/components/projects/ProjectExplorer";
 import { cn } from "@/lib/utils";
+import { projectsPage as page } from "@/content/pages/projects";
+import { crumbsFor } from "@/content/navigation";
 
 export const metadata: Metadata = {
-  title: "Projects & Portfolio",
-  description: "Completed and ongoing work across telecom infrastructure, renewable energy, civil construction, industrial facilities and commercial fit-outs.",
+  ...page.meta,
   alternates: { canonical: "/projects" },
 };
 
@@ -27,19 +28,16 @@ export default function ProjectsPage() {
   const stats =
     list.length > 0
       ? [
-          { label: list.length === 1 ? "Project" : "Projects", value: list.length },
-          { label: "Categories", value: projectCategories.filter((c) => list.some((p) => p.category === c.key)).length },
+          { label: list.length === 1 ? page.hero.stats.project : page.hero.stats.projects, value: list.length },
+          { label: page.hero.stats.categories, value: projectCategories.filter((c) => list.some((p) => p.category === c.key)).length },
         ]
       : [];
 
   return (
     <>
       <PageHero
-        eyebrow="Projects & portfolio"
-        title="Proven Through"
-        accent="Projects."
-        intro="Explore ADIDEV's completed and ongoing work across telecom infrastructure, renewable energy, civil construction, industrial facilities and commercial fit-outs."
-        crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
+        {...page.hero.heading}
+        crumbs={crumbsFor("projects")}
         aside={<ProjectsHeroVisual image={featured?.featuredImage} index={list.length > 0} />}
       >
         {stats.length > 0 && (
@@ -53,9 +51,9 @@ export default function ProjectsPage() {
           </dl>
         )}
         <div className="mt-9 flex flex-wrap gap-3">
-          <Button href={list.length > 0 ? "#portfolio" : "#categories"}>Explore projects</Button>
-          <Button href="/request-a-quote" variant="outline-light">
-            Request a quote
+          <Button href={list.length > 0 ? "#portfolio" : "#categories"}>{page.hero.primaryLabel}</Button>
+          <Button href={page.hero.secondary.href} variant="outline-light">
+            {page.hero.secondary.label}
           </Button>
         </div>
       </PageHero>
@@ -65,7 +63,7 @@ export default function ProjectsPage() {
       {list.length > 0 ? (
         <section id="portfolio" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
           <div className="container-page">
-            <SectionHeading eyebrow="Portfolio" title="Browse" accent="the work." align="split" intro="Filter by category and status. Every case study lists the actual scope delivered on that project." />
+            <SectionHeading {...page.portfolio.heading} align="split" />
             <div className="mt-10 lg:mt-14">
               <Suspense fallback={<ProjectExplorer projects={list} query={{ page: 1 }} />}>
                 <ProjectExplorerFromUrl projects={list} />
@@ -77,7 +75,7 @@ export default function ProjectsPage() {
         <PortfolioPending />
       )}
 
-      <CtaBanner title="Request project references." copy="We can share relevant project references for your scope on request." />
+      <CtaBanner {...page.cta} />
     </>
   );
 }
@@ -87,13 +85,7 @@ function PortfolioPending() {
   return (
     <section id="categories" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
       <div className="container-page">
-        <SectionHeading
-          eyebrow="Portfolio"
-          title="Case studies are being"
-          accent="prepared for publication."
-          align="split"
-          intro="Project names, clients, figures and photographs are published only once approved. Meanwhile, explore the scope behind each category."
-        />
+        <SectionHeading {...page.portfolio.pendingHeading} align="split" />
         <ul className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {projectCategories.map((c, i) => {
             const service = services.find((s) => s.key === c.vertical)!;

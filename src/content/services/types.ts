@@ -1,6 +1,7 @@
 import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
 import type { ProjectCategory } from "../projects";
+import type { ImageAsset, ImageSlot } from "../types";
 
 /**
  * One configuration per service page. Capability titles, process stages and
@@ -10,7 +11,7 @@ import type { ProjectCategory } from "../projects";
  * "coordination" are kept wherever the source uses them.
  */
 
-export type ServiceImage = { src: string; alt: string; position?: string };
+export type ServiceImage = ImageAsset;
 
 export type ServiceCapability = { number: string; title: string; copy?: string };
 
@@ -64,8 +65,11 @@ export type ServiceConfig = {
   process: { intro: string; steps: ProcessStep[] };
   /** Project categories that count as references on this page. */
   projectCategories: ProjectCategory[];
-  /** Concept image slots shown while no approved reference exists (slide wording). */
-  referenceSlots: string[];
+  /**
+   * Concept image slots shown while no approved reference exists (slide wording).
+   * A plain string shows a placeholder; use { slot, src, alt } to show a photo.
+   */
+  referenceSlots: (string | ImageSlot)[];
   /** Numbers from capabilities.ts most relevant to this vertical (a short selection). */
   relatedCapabilities: string[];
   /** Items from quality.qa that matter most for this work. */

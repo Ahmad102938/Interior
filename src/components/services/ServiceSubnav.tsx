@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LAST_VERTICAL_KEY } from "./shared";
+import { servicesPage } from "@/content/pages/services";
 
 type Item = { id: string; label: string };
 
@@ -67,7 +68,7 @@ export function ServiceSubnav({ items, quote, title, vertical }: { items: Item[]
           ))}
         </ol>
         <a href={quote} className="hidden h-12 shrink-0 items-center gap-2 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-maroon hover:text-navy md:inline-flex">
-          Request a quote
+          {servicesPage.detail.subnavCta}
           <ArrowUpRight aria-hidden className="size-4" />
         </a>
       </div>

@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { industries, industryHref, type Industry } from "@/data/industries";
-import { serviceHref, verticalByKey } from "@/data/verticals";
+import { industries, industryHref, type Industry } from "@/content/industries";
+import { serviceHref, verticalByKey } from "@/content/verticals";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
 import { cn } from "@/lib/utils";
+import { industriesPage } from "@/content/pages/industries";
 
 /*
  * Editorial grid — a dominant pair, a row of three, then one wide banner —
@@ -24,13 +25,7 @@ export function IndustryExplorer() {
   return (
     <section id="industries" data-nav-theme="light" className="section-y scroll-mt-20 bg-ivory">
       <div className="container-page">
-        <SectionHeading
-          eyebrow="Industries we serve"
-          title="Find your sector."
-          accent="Six operating environments."
-          align="split"
-          intro="Industries describe where we work. Choose one to see the requirements we support there, the services involved and, where approved, project references."
-        />
+        <SectionHeading {...industriesPage.explorer.heading} align="split" />
         <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-12 lg:gap-5">
           {industries.map((ind, i) => (
             <IndustryTile key={ind.slug} industry={ind} className={layout[i]} wide={i === industries.length - 1} />
