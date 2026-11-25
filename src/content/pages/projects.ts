@@ -1,5 +1,5 @@
 import { renders } from "../media";
-import type { Cta, Heading, ImageAsset } from "../types";
+import { image, type Cta, type Heading } from "../types";
 
 /**
  * /projects and /projects/[slug] — section copy and images.
@@ -21,7 +21,7 @@ export const projectsPage = {
     primaryLabel: "Explore projects",
     secondary: { label: "Request a quote", href: "/request-a-quote" } satisfies Cta,
     /** Hero image when no featured project has a photo. */
-    fallbackImage: { ...renders.construction, position: "45% 55%" } as ImageAsset,
+    fallbackImage: image({ ...renders.construction, position: "45% 55%" }),
     categoriesLabel: "Portfolio categories",
     /** Counters under the hero (numbers are counted automatically). */
     stats: { project: "Project", projects: "Projects", categories: "Categories" },

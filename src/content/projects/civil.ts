@@ -15,7 +15,7 @@ export const civilProjects: Project[] = [
     summary: "[Approved introduction] RCC foundations, PEB-related civil works, flooring and external development.",
     scope: ["RCC foundations and pedestals", "PEB-related civil works", "Roads, paving and drainage"],
     highlights: ["[Verified execution highlight]"],
-    featuredImage: { src: "/images/verticals/civil.jpg", alt: "Sample image — steel-framed industrial shed (illustrative visualisation)", position: "55% 60%" },
+    featuredImage: { src: "/images/projects/cvl1.webp", alt: "Sample image — steel-framed industrial shed (illustrative visualisation)", position: "55% 60%" },
     gallery: [{ phase: "during", src: "/images/verticals/civil.jpg", alt: "Sample image — shed frame on RCC pedestals", caption: "Sample — replace with an approved execution photograph" }],
     publicationStatus: "draft",
   },
@@ -29,6 +29,7 @@ export const civilProjects: Project[] = [
     projectStatus: "ongoing",
     summary: "[Approved introduction] Excavation, RCC foundations, columns, beams and slabs.",
     scope: ["Excavation and earthwork", "RCC foundations, columns, beams and slabs"],
+    featuredImage: { src: "/images/projects/cvl2.jpeg", alt: "Sample image — steel-framed industrial shed (illustrative visualisation)", position: "55% 60%" },
     publicationStatus: "draft",
   },
   {
@@ -41,6 +42,7 @@ export const civilProjects: Project[] = [
     projectStatus: "completed",
     summary: "[Approved introduction] Repair, waterproofing and facility improvements to an operating building.",
     scope: ["Renovation and repair", "Waterproofing and facility improvements"],
+    featuredImage: { src: "/images/projects/civil1.png", alt: "Sample image — steel-framed industrial shed (illustrative visualisation)", position: "55% 60%" },
     publicationStatus: "draft",
   },
 ];

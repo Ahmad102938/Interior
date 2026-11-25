@@ -1,5 +1,5 @@
 import { renders } from "../media";
-import type { Cta, Heading, ImageAsset } from "../types";
+import { image, type Cta, type Heading } from "../types";
 
 /**
  * /industries and /industries/[slug] — section copy and images.
@@ -22,9 +22,9 @@ export const industriesPage = {
     secondary: { label: "View projects", href: "/projects" } satisfies Cta,
     /** Three-image composition on large screens. */
     images: {
-      main: { ...renders.completed, position: "60% 50%" } as ImageAsset,
-      plan: { ...renders.model, position: "55% 45%" } as ImageAsset,
-      interior: { ...renders.interior, position: "40% 60%" } as ImageAsset,
+      main: image({ src: "/images/projects/telecom2.jpg", alt: "Telecom", position: "60% 50%" }),
+      plan: image({ src: "/images/projects/solarimg.webp", alt: "Telecom", position: "55% 45%" }),
+      interior: image({ src: "/images/projects/constr.jpg", alt: "Telecom", position: "40% 60%" }),
     },
   },
 

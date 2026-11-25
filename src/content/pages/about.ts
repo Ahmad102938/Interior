@@ -2,7 +2,7 @@ import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
 import { industries } from "../industries";
 import { renders } from "../media";
-import type { Cta, ImageAsset } from "../types";
+import { image, type Cta } from "../types";
 
 /**
  * About page content. Sourced from the ADIDEV Editable Website Master
@@ -137,7 +137,7 @@ export const aboutPage = {
   },
   intro: {
     /** Hero image beside the intro. */
-    image: { ...renders.completed, alt: "Illustrative visualisation of a completed ADIDEV-style building at dusk", position: "60% 50%" } as ImageAsset,
+    image: image({ ...renders.completed, alt: "Illustrative visualisation of a completed ADIDEV-style building at dusk", position: "60% 50%" }),
   },
   visionMission: { visionLabel: "Vision", missionLabel: "Mission" },
   story: { eyebrow: "Who we are", quoteLabel: "How we work", lifecycleLabel: "One team across the whole project lifecycle" },

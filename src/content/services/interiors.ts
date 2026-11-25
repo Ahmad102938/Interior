@@ -10,7 +10,7 @@ export const interiors: ServiceConfig = {
     "Transforming commercial environments through space planning, design coordination, technical integration, finishing and fit-out execution.",
   metaDescription:
     "Commercial interior and fit-out for offices, retail and showrooms: space planning, working drawings, 3D visualisation where available, BOQ and procurement coordination, MEP coordination, finishes, furniture and final handover.",
-  heroImage: { src: "/images/verticals/interiors.jpg", alt: "Open-plan commercial floor with a glazed meeting room — illustrative visualisation", position: "60% 50%", caption: "Illustrative visualisation" },
+  heroImage: { src: "/images/projects/intrer.png", alt: "Open-plan commercial floor with a glazed meeting room — illustrative visualisation", position: "60% 50%", caption: "Illustrative visualisation" },
   overview: {
     title: ["Workplaces, retail", "and showrooms."],
     body: [
@@ -108,7 +108,7 @@ export const interiors: ServiceConfig = {
         title: "Build and coordinate",
         copy: "Masonry, flooring, ceilings, partitions and finishes, with electrical, lighting, HVAC, plumbing, fire and low-voltage systems coordinated.",
         covers: ["10", "11", "12", "13", "14", "15", "16"],
-        image: { src: "/images/posters/stage-4.jpg", alt: "Workplace with feature lighting, workstations and planters — illustrative visualisation", position: "50% 55%", caption: "Illustrative visualisation" },
+        image: { src: "/images/projects/intrer.png", alt: "Workplace with feature lighting, workstations and planters — illustrative visualisation", position: "50% 55%", caption: "Illustrative visualisation" },
       },
       {
         title: "Fit out and hand over",

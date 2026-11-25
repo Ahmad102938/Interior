@@ -2,7 +2,7 @@ import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
 import type { Metric } from "../company";
 import { renders } from "../media";
-import type { Cta, Heading, ImageAsset, ImageSlot } from "../types";
+import { imageMap, type Cta, type Heading, type ImageAsset } from "../types";
 
 /**
  * HOMEPAGE (/) — everything on the page, in the order it appears.
@@ -124,16 +124,11 @@ export const homePage = {
      * and set status: "verified" to publish them.
      */
     metrics: [
-      { id: "experience", value: "[00]", label: "Years of operation", detail: "Calculated from the confirmed establishment year.", status: "pending", note: "Depends on the 2014 vs 2017 establishment date conflict." },
+      { id: "experience", value: "[0]", label: "Years of operation", detail: "Calculated from the confirmed establishment year.", status: "pending", note: "Depends on the 2014 vs 2017 establishment date conflict." },
       { id: "states", value: "[00]", label: "States with project presence", detail: "Operational footprint across Indian states.", status: "pending", note: "Figma draft shows 18 States — unverified." },
       { id: "sites", value: "[0,000+]", label: "Telecom sites supported", detail: "Site development, installation and allied works.", status: "pending", note: "Figma draft shows 1,000+ LTE — unverified." },
       { id: "team", value: "[000+]", label: "Engineers & site professionals", detail: "Project management, engineering and site supervision.", status: "pending" },
     ] as Metric[],
-    /**
-     * Team / office photo. Add a `src` to show it. With metrics published it sits
-     * above the stats; with none, it takes their place (placeholder until `src` is set).
-     */
-    image: { slot: "Office / team photograph", alt: "The ADIDEV team at work" } as ImageSlot,
   },
 
   /* ───────────── 02 — BUSINESS VERTICALS (also on /services) ───────────── */
@@ -146,12 +141,12 @@ export const homePage = {
     } satisfies Heading,
     cardCta: "Explore service",
     /** Large image on each vertical panel. For your own photo: telecom: { src: "/images/…", alt: "…" } (no caption). */
-    images: {
-      telecom: { src: "/images/posters/stage-5.jpg" },
-      solar: renders.solar,
-      civil: renders.civil,
-      interiors: renders.interiors,
-    } as Record<VerticalKey, ImageAsset>,
+    images: imageMap<VerticalKey>({
+      telecom: { src: "/images/projects/641-1.webp", alt: "Completed commercial building at dusk" },
+      solar: { src: "/images/projects/solar.webp", alt: "Completed solar panel installation" },
+      civil: { src: "/images/projects/const.jpg", alt: "Completed civil construction site" },
+      interiors: { src: "/images/projects/int.png", alt: "Completed interior design project" },
+    }),
   },
 
   /* ───────────── 03 — SELECTED PROJECTS ───────────── */
@@ -274,10 +269,10 @@ export const homePage = {
     title: "Resources behind the work.",
     note: "Each resource is labelled as owned, leased, hired or partner-provided.",
     items: [
-      { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", model: "[To confirm]", status: "pending" },
-      { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", model: "[To confirm]", status: "pending" },
-      { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", model: "[To confirm]", status: "pending" },
-      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending" },
+      { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", model: "[To confirm]", status: "pending", image: "/images/projects/eqp1.jpeg" },
+      { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", model: "[To confirm]", status: "pending", image: "/images/projects/tool1.webp" },
+      { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", model: "[To confirm]", status: "pending", image: "/images/projects/test1.jpg" },
+      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending", image: "/images/projects/sur1.png" },
     ] as EquipmentItem[],
   },
 };

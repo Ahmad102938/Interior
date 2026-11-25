@@ -10,7 +10,7 @@ export const solar: ServiceConfig = {
     "Supporting renewable energy infrastructure through site development, civil works, solar mounting structures, module installation and associated electrical execution.",
   metaDescription:
     "Solar project execution support: site clearing and grading, piling and foundations, module mounting structure and PV module installation, DC and AC electrical works, testing, commissioning and O&M support.",
-  heroImage: { src: "/images/verticals/solar.jpg", alt: "Rows of ground-mounted solar arrays on a graded site — illustrative visualisation", position: "50% 62%", caption: "Illustrative visualisation" },
+  heroImage: { src: "/images/projects/solarimg.webp", alt: "Rows of ground-mounted solar arrays on a graded site — illustrative visualisation", position: "50% 62%", caption: "Illustrative visualisation" },
   overview: {
     title: ["From prepared ground", "to installed array."],
     body: [

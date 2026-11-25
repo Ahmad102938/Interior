@@ -1,5 +1,5 @@
 import { renders } from "../media";
-import type { Cta, Heading, ImageAsset } from "../types";
+import { image, imageMap, type Cta, type Heading } from "../types";
 
 /**
  * /capabilities — section copy and images, in page order.
@@ -22,7 +22,7 @@ export const capabilitiesPage = {
     } satisfies Heading,
     primary: { label: "Explore capabilities", href: "#capabilities" } satisfies Cta,
     secondary: { label: "Discuss a project", href: "/request-a-quote" } satisfies Cta,
-    image: { ...renders.model, position: "55% 45%" } as ImageAsset,
+    image: image({ src: "/images/projects/cmt1.jpg", alt: "Site Execution — Site", position: "55% 45%" }),
     programmeLabel: "Capabilities across the sequence",
     /** Short names on the hero programme card, by capability number. */
     shortNames: { "01": "Engineering", "02": "BOQ & cost", "03": "Planning", "04": "Procurement", "05": "Site execution", "06": "Quality" } as Record<string, string>,
@@ -38,11 +38,11 @@ export const capabilitiesPage = {
     activitiesLabel: "Supporting activities",
     deliveryLabel: "Delivery model",
     /** Image per capability number; capabilities without one show a line diagram. */
-    images: {
+    images: imageMap<string>({
       "01": { ...renders.drawing, position: "60% 45%" },
-      "05": { ...renders.construction, position: "48% 55%" },
-      "06": { ...renders.completed, alt: "Completed building at handover — illustrative visualisation", position: "55% 50%" },
-    } as Record<string, ImageAsset>,
+      "05": { src: "/images/projects/civil1.png", alt: "Site Execution — Site", position: "48% 55%" },
+      "06": { src: "/images/projects/int9.jpg", alt: "Site Execution — Site", position: "55% 50%" },
+    }),
   },
 
   integrated: {
@@ -95,11 +95,11 @@ export const capabilitiesPage = {
     introWithoutProjects: "Approved project references are being prepared for publication. Until then, this is how the capability groups come together on site.",
     viewAll: { label: "View all projects", href: "/projects" } satisfies Cta,
     /** Stand-in image per capability group, shown until approved case studies exist. */
-    groupImages: {
+    groupImages: imageMap<string>({
       "pre-construction": renders.massing,
       "field-execution": { ...renders.civil, alt: "Steel shed frame rising on RCC pedestals — illustrative visualisation" },
       "quality-completion": { ...renders.interior, alt: "Completed workplace interior — illustrative visualisation" },
-    } as Record<string, ImageAsset>,
+    }),
   },
 
   cta: {

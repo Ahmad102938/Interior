@@ -15,7 +15,7 @@ export const telecomProjects: Project[] = [
     overview: ["[Project context, the client's requirement where shareable, and Adidev's involvement.]"],
     scope: ["Telecom site development and site preparation", "Tower foundation and erection support", "DG, battery bank and SMPS installation support"],
     highlights: ["[Verified execution highlight]", "[Verified execution highlight]"],
-    featuredImage: { src: "/images/verticals/telecom.jpg", alt: "Sample image — lattice telecom tower (illustrative visualisation)", position: "61% 30%" },
+    featuredImage: { src: "/images/projects/telecom1.webp", alt: "Sample image — lattice telecom tower (illustrative visualisation)", position: "61% 30%" },
     publicationStatus: "draft",
   },
   {
@@ -29,6 +29,7 @@ export const telecomProjects: Project[] = [
     metric: { label: "Route length", value: "[Verified route km]" },
     summary: "[Approved introduction] Fibre optic cable laying, trenching and duct works.",
     scope: ["Fibre optic cable laying", "Trenching and duct works"],
+    featuredImage: { src: "/images/projects/telecom2.jpg", alt: "Sample image — lattice telecom tower (illustrative visualisation)", position: "57% 34%" },
     publicationStatus: "draft",
   },
 ];

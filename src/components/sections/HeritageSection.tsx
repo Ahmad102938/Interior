@@ -4,7 +4,6 @@ import { homePage } from "@/content/pages/home";
 import { publishable } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StatCard } from "@/components/ui/StatCard";
-import { MediaSlot } from "@/components/ui/MediaSlot";
 
 /**
  * Homepage "Who we are" teaser. The full company story (vision, mission,
@@ -27,20 +26,13 @@ export function HeritageSection() {
             <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </Link>
         </div>
-        {stats.length > 0 ? (
-          <div className="flex flex-col gap-6 self-start" data-reveal>
-            {/* A real photo sits above the figures once one is supplied */}
-            {c.image.src && <MediaSlot {...c.image} className="aspect-[16/9]" />}
-            <dl className="grid grid-cols-2 border-t border-l border-line bg-white">
-              {stats.map((m) => (
-                <StatCard key={m.id} metric={m} />
-              ))}
-            </dl>
-          </div>
-        ) : (
-          <div data-reveal>
-            <MediaSlot {...c.image} className="aspect-[4/3]" />
-          </div>
+        {/* Metrics only; pending figures are hidden on the live site until verified */}
+        {stats.length > 0 && (
+          <dl className="grid grid-cols-2 self-start border-t border-l border-line bg-white" data-reveal>
+            {stats.map((m) => (
+              <StatCard key={m.id} metric={m} />
+            ))}
+          </dl>
         )}
       </div>
     </section>

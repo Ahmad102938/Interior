@@ -76,7 +76,6 @@ Common spots:
 - **Industry tiles and heroes**: `industries.ts` → `image`.
 - **Homepage** (all in `pages/home.ts`):
   - `hero.posters`: hero stills shown while the 3D scene loads, and on devices without WebGL.
-  - `heritage.image`: team or office photo. Shown above the metrics, or in their place.
   - `heritage.metrics`: the stat grid. Set `status: "verified"` to publish.
   - `verticals.images`: one large photo per vertical panel.
   - `capabilities.backgroundImage` / `quality.backgroundImage`: optional dimmed photo behind the section.

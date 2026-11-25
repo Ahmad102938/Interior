@@ -29,3 +29,12 @@ export type ImageSlot = Omit<ImageAsset, "src"> & {
   /** What photograph belongs here (shown on the placeholder in development). */
   slot: string;
 };
+
+/**
+ * Type-checked image helpers for content files: a missing `src` or `alt` is
+ * flagged in the editor and fails the build, instead of breaking at runtime.
+ *   image({ src: "/images/…", alt: "…" })
+ *   imageMap({ telecom: { src, alt }, solar: renders.solar })
+ */
+export const image = (img: ImageAsset): ImageAsset => img;
+export const imageMap = <K extends string>(map: Record<K, ImageAsset>): Record<K, ImageAsset> => map;
