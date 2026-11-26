@@ -1,0 +1,569 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Skip to content" [ref=e3] [cursor=pointer]:
+      - /url: "#main"
+    - generic [ref=e4]:
+      - link "Adidev — Commitment First, home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [aria-hidden] [ref=e7]:
+          - generic [ref=e18]: Adidev
+          - generic [ref=e20]: Commitment First
+      - navigation "Main" [ref=e21]:
+        - list [ref=e22]:
+          - listitem [ref=e23]:
+            - link "About" [ref=e24] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e26]:
+            - link "Industries" [ref=e27] [cursor=pointer]:
+              - /url: /industries
+          - listitem [ref=e28]:
+            - link "Services" [ref=e29] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e32]:
+            - link "Projects" [ref=e33] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=e34]:
+            - link "Capabilities" [ref=e35] [cursor=pointer]:
+              - /url: /capabilities
+          - listitem [ref=e36]:
+            - link "Quality & Safety" [ref=e37] [cursor=pointer]:
+              - /url: /quality-safety-compliance
+          - listitem [ref=e38]:
+            - link "Careers" [ref=e39] [cursor=pointer]:
+              - /url: /careers
+          - listitem [ref=e40]:
+            - link "Contact" [ref=e41] [cursor=pointer]:
+              - /url: /contact
+      - link "Request a Quote" [ref=e43] [cursor=pointer]:
+        - /url: /request-a-quote
+  - main [ref=e44]:
+    - generic [ref=e46]:
+      - navigation "Breadcrumb" [ref=e47]:
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - link "Home" [ref=e50] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e51]:
+            - generic [ref=e54]: About
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - paragraph [ref=e57]: About ADIDEV
+          - heading [level=1] [ref=e59]:
+            - text: One partner,
+            - emphasis [ref=e60]: from drawing to handover.
+          - paragraph [ref=e61]: ADIDEV is an integrated engineering and infrastructure solutions company supporting the development, execution and maintenance of projects across telecommunications, renewable energy, civil construction and commercial interior fit-out.
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - term [ref=e64]: Business verticals
+              - definition [ref=e65]: Four
+            - generic [ref=e66]:
+              - term [ref=e67]: Delivery model
+              - definition [ref=e68]: Design to handover
+            - generic [ref=e69]:
+              - term [ref=e70]: Project support
+              - definition [ref=e71]: Packages to full scope
+        - figure [ref=e72]:
+          - img "Illustrative visualisation of a completed ADIDEV-style building at dusk" [ref=e74]
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - term [ref=e78]:
+            - text: Established
+            - generic "Pending management verification — hidden in production" [ref=e79]: Pending
+          - definition [ref=e80]: "[Year pending approval]"
+        - generic [ref=e81]:
+          - term [ref=e82]:
+            - text: Headquarters
+            - generic "Pending management verification — hidden in production" [ref=e83]: Pending
+          - definition [ref=e84]: Karnal, Haryana
+        - generic [ref=e85]:
+          - term [ref=e86]:
+            - text: Legal name
+            - generic "Pending management verification — hidden in production" [ref=e87]: Pending
+          - definition [ref=e88]: "[Legal company name]"
+        - generic [ref=e89]:
+          - term [ref=e90]:
+            - text: Team strength
+            - generic "Pending management verification — hidden in production" [ref=e91]: Pending
+          - definition [ref=e92]: "[Verified team size]"
+        - generic [ref=e93]:
+          - term [ref=e94]:
+            - text: Offices
+            - generic "Pending management verification — hidden in production" [ref=e95]: Pending
+          - definition [ref=e96]: "[Verified office locations]"
+    - generic [ref=e98]:
+      - paragraph [ref=e99]:
+        - generic [ref=e100]: "01"
+        - text: Who we are
+      - generic [ref=e102]:
+        - heading "We bring planning, coordination and site execution under one roof." [level=2] [ref=e103]
+        - generic [ref=e104]:
+          - paragraph [ref=e105]: By bringing together technical coordination, project planning, resource management and on-ground execution, ADIDEV works to deliver practical project solutions aligned with approved drawings, specifications and agreed requirements.
+          - blockquote [ref=e106]:
+            - paragraph [ref=e107]: “We understand project requirements, coordinate technical resources, manage execution and deliver against approved drawings, specifications and agreed timelines.”
+            - generic [ref=e108]: How we work
+      - generic [ref=e109]:
+        - paragraph [ref=e110]: One team across the whole project lifecycle
+        - list [ref=e111]:
+          - listitem [ref=e112]:
+            - generic [ref=e113]: "01"
+            - generic [ref=e114]: Technical planning
+          - listitem [ref=e115]:
+            - generic [ref=e116]: "02"
+            - generic [ref=e117]: Engineering coordination
+          - listitem [ref=e118]:
+            - generic [ref=e119]: "03"
+            - generic [ref=e120]: Project management
+          - listitem [ref=e121]:
+            - generic [ref=e122]: "04"
+            - generic [ref=e123]: BOQ & cost management
+          - listitem [ref=e124]:
+            - generic [ref=e125]: "05"
+            - generic [ref=e126]: Procurement & vendors
+          - listitem [ref=e127]:
+            - generic [ref=e128]: "06"
+            - generic [ref=e129]: Resource deployment
+          - listitem [ref=e130]:
+            - generic [ref=e131]: "07"
+            - generic [ref=e132]: Site execution
+          - listitem [ref=e133]:
+            - generic [ref=e134]: "08"
+            - generic [ref=e135]: Quality inspection
+          - listitem [ref=e136]:
+            - generic [ref=e137]: "09"
+            - generic [ref=e138]: Testing & handover
+    - region "Vision and mission" [ref=e139]:
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - paragraph [ref=e142]: Vision
+          - paragraph [ref=e144]: To become a trusted engineering and infrastructure partner recognised for dependable project delivery and long-term value.
+        - generic [ref=e145]:
+          - paragraph [ref=e146]: Mission
+          - paragraph [ref=e148]: To provide integrated, quality-focused project solutions through responsible execution, technical coordination and client collaboration.
+    - generic [ref=e150]:
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - paragraph [ref=e153]:
+            - generic [ref=e154]: "02"
+            - text: Core values
+          - heading [level=2] [ref=e156]:
+            - text: Six commitments
+            - emphasis [ref=e157]: on every site.
+        - generic [ref=e158]: The standards our teams hold themselves to — on drawings, on site and with every client.
+      - list [ref=e159]:
+        - listitem [ref=e160]:
+          - text: "01"
+          - heading "Quality" [level=3] [ref=e161]
+          - paragraph [ref=e162]: Attention to approved drawings, specifications, workmanship and stage-wise inspection.
+        - listitem [ref=e163]:
+          - text: "02"
+          - heading "Safety" [level=3] [ref=e164]
+          - paragraph [ref=e165]: A responsible approach to site safety, hazard identification, PPE and safe working practices.
+        - listitem [ref=e166]:
+          - text: "03"
+          - heading "Integrity" [level=3] [ref=e167]
+          - paragraph [ref=e168]: Transparent business conduct, accountability and professional responsibility.
+        - listitem [ref=e169]:
+          - text: "04"
+          - heading "Innovation" [level=3] [ref=e170]
+          - paragraph [ref=e171]: Practical improvements in engineering coordination, execution and problem-solving.
+        - listitem [ref=e172]:
+          - text: "05"
+          - heading "Commitment" [level=3] [ref=e173]
+          - paragraph [ref=e174]: Responsibility towards agreed project requirements and client expectations.
+        - listitem [ref=e175]:
+          - text: "06"
+          - heading "Collaboration" [level=3] [ref=e176]
+          - paragraph [ref=e177]: Coordination between clients, technical teams, vendors, project management and site personnel.
+    - generic [ref=e179]:
+      - generic [ref=e180]:
+        - generic [ref=e181]:
+          - paragraph [ref=e182]:
+            - generic [ref=e183]: "03"
+            - text: What we do
+          - heading [level=2] [ref=e185]:
+            - text: Four verticals.
+            - emphasis [ref=e186]: Equal depth.
+        - generic [ref=e187]: Each vertical has its own specialists — and shares the same planning, procurement, site and quality disciplines.
+      - list [ref=e188]:
+        - listitem [ref=e189]:
+          - paragraph [ref=e191]:
+            - generic [ref=e192]: "01"
+            - text: Telecom
+          - heading "Telecom Infrastructure" [level=3] [ref=e194]
+          - paragraph [ref=e195]: Connecting infrastructure. Enabling communication.
+          - paragraph [ref=e196]: Supporting network deployment on the ground — from site development and tower foundations to fibre routes and the power systems that keep sites running.
+          - link "Explore telecom" [ref=e197] [cursor=pointer]:
+            - /url: /services/telecom-infrastructure
+        - listitem [ref=e201]:
+          - paragraph [ref=e203]:
+            - generic [ref=e204]: "02"
+            - text: Solar
+          - heading "Solar & Renewable Energy" [level=3] [ref=e206]
+          - paragraph [ref=e207]: Supporting the transition towards clean energy.
+          - paragraph [ref=e208]: Connecting renewable-energy infrastructure with the civil, structural and electrical execution it depends on — from site preparation and piling to modules and inverters.
+          - link "Explore solar" [ref=e209] [cursor=pointer]:
+            - /url: /services/solar-renewable-energy
+        - listitem [ref=e213]:
+          - paragraph [ref=e215]:
+            - generic [ref=e216]: "03"
+            - text: Civil
+          - heading "Civil Construction & Infrastructure" [level=3] [ref=e218]
+          - paragraph [ref=e219]: Building strong foundations for every project.
+          - paragraph [ref=e220]: Building the physical infrastructure industry runs on — RCC structures, industrial sheds, warehouses, roads, drainage and the facilities around them.
+          - link "Explore civil" [ref=e221] [cursor=pointer]:
+            - /url: /services/civil-construction-infrastructure
+        - listitem [ref=e225]:
+          - paragraph [ref=e227]:
+            - generic [ref=e228]: "04"
+            - text: Interiors
+          - heading "Commercial Interior & Fit-Out" [level=3] [ref=e230]
+          - paragraph [ref=e231]: Creating functional and future-ready commercial spaces.
+          - paragraph [ref=e232]: Turning commercial floor plates into working offices, retail spaces and showrooms — planning, technical coordination, finishing and execution as one package.
+          - link "Explore interiors" [ref=e233] [cursor=pointer]:
+            - /url: /services/commercial-interior-fit-out
+      - generic [ref=e237]:
+        - generic [ref=e238]:
+          - generic [ref=e239]:
+            - heading "Industries we serve" [level=3] [ref=e240]
+            - list [aria-hidden] [ref=e241]:
+              - listitem [ref=e242]: Telecom
+              - listitem [ref=e244]: Solar
+              - listitem [ref=e246]: Civil
+              - listitem [ref=e248]: Interiors
+          - link "Industry detail" [ref=e250] [cursor=pointer]:
+            - /url: /industries
+        - list [ref=e254]:
+          - listitem [ref=e255]:
+            - generic [ref=e256]: Telecom & Telecommunications
+            - generic [ref=e257]: "Drawn from: Telecom"
+          - listitem [ref=e260]:
+            - generic [ref=e261]: Renewable Energy
+            - generic [ref=e262]: "Drawn from: Solar"
+          - listitem [ref=e265]:
+            - generic [ref=e266]: Industrial & Manufacturing
+            - generic [ref=e267]: "Drawn from: Civil"
+          - listitem [ref=e270]:
+            - generic [ref=e271]: Commercial & Retail
+            - generic [ref=e272]: "Drawn from: Interiors, Civil"
+          - listitem [ref=e276]:
+            - generic [ref=e277]: Warehousing & Logistics
+            - generic [ref=e278]: "Drawn from: Civil"
+          - listitem [ref=e281]:
+            - generic [ref=e282]: Infrastructure & Real Estate
+            - generic [ref=e283]: "Drawn from: Civil"
+    - generic [ref=e287]:
+      - generic [ref=e288]:
+        - generic [ref=e289]:
+          - paragraph [ref=e290]:
+            - generic [ref=e291]: "04"
+            - text: How it connects
+          - heading [level=2] [ref=e293]:
+            - text: Six disciplines
+            - emphasis [ref=e294]: run through every vertical.
+        - generic [ref=e295]: Whether the work is a telecom site or an office floor, the same coordinated disciplines plan it, cost it, resource it, build it and hand it over.
+      - generic [ref=e296]:
+        - generic [ref=e297]:
+          - list [ref=e298]:
+            - listitem [ref=e299]:
+              - generic [ref=e300]: "01"
+              - generic [ref=e301]: Engineering & design coordination
+            - listitem [ref=e302]:
+              - generic [ref=e303]: "02"
+              - generic [ref=e304]: BOQ & cost management
+            - listitem [ref=e305]:
+              - generic [ref=e306]: "03"
+              - generic [ref=e307]: Project planning
+            - listitem [ref=e308]:
+              - generic [ref=e309]: "04"
+              - generic [ref=e310]: Procurement & vendors
+            - listitem [ref=e311]:
+              - generic [ref=e312]: "05"
+              - generic [ref=e313]: Site execution
+            - listitem [ref=e314]:
+              - generic [ref=e315]: "06"
+              - generic [ref=e316]: Quality & handover
+          - paragraph [ref=e317]: In-house expertise is distinguished from qualified partner- or vendor-supported delivery on each project.
+          - link "Capability detail" [ref=e318] [cursor=pointer]:
+            - /url: /capabilities
+        - figure [ref=e322]:
+          - img "ADIDEV integrated operating system Four business verticals around six shared disciplines, all connected to one delivery team." [ref=e323]:
+            - generic [ref=e324]: 01 Telecom
+            - generic [ref=e329]: 02 Solar
+            - generic [ref=e334]: 03 Civil
+            - generic [ref=e339]: 04 Interiors
+            - generic [ref=e360]: One delivery
+            - generic [ref=e361]: team
+            - generic [ref=e362]: "01"
+            - generic [ref=e365]: "02"
+            - generic [ref=e368]: "03"
+            - generic [ref=e371]: "04"
+            - generic [ref=e374]: "05"
+            - generic [ref=e377]: "06"
+    - generic [ref=e381]:
+      - generic [ref=e382]:
+        - generic [ref=e383]:
+          - paragraph [ref=e384]:
+            - generic [ref=e385]: "05"
+            - text: Method & people
+          - heading [level=2] [ref=e387]:
+            - text: How a project moves —
+            - emphasis [ref=e388]: and who moves it.
+        - generic [ref=e389]: Five stages take a project from brief to handover. Each is led by the teams best placed for it, so responsibility is clear at every step.
+      - generic [ref=e390]:
+        - list [ref=e391]:
+          - listitem [ref=e393]:
+            - generic [aria-hidden] [ref=e394]: "01"
+            - heading "Understand" [level=3] [ref=e395]
+            - paragraph [ref=e396]: Client brief, objectives, site conditions, scope and constraints.
+            - paragraph [ref=e397]: Led by business development · project management · engineering & technical
+          - listitem [ref=e398]:
+            - generic [aria-hidden] [ref=e399]: "02"
+            - heading "Plan" [level=3] [ref=e400]
+            - paragraph [ref=e401]: Drawings, BOQ, estimates, resources, schedule and technical coordination.
+            - paragraph [ref=e402]: Led by engineering & technical · design & architecture · project management
+          - listitem [ref=e403]:
+            - generic [aria-hidden] [ref=e404]: "03"
+            - heading "Mobilise" [level=3] [ref=e405]
+            - paragraph [ref=e406]: Approvals, procurement, vendors, manpower, equipment and site readiness.
+            - paragraph [ref=e407]: Led by procurement & vendors · project management · site supervision & quality
+          - listitem [ref=e408]:
+            - generic [aria-hidden] [ref=e409]: "04"
+            - heading "Execute" [level=3] [ref=e410]
+            - paragraph [ref=e411]: Site coordination, progress monitoring, quality checks and safe work practices.
+            - paragraph [ref=e412]: Led by site supervision & quality · project management · engineering & technical
+          - listitem [ref=e413]:
+            - generic [aria-hidden] [ref=e414]: "05"
+            - heading "Inspect & handover" [level=3] [ref=e415]
+            - paragraph [ref=e416]: Inspections, testing where applicable, snag closure, documents and handover.
+            - paragraph [ref=e417]: Led by site supervision & quality · engineering & technical · project management
+        - complementary "Organisation" [ref=e418]:
+          - generic [ref=e419]:
+            - paragraph [ref=e420]: Our organisation
+            - generic [ref=e422]:
+              - generic [ref=e423]:
+                - paragraph [ref=e424]: "[Approved Name]"
+                - paragraph [ref=e425]: "[Designation]"
+              - generic "Pending management verification — hidden in production" [ref=e426]: Pending
+            - list [ref=e428]:
+              - listitem [ref=e429]:
+                - paragraph [ref=e430]: Business development
+                - paragraph [ref=e431]: Client coordination, proposals and enquiries.
+              - listitem [ref=e432]:
+                - paragraph [ref=e433]: Project management
+                - paragraph [ref=e434]: Planning, scheduling, coordination and reporting.
+              - listitem [ref=e435]:
+                - paragraph [ref=e436]: Engineering & technical
+                - paragraph [ref=e437]: Drawings, technical coordination and documentation.
+              - listitem [ref=e438]:
+                - paragraph [ref=e439]: Design & architecture
+                - paragraph [ref=e440]: Space planning, design development and detailing.
+              - listitem [ref=e441]:
+                - paragraph [ref=e442]: Procurement & vendors
+                - paragraph [ref=e443]: Material planning, sourcing and commercial coordination.
+              - listitem [ref=e444]:
+                - paragraph [ref=e445]: Site supervision & quality
+                - paragraph [ref=e446]: Site execution, inspections and quality checks.
+            - paragraph [ref=e447]: "Highlighted: teams leading Understand"
+    - generic [ref=e449]:
+      - generic [ref=e450]:
+        - generic [ref=e451]:
+          - paragraph [ref=e452]:
+            - generic [ref=e453]: "06"
+            - text: Responsible execution
+          - heading [level=2] [ref=e455]:
+            - text: How we work on site
+            - emphasis [ref=e456]: matters as much as what we build.
+        - link "Quality, safety & compliance" [ref=e458] [cursor=pointer]:
+          - /url: /quality-safety-compliance
+      - list [ref=e462]:
+        - listitem [ref=e463]:
+          - paragraph [ref=e464]: "01"
+          - heading "Quality assurance" [level=3] [ref=e465]
+          - paragraph [ref=e466]: Work is checked against approved drawings and BOQ — materials verified, workmanship inspected stage by stage, snags closed and testing recorded.
+        - listitem [ref=e467]:
+          - paragraph [ref=e468]: "02"
+          - heading "Health & safety" [level=3] [ref=e469]
+          - paragraph [ref=e470]: Every site starts with induction and PPE, identifies its risks, and reports incidents so corrective action follows.
+        - listitem [ref=e471]:
+          - paragraph [ref=e472]: "03"
+          - heading "Sustainability" [level=3] [ref=e473]
+          - paragraph [ref=e474]: Responsible material use, waste management and resource efficiency — alongside our renewable-energy work.
+      - list [ref=e475]:
+        - listitem [ref=e476]:
+          - generic [ref=e477]:
+            - text: "[Certification / registration]"
+            - generic [ref=e478]: · [Issuer] · [Valid until]
+          - generic "Pending management verification — hidden in production" [ref=e479]: Pending
+        - listitem [ref=e480]:
+          - generic [ref=e481]:
+            - text: "[Licence]"
+            - generic [ref=e482]: · [Issuer] · [Valid until]
+          - generic "Pending management verification — hidden in production" [ref=e483]: Pending
+    - generic [ref=e485]:
+      - generic [ref=e487]:
+        - paragraph [ref=e488]:
+          - generic [ref=e489]: "07"
+          - text: Our journey
+        - heading [level=2] [ref=e491]:
+          - text: From one discipline
+          - emphasis [ref=e492]: to an integrated model.
+      - generic [ref=e494]:
+        - generic [ref=e495]:
+          - paragraph [ref=e496]: Company journey
+          - generic [ref=e497]:
+            - button "Previous milestones" [ref=e498]
+            - button "Next milestones" [ref=e501]
+        - list "Company milestones" [ref=e504]:
+          - listitem [ref=e505]:
+            - paragraph [ref=e508]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e509]: Pending
+            - heading "Operations commence" [level=3] [ref=e510]
+            - paragraph [ref=e511]: Foundational business activity — awaiting the approved date (draft says 2014, existing website says 2017).
+            - generic [ref=e512]: Milestone 1 of 7
+          - listitem [ref=e513]:
+            - paragraph [ref=e516]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e517]: Pending
+            - heading "Company incorporated" [level=3] [ref=e518]
+            - paragraph [ref=e519]: Legal incorporation — publish only if management confirms it differs from the commencement date.
+            - generic [ref=e520]: Milestone 2 of 7
+          - listitem [ref=e521]:
+            - paragraph [ref=e524]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e525]: Pending
+            - heading "Telecom infrastructure execution" [level=3] [ref=e526]
+            - paragraph [ref=e527]: Site development, tower-related works and allied power systems.
+            - generic [ref=e528]: Milestone 3 of 7
+          - listitem [ref=e529]:
+            - paragraph [ref=e532]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e533]: Pending
+            - heading "Entry into solar & renewable energy" [level=3] [ref=e534]
+            - paragraph [ref=e535]: Foundations, mounting structures and module installation support.
+            - generic [ref=e536]: Milestone 4 of 7
+          - listitem [ref=e537]:
+            - paragraph [ref=e540]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e541]: Pending
+            - heading "Civil & industrial construction" [level=3] [ref=e542]
+            - paragraph [ref=e543]: Industrial sheds, warehouses, RCC structures and external development.
+            - generic [ref=e544]: Milestone 5 of 7
+          - listitem [ref=e545]:
+            - paragraph [ref=e548]:
+              - text: "[Year]"
+              - generic "Pending management verification — hidden in production" [ref=e549]: Pending
+            - heading "Commercial interior & fit-out" [level=3] [ref=e550]
+            - paragraph [ref=e551]: Turnkey workplace, retail and showroom fit-out execution.
+            - generic [ref=e552]: Milestone 6 of 7
+          - listitem [ref=e553]:
+            - paragraph [ref=e556]:
+              - text: Today
+              - generic "Pending management verification — hidden in production" [ref=e557]: Pending
+            - heading "One integrated operating model" [level=3] [ref=e558]
+            - paragraph [ref=e559]: Four verticals delivered through shared planning, procurement, site execution and quality disciplines.
+            - generic [ref=e560]: Milestone 7 of 7
+    - generic [ref=e562]:
+      - heading [level=2] [ref=e564]:
+        - text: Talk to the team
+        - emphasis [ref=e565]: that plans it and builds it.
+      - generic [ref=e566]:
+        - link "Request a quote" [ref=e567] [cursor=pointer]:
+          - /url: /request-a-quote
+        - link "View projects" [ref=e571] [cursor=pointer]:
+          - /url: /projects
+  - contentinfo [ref=e575]:
+    - generic [ref=e576]:
+      - generic [ref=e577]:
+        - link "Adidev — Commitment First, home" [ref=e578] [cursor=pointer]:
+          - /url: /
+          - img [aria-hidden] [ref=e580]:
+            - generic [ref=e591]: Adidev
+            - generic [ref=e593]: Commitment First
+        - paragraph [ref=e594]: Integrated Engineering & Infrastructure Solutions.
+        - paragraph [ref=e595]: Building Infrastructure. Empowering Progress.
+      - generic [ref=e596]:
+        - heading "Services" [level=2] [ref=e597]
+        - list [ref=e598]:
+          - listitem [ref=e599]:
+            - link "Telecom Infrastructure" [ref=e600] [cursor=pointer]:
+              - /url: /services/telecom-infrastructure
+          - listitem [ref=e601]:
+            - link "Solar & Renewable Energy" [ref=e602] [cursor=pointer]:
+              - /url: /services/solar-renewable-energy
+          - listitem [ref=e603]:
+            - link "Civil Construction & Infrastructure" [ref=e604] [cursor=pointer]:
+              - /url: /services/civil-construction-infrastructure
+          - listitem [ref=e605]:
+            - link "Commercial Interior & Fit-Out" [ref=e606] [cursor=pointer]:
+              - /url: /services/commercial-interior-fit-out
+      - generic [ref=e607]:
+        - heading "Company" [level=2] [ref=e608]
+        - list [ref=e609]:
+          - listitem [ref=e610]:
+            - link "Home" [ref=e611] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e612]:
+            - link "About Us" [ref=e613] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e614]:
+            - link "Services" [ref=e615] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e616]:
+            - link "Projects" [ref=e617] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=e618]:
+            - link "Capabilities" [ref=e619] [cursor=pointer]:
+              - /url: /capabilities
+          - listitem [ref=e620]:
+            - link "Clients & Partners" [ref=e621] [cursor=pointer]:
+              - /url: /clients-partners
+          - listitem [ref=e622]:
+            - link "Resources" [ref=e623] [cursor=pointer]:
+              - /url: /resources
+          - listitem [ref=e624]:
+            - link "Contact Us" [ref=e625] [cursor=pointer]:
+              - /url: /contact
+      - generic [ref=e626]:
+        - heading "Contact" [level=2] [ref=e627]
+        - list [ref=e628]:
+          - listitem [ref=e629]:
+            - generic [ref=e630]: "Business email:"
+            - text: "[Email]"
+            - generic "Pending management verification — hidden in production" [ref=e631]: Pending
+          - listitem [ref=e632]:
+            - generic [ref=e633]: "Official phone:"
+            - text: "[Number]"
+            - generic "Pending management verification — hidden in production" [ref=e634]: Pending
+          - listitem [ref=e635]:
+            - generic [ref=e636]: "Corporate office:"
+            - text: "[Verified address]"
+            - generic "Pending management verification — hidden in production" [ref=e637]: Pending
+          - listitem [ref=e638]:
+            - link "www.adidev.co.in" [ref=e639] [cursor=pointer]:
+              - /url: https://www.adidev.co.in
+        - list [ref=e640]:
+          - listitem [ref=e641]:
+            - link "LinkedIn" [ref=e642] [cursor=pointer]:
+              - /url: "#"
+            - generic "Pending management verification — hidden in production" [ref=e643]: Pending
+          - listitem [ref=e644]:
+            - link "Instagram" [ref=e645] [cursor=pointer]:
+              - /url: "#"
+            - generic "Pending management verification — hidden in production" [ref=e646]: Pending
+          - listitem [ref=e647]:
+            - link "Facebook" [ref=e648] [cursor=pointer]:
+              - /url: "#"
+            - generic "Pending management verification — hidden in production" [ref=e649]: Pending
+          - listitem [ref=e650]:
+            - link "YouTube" [ref=e651] [cursor=pointer]:
+              - /url: "#"
+            - generic "Pending management verification — hidden in production" [ref=e652]: Pending
+    - generic [ref=e654]:
+      - paragraph [ref=e655]: © 2026 Adidev. All Rights Reserved.
+      - paragraph [ref=e656]:
+        - link "Privacy Policy" [ref=e657] [cursor=pointer]:
+          - /url: /privacy-policy
+        - link "Terms & Conditions" [ref=e658] [cursor=pointer]:
+          - /url: /terms
+  - button "Open Next.js Dev Tools" [ref=e664] [cursor=pointer]

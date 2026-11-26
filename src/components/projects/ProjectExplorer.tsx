@@ -66,7 +66,7 @@ export function ProjectExplorer({ projects, query }: { projects: Project[]; quer
   const lead = shown.length > 2 && (shown.length + 1) % 3 === 0;
   const catCount = (key?: Query["category"]) => applyQuery(projects, { ...query, category: key }).length;
   const statusCount = (s?: Query["status"]) => applyQuery(projects, { ...query, status: s }).length;
-  const states = [...new Set(projects.map((p) => p.location.state))].sort();
+  const states = [...new Set(projects.map((p) => p.location.state).filter(Boolean))].sort();
   const showLocation = projects.length >= LOCATION_FROM.projects && states.length >= LOCATION_FROM.states;
   const showSearch = projects.length >= SEARCH_FROM;
   const filtered = isFiltered(query);

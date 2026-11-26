@@ -36,7 +36,8 @@ export type StoryChapter = {
 export type EquipmentItem = {
   title: string;
   copy: string;
-  model: "Owned" | "Leased" | "Hired" | "Partner-provided" | "[To confirm]";
+  /** Optional ownership tag — leave out until confirmed. */
+  model?: "Owned" | "Leased" | "Hired" | "Partner-provided";
   status: Status;
   /** Optional photo, e.g. "/images/equipment/excavator.jpg". */
   image?: string;
@@ -269,10 +270,10 @@ export const homePage = {
     title: "Resources behind the work.",
     note: "Each resource is labelled as owned, leased, hired or partner-provided.",
     items: [
-      { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", model: "[To confirm]", status: "pending", image: "/images/projects/eqp1.jpeg" },
-      { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", model: "[To confirm]", status: "pending", image: "/images/projects/tool1.webp" },
-      { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", model: "[To confirm]", status: "pending", image: "/images/projects/test1.jpg" },
-      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", model: "[To confirm]", status: "pending", image: "/images/projects/sur1.g" },
+      { title: "Construction equipment", copy: "Excavators, lifting equipment, access systems and other machinery, where available.", status: "verified", image: "/images/projects/eqp1.jpeg" },
+      { title: "Installation tools", copy: "Trade-specific tools and equipment for site installation and fit-out works.", status: "verified", image: "/images/projects/tool1.webp" },
+      { title: "Testing instruments", copy: "Electrical and other testing instruments relevant to the approved work scope.", status: "verified", image: "/images/projects/test1.jpg" },
+      { title: "Survey resources", copy: "Survey and measurement equipment for site assessment and setting out.", status: "verified", image: "/images/projects/sur1.png" },
     ] as EquipmentItem[],
   },
 };

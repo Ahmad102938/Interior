@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { verticals, serviceHref, verticalImage } from "@/content/verticals";
+import { verticals, serviceHref } from "@/content/verticals";
 import { industryMap, verticalRoles, aboutPage } from "@/content/pages/about";
 import { verticalTheme } from "@/config/theme";
 import { verticalClasses } from "@/components/ui/VerticalBadge";
@@ -10,8 +10,9 @@ import { AboutHeading } from "./AboutHeading";
 
 /**
  * Four equal verticals in a 2×2 field — no vertical is subordinate. Each tile
- * is its vertical's solid colour with a monochrome photograph blended in, so
- * the four shades stay clean and comparable. Below: industries served.
+ * shows its photograph in full colour under a dark scrim that settles into the
+ * vertical's colour at the bottom, so text stays readable. Below: industries served.
+ * Photos: src/content/pages/about.ts → verticals.images.
  */
 export function VerticalsMatrix() {
   return (
@@ -25,21 +26,24 @@ export function VerticalsMatrix() {
           {verticals.map((v) => (
             <li
               key={v.key}
-              className="group relative isolate flex min-h-[24rem] flex-col overflow-hidden p-8 text-white lg:p-10"
+              className="group relative isolate flex min-h-[24rem] flex-col overflow-hidden p-8 text-white [text-shadow:0_1px_14px_rgb(0_0_0/0.45)] lg:p-10"
               style={{ backgroundColor: verticalTheme[v.key].primary }}
               data-reveal
             >
               <Image
-                src={verticalImage(v)}
-                alt=""
+                src={aboutPage.verticals.images[v.key].src}
+                alt={aboutPage.verticals.images[v.key].alt}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
-                className="-z-10 object-cover opacity-25 mix-blend-luminosity grayscale transition-[opacity,transform] duration-[1.2s] ease-(--ease-premium) group-hover:scale-105 group-hover:opacity-35"
+                className="-z-10 object-cover transition-transform duration-[1.2s] ease-(--ease-premium) group-hover:scale-105"
+                style={{ objectPosition: aboutPage.verticals.images[v.key].position }}
               />
               <div
                 aria-hidden
                 className="absolute inset-0 -z-10"
-                style={{ background: `linear-gradient(180deg, transparent 30%, ${verticalTheme[v.key].primary} 92%)` }}
+                style={{
+                  background: `linear-gradient(180deg, rgb(8 14 28 / 0.72) 0%, rgb(8 14 28 / 0.55) 45%, ${verticalTheme[v.key].primary}eb 82%, ${verticalTheme[v.key].primary} 100%)`,
+                }}
               />
               <p className="eyebrow flex items-center gap-3 text-gold-pale">
                 <span className="font-display text-xl tracking-normal">{v.number}</span>

@@ -130,10 +130,12 @@ async function ProjectContent({ params }: { params: PageProps<"/projects/[slug]"
               </p>
               <h1 className="display mt-6 text-[2.5rem] sm:text-6xl lg:text-[4rem]">{p.name}</h1>
               <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-white/80">
-                <span className="inline-flex items-center gap-2">
-                  <MapPin aria-hidden className="size-4" />
-                  {locationLabel(p)}
-                </span>
+                {locationLabel(p) && (
+                  <span className="inline-flex items-center gap-2">
+                    <MapPin aria-hidden className="size-4" />
+                    {locationLabel(p)}
+                  </span>
+                )}
                 <StatusBadge project={p} tone="dark" />
                 {!isPublic(p) && <PendingBadge status="pending" />}
               </div>

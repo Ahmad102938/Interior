@@ -50,10 +50,12 @@ export function FeaturedProject({ project: p }: { project: Project }) {
             <h2 id="featured-title" className="display mt-4 text-[2.25rem] text-navy sm:text-5xl">
               {p.name}
             </h2>
-            <p className="mt-4 flex items-center gap-2 text-sm text-slate">
-              <MapPin aria-hidden className="size-4 shrink-0" />
-              {locationLabel(p)}
-            </p>
+            {locationLabel(p) && (
+              <p className="mt-4 flex items-center gap-2 text-sm text-slate">
+                <MapPin aria-hidden className="size-4 shrink-0" />
+                {locationLabel(p)}
+              </p>
+            )}
             <p className="mt-5 text-[0.9375rem] leading-relaxed text-charcoal/85">{p.summary}</p>
             {p.metric && (
               <dl className="mt-6 border-t border-navy/10 pt-5">

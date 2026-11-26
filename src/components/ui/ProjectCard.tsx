@@ -45,8 +45,12 @@ export function ProjectCard({ project: p, wide = false, className, headingLevel:
 
       <div className={cn("flex flex-1 flex-col p-6", wide && "lg:p-10")}>
         <p className="flex flex-wrap items-center gap-2 text-xs text-slate">
-          <MapPin aria-hidden className="size-3.5 shrink-0" />
-          {locationLabel(p)}
+          {locationLabel(p) && (
+            <>
+              <MapPin aria-hidden className="size-3.5 shrink-0" />
+              {locationLabel(p)}
+            </>
+          )}
           {!isPublic(p) && <PendingBadge status="pending" />}
         </p>
         <H className={cn("display mt-3 text-navy", wide ? "text-[2rem] lg:text-[2.5rem]" : "text-[1.625rem]")}>{p.name}</H>

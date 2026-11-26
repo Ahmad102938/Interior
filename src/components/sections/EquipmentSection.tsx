@@ -30,7 +30,7 @@ export function EquipmentSection() {
                 <PendingBadge status={e.status} />
               </div>
               <p className="mt-2 text-sm leading-relaxed text-slate">{e.copy}</p>
-              <p className="mt-4 inline-block border border-navy/15 px-2 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-navy">{e.model}</p>
+              {e.model && <p className="mt-4 inline-block border border-navy/15 px-2 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-navy">{e.model}</p>}
             </div>
           </li>
         ))}

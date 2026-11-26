@@ -1,8 +1,7 @@
 import type { VerticalKey } from "@/config/theme";
 import type { Status } from "@/lib/content";
 import { industries } from "../industries";
-import { renders } from "../media";
-import { image, type Cta } from "../types";
+import { image, imageMap, type Cta } from "../types";
 
 /**
  * About page content. Sourced from the ADIDEV Editable Website Master
@@ -21,6 +20,7 @@ export const aboutIntro = {
   accent: "from drawing to handover.",
   lead: "ADIDEV is an integrated engineering and infrastructure solutions company supporting the development, execution and maintenance of projects across telecommunications, renewable energy, civil construction and commercial interior fit-out.",
   /** True, non-numeric facts — safe to publish. */
+  // image: { src: "/images/projects/civil1.png", alt: "hero img" },
   facts: [
     { label: "Business verticals", value: "Four" },
     { label: "Delivery model", value: "Design to handover" },
@@ -137,7 +137,7 @@ export const aboutPage = {
   },
   intro: {
     /** Hero image beside the intro. */
-    image: image({ ...renders.completed, alt: "Illustrative visualisation of a completed ADIDEV-style building at dusk", position: "60% 50%" }),
+    image: image({ src: "/images/projects/int9.jpg", alt: "Completed commercial lobby with lounge seating and indoor landscaping", position: "50% 55%" }),
   },
   visionMission: { visionLabel: "Vision", missionLabel: "Mission" },
   story: { eyebrow: "Who we are", quoteLabel: "How we work", lifecycleLabel: "One team across the whole project lifecycle" },
@@ -148,6 +148,13 @@ export const aboutPage = {
   verticals: {
     heading: { eyebrow: "What we do", title: "Four verticals.", accent: "Equal depth." },
     intro: "Each vertical has its own specialists — and shares the same planning, procurement, site and quality disciplines.",
+    /** Photo on each vertical tile (shown in full colour under a dark scrim). */
+    images: imageMap<VerticalKey>({
+      telecom: { src: "/images/projects/telecom1.webp", alt: "Telecom towers with microwave dishes", position: "50% 40%" },
+      solar: { src: "/images/projects/solarimg.webp", alt: "Site team installing solar modules", position: "50% 40%" },
+      civil: { src: "/images/projects/sur1.png", alt: "Engineers surveying a building construction site", position: "50% 60%" },
+      interiors: { src: "/images/projects/int1.jpeg", alt: "Fitted-out office lounge with breakout seating", position: "50% 55%" },
+    }),
     industriesLabel: "Industries we serve",
     industriesLink: { label: "Industry detail", href: "/industries" } satisfies Cta,
   },
